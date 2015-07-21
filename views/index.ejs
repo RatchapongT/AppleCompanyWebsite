@@ -28,7 +28,7 @@
                 </h4>
             </div>
             <form name="login-user-form" id="login-user-form" method="post"
-                  action="/">
+                  action="/users/create">
                 <div class="login-form">
                     <div class="form-group">
                         <input name="username" type="text"
@@ -60,6 +60,9 @@
     </div>
 </div>
 <!-- /container -->
+<% if (typeof error != 'undefined') { %>
+<div style="color : red;"> <%= error %></div>
+<% } %>
 </body>
 <footer>
     <% include partials/page/footer.ejs %>
