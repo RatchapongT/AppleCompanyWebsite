@@ -2,8 +2,398 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8f9b5c2-6d5c-45d8-bf5b-1d547e62c127" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layout.hbs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Book.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Calendar.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Chat.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Clipboard.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Compas.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Gift-Box.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Infinity-Loop.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Mail.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Map.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Pensils.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Pocket.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Retina-Ready.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Toilet-Paper.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/png/Watches.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/login/apple_icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser-2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser-author.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser-pic-1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser-pic-2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser-pic-3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser-pic-4.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser-pic-5.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser-pic-6.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/browser.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/example-image.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/favicon.ico" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/glyphicons/flat-ui-icons-regular.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/glyphicons/flat-ui-icons-regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/glyphicons/flat-ui-icons-regular.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/html-icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/getting-started/icomoon_import.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/login/icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/login/imac-2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/login/imac.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-black.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-black.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-black.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-bold.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-bold.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-bold.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-bolditalic.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-bolditalic.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-bolditalic.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-italic.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-italic.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-italic.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-light.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-light.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-light.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-regular.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-regular.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/logo-mask-2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/logo-mask.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/footer/logo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/video/poster.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/tile/ribbon-2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/tile/ribbon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/FlatDesignJS/vendor/video-js.swf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/demo/video.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/application.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/book.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/FlatDesignCSS/vendor/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/calendar.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/chat.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/clipboard.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/clocks.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/compas.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/date_time.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/css/demo.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/css/demo.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/css/src/demo.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/css/docs.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/css/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/css/src/docs.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/error.ejs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/glyphicons/flat-ui-icons-regular.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/FlatDesignCSS/flat-ui.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/FlatDesignCSS/flat-ui.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/FlatDesignJS/flat-ui.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/FlatDesignCSS/flat-ui.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/FlatDesignJS/flat-ui.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/partials/page/footer.ejs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/gift-box.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/global.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/partials/page/head.ejs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/partials/page/header.ejs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/FlatDesignJS/vendor/html5shiv.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/index.ejs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/FlatDesignJS/vendor/jquery.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/FlatDesignJS/vendor/jquery.min.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/partials/page/jsdefaults.ejs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-black.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-bold.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-bolditalic.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-italic.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-light.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/lato/lato-regular.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/loop.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/mail.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/map.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/paper-bag.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/pencils.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/prettify.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/css/src/prettyprint.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/FlatDesignJS/vendor/respond.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/retina.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/ribbon.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/glyphicons/selection.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/FlatDesignIMG/icons/svg/toilet-paper.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/FlatDesignJS/vendor/video.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/.gitmodules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/.npmignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/History.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/Readme.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/extend/app.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/extend/public/css/index.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/extend/public/css/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/extend/views/index.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/extend/views/layout.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/app.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/public/css/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/views/index.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/views/layout.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/views/partial.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/views/partials/partial1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/views/partials/partial2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/views/partials/partial3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/views/partials/partial4.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/examples/partial/views/partials/partial5.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/lib/async.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/lib/hbs.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/.bin/handlebars" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/.gitmodules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/.istanbul.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/.npmignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/CONTRIBUTING.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/FAQ.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/README.markdown" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/bin/handlebars" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/coverage.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars.runtime.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/base.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/ast.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/base.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/compiler.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/helpers.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/javascript-compiler.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/parser.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/printer.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/compiler/visitor.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/exception.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/runtime.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/safe-string.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/handlebars/utils.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/dist/cjs/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/lib/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/lib/index.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/lib/precompiler.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/prettify.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/prettify.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/ast.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/basic.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/blocks.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/builtins.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/data.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/env/browser.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/env/common.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/env/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/env/node.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/env/runner.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/env/runtime.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/helpers.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/javascript-compiler.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/parser.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/partials.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/precompiler.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/regressions.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/require.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/runtime.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/spec.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/string-params.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/subexpressions.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/tokenizer.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/track-ids.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/utils.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov-report/spec/whitespace-control.js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/coverage/lcov.info" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars.runtime.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/compiler/ast.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/compiler/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/compiler/compiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/compiler/helpers.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/compiler/javascript-compiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/compiler/parser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/compiler/printer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/compiler/visitor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/exception.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/runtime.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/safe-string.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/handlebars/utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/amd/precompiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars.runtime.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/compiler/ast.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/compiler/helpers.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/compiler/printer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/exception.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/runtime.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/safe-string.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/handlebars/utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/cjs/precompiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/handlebars.amd.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/handlebars.amd.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/handlebars.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/handlebars.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/handlebars.runtime.amd.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/handlebars.runtime.amd.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/handlebars.runtime.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/dist/handlebars.runtime.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars.runtime.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/compiler/ast.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/compiler/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/compiler/compiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/compiler/helpers.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/compiler/javascript-compiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/compiler/parser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/compiler/printer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/compiler/visitor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/exception.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/runtime.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/safe-string.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/handlebars/utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/lib/precompiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/.bin/uglifyjs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/bool.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/boolean_double.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/boolean_single.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/default_hash.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/default_singles.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/divide.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/line_count.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/line_count_options.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/line_count_wrap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/nonopt.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/reflect.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/short.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/string.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/usage-options.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/example/xup.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/README.markdown" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/example/center.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/example/meat.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/test/break.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/test/idleness.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/node_modules/wordwrap/test/wrap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/readme.markdown" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/test/_.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/test/_/argv.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/test/_/bin.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/test/parse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/optimist/test/usage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/.npmignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/bin/uglifyjs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/ast.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/compress.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/mozilla-ast.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/output.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/parse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/scope.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/sourcemap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/transform.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/lib/utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/async/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/async/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/async/component.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/async/lib/async.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/async/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/.npmignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/CHANGELOG.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/Makefile.dryice.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/assert-shim.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/mini-require.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/prefix-source-map.jsm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/prefix-utils.jsm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/suffix-browser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/suffix-source-map.jsm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/suffix-utils.jsm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/test-prefix.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/test-suffix.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/array-set.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/base64-vlq.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/base64.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/binary-search.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/mapping-list.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/source-map-consumer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/source-map-generator.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/source-node.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/lib/source-map/util.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/amdefine.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/intercept.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/run-tests.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-api.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-array-set.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-base64-vlq.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-base64.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-binary-search.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-dog-fooding.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-source-map-consumer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-source-map-generator.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-source-node.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/test-util.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/test/source-map/util.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/arrays.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/blocks.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/conditionals.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/dead-code.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/debugger.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/drop-unused.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/issue-105.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/issue-12.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/issue-143.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/issue-22.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/issue-44.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/issue-59.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/labels.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/loops.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/properties.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/sequences.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/switch.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/compress/typeof.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/test/run-tests.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/node_modules/uglify-js/tools/node.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/print-script" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/release-notes.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/handlebars/runtime.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/node-type-emitter.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/node_modules/forEachAsync/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/node_modules/forEachAsync/forEachAsync.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/node_modules/forEachAsync/node_modules/sequence/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/node_modules/forEachAsync/node_modules/sequence/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/node_modules/forEachAsync/node_modules/sequence/sequence.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/node_modules/forEachAsync/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/walk-async-only.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/node_modules/walk/walk.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/hbs/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/views/error.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/views/index.hbs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/views/layout.hbs" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style.css" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AppleCompanyWebsite.iws" />
@@ -31,7 +421,17 @@
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+              <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="head.ejs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/partials/page/head.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -40,48 +440,18 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+            <state vertical-scroll-proportion="-9.935484">
+              <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="www" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/www">
+      <file leaf-file-name="prettify.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/assets/js/prettify.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="error.hbs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/error.hbs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.1290324">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="layout.hbs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/views/layout.hbs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2264151">
-              <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.hbs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/index.hbs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.4193548">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -89,26 +459,6 @@
       </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="users.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/users.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AppleCompanyWebsite.iml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AppleCompanyWebsite.iml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -127,12 +477,23 @@
       <projects_view />
     </option>
   </component>
+  <component name="GulpTreeLayoutManager">
+    <layout place="tools.popup">
+      <scroll-view-position x="0" y="0" />
+    </layout>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/node_modules/hbs/lib/hbs.js" />
         <option value="$PROJECT_DIR$/views/layout.hbs" />
+        <option value="$PROJECT_DIR$/views/partials/page/footer.hbs" />
+        <option value="$PROJECT_DIR$/views/partials/page/head.hbs" />
+        <option value="$PROJECT_DIR$/views/partials/page/header.hbs" />
+        <option value="$PROJECT_DIR$/views/partials/page/jsdefaults.hbs" />
+        <option value="$PROJECT_DIR$/views/index.hbs" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -151,9 +512,9 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="44" />
+    <option name="x" value="49" />
     <option name="y" value="23" />
-    <option name="width" value="974" />
+    <option name="width" value="816" />
     <option name="height" value="1027" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -495,6 +856,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -554,6 +916,38 @@
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stylesheets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppleCompanyWebsite" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppleCompanyWebsite" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppleCompanyWebsite" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppleCompanyWebsite" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -571,9 +965,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -582,14 +975,18 @@
     <property name="recentsLimit" value="5" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="restartRequiresConfirmation" value="true" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/views" />
+      <recent name="$PROJECT_DIR$/public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/views/partials/page" />
       <recent name="$PROJECT_DIR$/views" />
     </key>
   </component>
@@ -786,6 +1183,11 @@
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
+    <configuration default="true" type="MongoRunConfiguration" factoryName="Mongo">
+      <setting name="path" value="" />
+      <setting name="shellParams" value="" />
+      <method />
+    </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
@@ -862,22 +1264,24 @@
       <updated>1437422514721</updated>
       <workItem from="1437422529586" duration="1521000" />
       <workItem from="1437424217268" duration="52000" />
-      <workItem from="1437424304949" duration="778000" />
+      <workItem from="1437424304949" duration="841000" />
+      <workItem from="1437455279679" duration="2982000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2351000" />
+    <option name="totallyTimeSpent" value="5396000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="44" y="23" width="974" height="1027" extended-state="0" />
-    <editor active="true" />
+    <frame x="49" y="23" width="816" height="1027" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32985386" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32985386" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -889,15 +1293,22 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20944558" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32985386" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32985386" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -935,22 +1346,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/error.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -991,22 +1386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/error.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1023,39 +1402,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/www">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AppleCompanyWebsite.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1071,26 +1418,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/error.hbs">
+    <entry file="file://$PROJECT_DIR$/bin/www">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.1290324">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state vertical-scroll-proportion="-2.1530945">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.hbs">
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4193548">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/layout.hbs">
+    <entry file="file://$PROJECT_DIR$/public/assets/js/prettify.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2264151">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.935484">
+          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/partials/page/head.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

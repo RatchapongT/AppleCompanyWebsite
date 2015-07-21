@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/page/head.ejs %>
+</head>
+<header>
+    <% include partials/page/header.ejs %>
+</header>
+<body>
+<div class="container"
+     style="width:970px; text-align:center; margin-top: 50px; margin-bottom: 50px;">
+
+    <img src="/images/FlatDesignIMG/icons/png/Watches.png" height="100px"
+         width="100px"/>
+    <span id="date_time"></span>
+    <script type="text/javascript">window.onload = date_time('date_time');</script>
+</div>
+
+<div class="container" style="width:970px;">
+
+    <div class="login">
+        <div class="login-screen">
+            <div class="login-icon">
+                <img src="/images/FlatDesignIMG/login/icon.png"
+                     alt="Welcome to Mail App"/>
+                <h4>Welcome to
+                    <small>iCoreReport</small>
+                </h4>
+            </div>
+            <form name="login-user-form" id="login-user-form" method="post"
+                  action="/">
+                <div class="login-form">
+                    <div class="form-group">
+                        <input name="username" type="text"
+                               class="form-control login-field"
+                               value='<%= typeof input != 'undefined' ? input.username : '' %>'
+                               placeholder="Enter your username" id="login-name"
+                               required/>
+                        <label class="login-field-icon fui-user"
+                               for="login-name"></label>
+                    </div>
+
+                    <div class="form-group">
+                        <input name="password" type="password"
+                               class="form-control login-field"
+                               value='<%= typeof input != 'undefined' ? input.password : '' %>'
+                               placeholder="Password"
+                               id="login-pass"
+                               required/>
+                        <label class="login-field-icon fui-lock"
+                               for="login-pass"></label>
+                    </div>
+                    <input class="btn btn-primary btn-lg btn-block"
+                           type="submit" value="Log in"/>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /container -->
+</body>
+<footer>
+    <% include partials/page/footer.ejs %>
+</footer>
+</html>
+
+
+
