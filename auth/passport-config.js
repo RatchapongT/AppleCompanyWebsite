@@ -19,7 +19,7 @@ module.exports = function() {
     next(null, user.username);
   });
   
-  passport.deserializeUser(function(email, next) {
+  passport.deserializeUser(function(username, next) {
     userService.findUser(username, function(err, user) {
       next(err, user);
     });
