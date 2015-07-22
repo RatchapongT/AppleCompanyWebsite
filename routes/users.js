@@ -5,7 +5,10 @@ var userService = require('../services/user-service');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  var vm = {
+    title: 'Homepage'
+  };
+  res.render('homepage', vm);
 });
 
 router.get('/create', function(req, res, next) {
@@ -33,16 +36,7 @@ router.post('/create', function(req, res, next) {
   });
 });
 
-router.post('/login',
-    passport.authenticate('local', {
-      failureRedirect: '/',
-      successRedirect: '/homepage',
-      failureFlash: 'Invalid credentials'
-    }));
 
-router.get('/logout', function(req, res, next) {
-  req.logout();
-  res.redirect('/');
-});
+
 
 module.exports = router;
