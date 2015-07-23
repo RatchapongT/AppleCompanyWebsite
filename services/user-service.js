@@ -2,7 +2,7 @@ var User = require('../models/user').User;
 var bcrypt = require('bcrypt');
 
 exports.addUser = function (user, next) {
-    bcrypt.hash(user.password, 10, function(err, hash) {
+    bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) {
             return next(err);
         }
@@ -12,7 +12,7 @@ exports.addUser = function (user, next) {
             password: user.password
         });
 
-        newUser.save(function(err) {
+        newUser.save(function (err) {
             if (err) {
                 return next(err);
             }
@@ -28,3 +28,4 @@ exports.findUser = function (username, next) {
         next(err, user);
     });
 };
+

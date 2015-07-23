@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/page/head.ejs %>
+</head>
+<header>
+    <% include partials/page/header.ejs %>
+</header>
+
+Table
+
+
+<table>
+    <% for(var i=0; i < data.length; i++) { %>
+    <tr>
+        <td><%= data[i].username %></td>
+        <td><a href="/users/reset" class="button">Reset</a></td>
+        <td><a href="/users/delete/<%= data[i].username %>" class="button">Delete</a></td>
+    </tr>
+    <% } %>
+</table>

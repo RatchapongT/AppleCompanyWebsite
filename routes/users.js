@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var userService = require('../services/user-service');
+var User = require('../models/user').User;
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -36,7 +38,34 @@ router.post('/create', function(req, res, next) {
   });
 });
 
+router.get('/manage', function(req, res, next) {
+  User.find({}, 'username', function(err, users) {
+    if (err) throw err;
 
+    res.render('manage', {data: users});
+  });
+
+});
+
+router.get('/manage', function(req, res, next) {
+  User.find({}, 'username', function(err, users) {
+    if (err) throw err;
+
+    res.render('manage', {data: users});
+  });
+
+});
+
+router.get('/delete/:username', function(req, res) {
+  User.remove({
+    username: req.params.username
+  }, function(err, user) {
+    if (err)
+      res.send(err);
+
+    res.json({ message: 'Successfully deleted' });
+  });
+});
 
 
 module.exports = router;
