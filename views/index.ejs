@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+<% include partials/page/jsdefaults.ejs %>
 <head>
     <% include partials/page/head.ejs %>
 </head>
 <header>
-    <% include partials/page/header.ejs %>
+    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="/">iCoreReport</a>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </nav>
 </header>
 <body>
 <div class="container"
      style="width:970px; text-align:center; margin-top: 50px; margin-bottom: 50px;">
-
     <img src="/images/FlatDesignIMG/icons/png/Watches.png" height="100px"
          width="100px"/>
     <span id="date_time"></span>

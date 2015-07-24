@@ -30,7 +30,7 @@ exports.findUser = function (username, next) {
 };
 
 exports.getUserList = function (req, res) {
-    User.find({}, 'username', function ( err, object){
+    User.find({}, 'username created', function ( err, object){
         if (err) throw err;
         res(err, object);
     });
