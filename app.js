@@ -9,14 +9,17 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var expressSession = require('express-session');
+var connectMongo = require('connect-mongo');
 var flash = require('connect-flash');
 var config = require('./config');
 
 
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
 var restrict = require('./auth/restrict');
+
+var MongoStore = connectMongo(expressSession);
 var passportConfig = require('./auth/passport-config');
 passportConfig();
 
@@ -36,11 +39,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use(expressSession(
     {
       secret: 'getting good money',
       saveUninitialized: false,
-      resave: false
+      resave: false,
+      store: new MongoStore({
+        mongooseConnection: mongoose.connection
+      })
     }
 ));
 

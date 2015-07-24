@@ -8,8 +8,10 @@ var User = require('../models/user').User;
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     var vm = {
-        title: 'Homepage'
+        title: 'Homepage',
+        currentUser: req.session.passport.user
     };
+
     res.render('homepage', vm);
 });
 
