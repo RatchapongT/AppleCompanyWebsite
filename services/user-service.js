@@ -29,3 +29,23 @@ exports.findUser = function (username, next) {
     });
 };
 
+exports.getUserList = function (req, res) {
+    User.find({}, 'username', function ( err, object){
+        if (err) throw err;
+        res(err, object);
+    });
+};
+
+
+exports.deleteUser = function (req, res, next) {
+    console.log(req.params);
+    User.findById( req.params.id, function ( err, object ){
+
+        if( err ) return next( err );
+        object.remove( function (err){
+            res(err);
+        });
+    });
+};
+
+

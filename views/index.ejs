@@ -56,14 +56,23 @@
                 </div>
 
             </form>
+            <% if (typeof error != 'undefined' & error != "") { %>
+
+            <div align="center" style="margin:25px auto; width:150px;">
+
+                <div class="form-group has-error">
+                    <input type="text" value=""
+                           placeholder="<%= error %>" class="form-control"/>
+                </div>
+
+            </div>
+
+            <% } %>
         </div>
     </div>
 </div>
 <!-- /container -->
-<% if (typeof error != 'undefined') { %>
-<div style="color : red;"> <%= error %></div>
-<% } %>
-</body>
+
 <footer>
     <% include partials/page/footer.ejs %>
 </footer>

@@ -9,11 +9,13 @@ var userSchema = new Schema({
 });
 
 userSchema.path('username').validate(function(value, next) {
+
   userService.findUser(value, function(err, user) {
     if (err) {
       console.log(err);
       return next(false);
     }
+    console.log(!user);
     next(!user);
   });
 }, 'That username is already in use');
