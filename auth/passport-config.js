@@ -1,10 +1,10 @@
 module.exports = function () {
     var passport = require('passport');
     var passportLocal = require('passport-local');
-    var userService = require('../services/user-service');
+    var databaseService = require('../services/database-service');
     var bcrypt = require('bcrypt');
     passport.use(new passportLocal.Strategy({usernameField: 'username'}, function (username, password, next) {
-        userService.findUser(username, function (err, user) {
+        databaseService.findUser(username, function (err, user) {
             if (err) {
                 return next(err);
             }
@@ -30,7 +30,7 @@ module.exports = function () {
     });
 
     passport.deserializeUser(function (username, next) {
-        userService.findUser(username, function (err, user) {
+        databaseService.findUser(username, function (err, user) {
             next(err, user);
         });
     });

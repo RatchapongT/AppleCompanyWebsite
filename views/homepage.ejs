@@ -7,10 +7,27 @@
     <% include partials/page/header.ejs %>
 </header>
 
-You are now logged in as <%=currentUser%>,
-<br></br>
-<a href="/users/manage" class="button">User Management</a>
-<br></br>
-<a href="/users/assign" class="button">Assign Customer To Worker</a>
-<br></br>
-<a href="/users/edit" class="button">Edit Customer Info</a>
+<center>
+    You are now logged in as <%= currentUser %>,
+    <br>
+
+    <h4> USER </h4>
+    <a href="/users/manage" class="button">Add User/ Delete User</a>
+    <br>
+    <a href="/users/profiles" class="button">Edit User Profiles</a>
+    <h4> CUSTOMER </h4>
+
+    <h4> WORKER </h4>
+
+    <br></br>
+    <a href="/users/customer" class="button">Assign Customer To Worker</a>
+    <br></br>
+    <a href="/users/edit" class="button">Edit Customer Info</a>
+    <br></br>
+    <a href="/users/customer" class="button">Assign Customer To Worker</a>
+    <br></br>
+    <a href="/users/addrecord" class="button">Add Record</a>
+
+    <br></br>
+    <a href="/users/createcustomer" class="button">Create Customer</a>
+</center>

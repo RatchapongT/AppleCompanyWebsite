@@ -17,6 +17,7 @@ router.get('/', function (req, res, next) {
 
 });
 
+
 router.post('/login',
     function(req, res, next) {
         req.session.cookie.maxAge = config.cookieMaxAge;

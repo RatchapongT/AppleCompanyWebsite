@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+
+<div class="container">
+    <h2>User Management</h2>
+
+    <form method="post" action="/users/create">
+        <div align="center">
+            <div class="login-form" style="width:350px; margin-top: 30px; ">
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Username" name="username" required/>
+                    <label class="login-field-icon fui-user"></label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Password" name="password" required/>
+                    <label class="login-field-icon fui-lock"></label>
+                </div>
+
+                <div style="text-align:left; margin-left: 100px;">
+
+                    <label class="radio">
+                        <input type="radio" name="accountType"
+                               id="optionsRadios1" value="Worker"
+                               data-toggle="radio" checked="">
+                        Worker
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="accountType"
+                               id="optionsRadios2" value="Admin"
+                               data-toggle="radio">
+                        Admin
+                    </label>
+                </div>
+                <strong>Optional</strong>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Nickname" name="nickname"/>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Phone" name="phone"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control login-field"
+                           placeholder="Line ID" name="lineID"/>
+                </div>
+                <input class="btn btn-primary btn-lg btn-block"
+                       type="submit" value="Add User"/>
+            </div>
+
+        </div>
+    </form>
+
+    <% if (typeof error != 'undefined' & error != "") { %>
+
+    <div align="center" style="margin:25px auto; width:200px;">
+        <% if (error == "Successfully Added") { %>
+        <div class="form-group has-success">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= error %>" class="form-control"/>
+        </div>
+        <% } else { %>
+        <div class="form-group has-error">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= error %>" class="form-control"/>
+        </div>
+        <% } %>
+
+    </div>
+
+    <% } %>
+
+    <br></br>
+
+    <table id="sort" class="table">
+        <thead>
+        <tr>
+            <th style="text-align:center" class="sort-default">Name</th>
+            <th style="text-align:center" class="sort-default">Account Type</th>
+            <th style="text-align:center" class="sort-default">Created On</th>
+
+            <th style="text-align:center" class="no-sort">Reset Password</th>
+            <th style="text-align:center" class="no-sort">Delete User</th>
+        </tr>
+        </thead>
+        <% for(var i = 0; i < data.length; i++) { %>
+        <tr>
+            <td align="center"><%= data[i].username %></td>
+            <td align="center"><%= data[i].accountType %></td>
+            <% date = new Date(data[i].created) %>
+            <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
+                /<%= date.getFullYear() %></td>
+            <td align="center"><a href="/users/reset" class="button">Reset</a>
+            </td>
+            <td align="center"><a href="/users/delete/<%= data[i].id %>"
+                                  class="button"><span class="fui-cross"
+                                                       style="color:#f93c3c"></span></a>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+
+
+</div>
+
+<% include ../partials/page/jsdefaults.ejs %>
+<script>
+    new Tablesort(document.getElementById('sort'));
+</script>
+
+<footer>
+    <% include ../partials/page/footer.ejs %>
+</footer>
+</html>
