@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+<% include ../partials/page/jsdefaults.ejs %>
+
+<div class="container">
+    <h2>Customer's Bank</h2>
+
+    <div align="center">
+        <form name="search_customer" method="post" action="/customers/bank"
+              id="search_customer">
+
+            <select name="customerID"
+                    class="form-control select select-info"
+                    data-toggle="select" form="search_customer"
+                    onchange='this.form.submit()'>
+                <% for(var i = 0; i < data.length; i++) { %>
+
+                <% if(data[i].customerID === searchCustomer.customerID) { %>
+
+                <option value=<%= data[i].customerID %> selected> <%= data[i].customerID %>
+                    (<%= data[i].nickname %>)
+                </option>
+                <% } else { %>
+                <option value=<%= data[i].customerID %>><%= data[i].customerID %>
+                    (<%= data[i].nickname %>)
+                </option>
+                <% } %>
+
+                <% } %>
+
+            </select>
+
+        </form>
+    </div>
+
+
+    <form method="post" action="/customers/addbank" id="bank_form">
+        <div align="center">
+            <div class="login-form" style="width:350px; margin-top: 30px; ">
+
+                <input type="hidden" value="<%= searchCustomer.id %>"
+                       name="id"/>
+                <input type="hidden" value="<%= searchCustomer.customerID %>"
+                       name="customerID"/>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Bank Number" name="bankNumber"
+                           required/>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Bank Name" name="bankName"
+                           required/>
+
+                </div>
+
+
+
+                <div style="margin-bottom: 30px ">
+                    Bank Type
+                    <select name="bankType"
+                            class="form-control select select-info"
+                            data-toggle="select" form="bank_form"
+                            >
+                        <option value="BBL"> BBL</option>
+                        <option value="TFB"> TFB</option>
+                        <option value="SCB"> SCB</option>
+
+
+                    </select>
+                </div>
+
+                <input class="btn btn-primary btn-lg btn-block"
+                       type="submit" value="Add Bank"/>
+            </div>
+
+        </div>
+    </form>
+
+    <% if (typeof error != 'undefined' & error != "") { %>
+
+    <div align="center" style="margin:25px auto; width:200px;">
+        <div class="form-group has-success">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= error %>" class="form-control"/>
+        </div>
+    </div>
+    <% } %>
+
+    <table id="sort" class="table" style="margin-top: 50px">
+        <thead>
+        <tr>
+            <th style="text-align:center" class="sort-default">Bank Number</th>
+            <th style="text-align:center" class="sort-default">Bank Name</th>
+            <th style="text-align:center" class="sort-default">Bank Type</th>
+            <th style="text-align:center" class="no-sort">Delete Bank</th>
+        </tr>
+        </thead>
+        <% for(var i = 0; i < searchCustomer.bank.length; i++) { %>
+        <tr>
+            <td align="center"><%= searchCustomer.bank[i].bankNumber %></td>
+            <td align="center"><%= searchCustomer.bank[i].bankName %></td>
+            <td align="center"><%= searchCustomer.bank[i].bankType %></td>
+
+            <td align="center"><a
+                        href="/customers/bank/delete/<%= searchCustomer.id %>/<%= searchCustomer.bank[i].id %>"
+                        class="button"><span class="fui-cross"
+                                             style="color:#f93c3c"></span></a>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+
+</div>
+
+<% include ../partials/page/jsdefaults.ejs %>
+<script>
+    new Tablesort(document.getElementById('sort'));
+</script>
+
+<footer>
+    <% include ../partials/page/footer.ejs %>
+</footer>

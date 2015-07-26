@@ -40,6 +40,8 @@ var customerSchema = new Schema({
     phone: String,
     percent: Number,
     paymentCondition: String,
+    malay: {type: Boolean, default: false},
+    thai:  {type: Boolean, default: false},
     bank: [bankSchema],
     created: {type: Date, default: Date.now}
 });
@@ -59,8 +61,9 @@ customerSchema.path('customerID').validate(function (value, next) {
 
 var User = mongoose.model('User', userSchema);
 var Customer = mongoose.model('Customer', customerSchema);
-
+var Bank = mongoose.model('Bank', bankSchema);
 module.exports = {
     User: User,
-    Customer: Customer
+    Customer: Customer,
+    Bank: Bank
 };

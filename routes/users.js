@@ -109,6 +109,38 @@ router.post('/profiles', function (req, res) {
 });
 
 
+router.get('/profiles/:id', function (req, res) {
+    databaseService.getUserList(req, function (err, object) {
+        if (err) {
+            console.log(err);
+            return res.render('error', {
+                title: 'Error Page',
+                message: 'Something went wrong',
+                error: err
+            });
+        }
+        User.findOne({_id: req.params.id}, 'username created accountType nickname phone lineID', function (err, searchUser) {
+            if (err) {
+                console.log(err);
+                return res.render('error', {
+                    title: 'Error Page',
+                    message: 'Something went wrong',
+                    error: err
+                });
+            }
+            return res.render('users/profiles', {
+                title: 'User Management',
+                data: object,
+                currentUser: req.session.passport.user,
+                error: req.flash('error'),
+                searchUser: searchUser
+            });
+        });
+
+    });
+});
+
+
 router.post('/edit', function (req, res) {
 
     User.findByIdAndUpdate(req.body.id, {
@@ -119,8 +151,8 @@ router.post('/edit', function (req, res) {
         }
     }, function (err, object) {
         if (err) return handleError(err);
-        req.flash('error', "Successfully Edit " + object.username);
-        return res.redirect('/users/profiles');
+        req.flash('error', "Successfully edit " + object.username);
+        return res.redirect('/users/profiles/' + object.id);
     });
 });
 

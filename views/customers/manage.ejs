@@ -11,35 +11,30 @@
 <div class="container">
     <h2>Customer Management</h2>
 
-    <form method="post" action="/customers/create">
+    <form method="post" action="/customers/create" id="customer_form">
         <div align="center">
             <div class="login-form" style="width:350px; margin-top: 30px; ">
 
                 <div class="form-group">
                     <input type="text" class="form-control login-field" value=""
-                           placeholder="Username" name="username" required/>
+                           placeholder="Customer ID" name="customerID"
+                           required/>
                     <label class="login-field-icon fui-user"></label>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value=""
-                           placeholder="Password" name="password" required/>
-                    <label class="login-field-icon fui-lock"></label>
-                </div>
 
                 <div style="text-align:left; margin-left: 100px;">
 
-                    <label class="radio">
-                        <input type="radio" name="accountType"
-                               id="optionsRadios1" value="Worker"
-                               data-toggle="radio" checked="">
-                        Worker
+                    <label class="checkbox" for="checkbox1">
+                        <input name="malay" type="checkbox" value=1
+                               id="checkbox1"
+                               data-toggle="checkbox">
+                        Malay
                     </label>
-                    <label class="radio">
-                        <input type="radio" name="accountType"
-                               id="optionsRadios2" value="Admin"
-                               data-toggle="radio">
-                        Admin
+                    <label class="checkbox" for="checkbox2">
+                        <input name="thai" type="checkbox"
+                               value=1  id="checkbox2" data-toggle="checkbox">
+                        Thai
                     </label>
                 </div>
                 <strong>Optional</strong>
@@ -58,6 +53,29 @@
                     <input type="text" class="form-control login-field"
                            placeholder="Line ID" name="lineID"/>
                 </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Percent" name="percent"/>
+
+                </div>
+
+                <div style="margin-bottom: 30px ">
+                    Payment Condition
+                    <select name="paymentCondition"
+                            class="form-control select select-info"
+                            data-toggle="select" form="customer_form"
+                            >
+                        <option value="Type 1"> Type 1</option>
+                        <option value="Type 2"> Type 2</option>
+                        <option value="Type 3"> Type 3</option>
+                        <option value="Type 4"> Type 4</option>
+                        <option value="No Type" selected> No Type</option>
+
+
+                    </select>
+                </div>
+
                 <input class="btn btn-primary btn-lg btn-block"
                        type="submit" value="Add User"/>
             </div>
@@ -89,24 +107,26 @@
     <table id="sort" class="table">
         <thead>
         <tr>
-            <th style="text-align:center" class="sort-default">Name</th>
-            <th style="text-align:center" class="sort-default">Account Type</th>
+            <th style="text-align:center" class="sort-default">Customer ID</th>
+            <th style="text-align:center" class="sort-default">Condition</th>
             <th style="text-align:center" class="sort-default">Created On</th>
-
-            <th style="text-align:center" class="no-sort">Reset Password</th>
-            <th style="text-align:center" class="no-sort">Delete User</th>
+            <th style="text-align:center" class="sort-default">Percent</th>
+            <th style="text-align:center" class="sort-default">Malay</th>
+            <th style="text-align:center" class="sort-default">Thai</th>
+            <th style="text-align:center" class="no-sort">Delete Customer</th>
         </tr>
         </thead>
         <% for(var i = 0; i < data.length; i++) { %>
         <tr>
-            <td align="center"><%= data[i].username %></td>
-            <td align="center"><%= data[i].accountType %></td>
+            <td align="center"><%= data[i].customerID %></td>
+            <td align="center"><%= data[i].paymentCondition %></td>
             <% date = new Date(data[i].created) %>
             <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
                 /<%= date.getFullYear() %></td>
-            <td align="center"><a href="/users/reset" class="button">Reset</a>
-            </td>
-            <td align="center"><a href="/users/delete/<%= data[i].id %>"
+            <td align="center"><%= data[i].percent %> %</td>
+            <td align="center"><%= data[i].malay %></td>
+            <td align="center"><%= data[i].thai %></td>
+            <td align="center"><a href="/customers/delete/<%= data[i].id %>"
                                   class="button"><span class="fui-cross"
                                                        style="color:#f93c3c"></span></a>
             </td>
