@@ -77,7 +77,7 @@ router.get('/profiles', function (req, res) {
                 error: err
             });
         }
-        Customer.findOne({}, 'customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+        Customer.findOne({}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -108,7 +108,7 @@ router.get('/profiles/:id', function (req, res) {
                 error: err
             });
         }
-        Customer.findOne({_id : req.params.id}, 'customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+        Customer.findOne({_id : req.params.id}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -141,7 +141,7 @@ router.post('/profiles', function (req, res) {
                 error: err
             });
         }
-        Customer.findOne({customerID: req.body.customerID}, 'customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+        Customer.findOne({customerID: req.body.customerID}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -256,7 +256,7 @@ router.post('/bank', function (req, res) {
                 error: err
             });
         }
-        Customer.findOne({customerID: req.body.customerID}, 'customerID bank', function (err, searchCustomer) {
+        Customer.findOne({_id: req.body.id}, 'customerID bank', function (err, searchCustomer) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -279,8 +279,9 @@ router.post('/bank', function (req, res) {
 
 
 router.post('/addbank', function (req, res) {
+
     Customer.update(
-        req.id,
+        {_id: req.body.id},
         {
             $push: {
                 "bank": {
@@ -292,7 +293,7 @@ router.post('/addbank', function (req, res) {
         },
         function (err, model) {
             if (err) return next(err);
-            req.flash('error', "Successfully Added Bank");
+            req.flash('error', "Successfully Added Bank" + req.body.customerID);
             return res.redirect('/customers/bank/' + req.body.id);
         });
 
@@ -300,7 +301,7 @@ router.post('/addbank', function (req, res) {
 
 router.get('/bank/delete/:customerID/:bankId', function (req, res) {
     Customer.update(
-        req.params.customerID,
+        {_id: req.params.customerID},
         {
             $pull: {
                 "bank": {
@@ -313,6 +314,67 @@ router.get('/bank/delete/:customerID/:bankId', function (req, res) {
             req.flash('error', "Bank Deleted!");
             return res.redirect('/customers/bank/' + req.params.customerID);
         });
+
+});
+
+router.post('/bank/edit/:customerID/:bankId', function (req, res) {
+
+    //Customer.update(
+    //    req.params.customerID,
+    //    {
+    //        $set: {
+    //            "bank": {
+    //                "bankNumber" : req.params.bankNumber,
+    //                "bankName" : req.params.bankName,
+    //                "bankType" : req.params.bankType
+    //            }
+    //        }
+    //    },
+    //    function (err, model) {
+    //        if (err) return next(err);
+    //        req.flash('error', "Bank Updated!");
+    //        return res.redirect('/customers/profiles/' + req.params.customerID);
+    //    });
+
+    models.User.findOneAndUdate(
+        { "_id": user._id, "files._id": filedata._id },
+        {
+            "$set": {
+                "name": filedata.name,
+                "size": filedata.size,
+                "type": filedata.type
+            }
+        },
+        function(err,user) {
+
+            // Whatever in here, but the update is already done.
+        }
+    );
+
+    Customer.findOne({_id: req.params.customerID}, function (err, customer) {
+        if (err) {
+            console.log(err);
+            return res.render('error', {
+                title: 'Error Page',
+                message: 'Something went wrong',
+                error: err
+            });
+        }
+        customer.update({'bank._id': req.params.bankId},
+            {
+                $set: {
+                    "bank": {
+                        "bankType" : req.body.bankType
+                    }
+                }
+            },
+            function (err, model) {
+                console.log(err);
+                if (err) return next(err);
+
+            });
+
+    });
 
 });
 

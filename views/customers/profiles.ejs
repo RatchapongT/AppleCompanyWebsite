@@ -41,10 +41,11 @@
     </div>
 
 
-    <form method="post" action="/customers/edit" id = "customer_form">
+    <form method="post" action="/customers/edit" id="customer_form">
         <div align="center">
             <input type="hidden" value="<%= searchCustomer.id %>" name="id"/>
-            <input type="hidden" value="<%= searchCustomer.customerID %>" name="customerID"/>
+            <input type="hidden" value="<%= searchCustomer.customerID %>"
+                   name="customerID"/>
 
             <div class="login-form" style="width:350px; margin-top: 30px; ">
                 <div style="text-align:left; margin-left: 100px;">
@@ -111,16 +112,13 @@
                         element.value = "<%=searchCustomer.paymentCondition%>";
                     </script>
                 </div>
-
-
                 <input class="btn btn-primary btn-lg btn-block"
                        type="submit" value="Save Edit"/>
             </div>
+
+
         </div>
     </form>
-
-
-
 
     <% if (typeof error != 'undefined' & error != "") { %>
 
@@ -132,4 +130,51 @@
     </div>
     <% } %>
 
+
+    <div align="center">
+        <% for(var i = 0; i < searchCustomer.bank.length; i++) { %>
+        <form method="post" action="/customers/bank/edit/<%=searchCustomer.id%>/<%=searchCustomer.bank[i].id%>" id="customer_form_<%=i%>">
+        <div class="login-form" style="width:550px; margin-top: 30px; ">
+            <strong>Bank <%= i + 1%></strong>
+
+            <input type="hidden" value="<%= searchCustomer.id %>" name="id"/>
+
+            <div class="form-group">
+                Bank Number<input type="text" class="form-control login-field"
+                                  placeholder="Bank Number" name="bankNumber"
+                                  value="<%= searchCustomer.bank[i].bankNumber %>"/>
+            </div>
+            <div class="form-group">
+                Bank Name<input type="text" class="form-control login-field"
+                                placeholder="Bank Name" name="bankName"
+                                value="<%= searchCustomer.bank[i].bankName %>"/>
+            </div>
+
+            <div style="margin-bottom: 30px ">
+                BankType
+                <br>
+                <select name="bankType"
+                        class="form-control select select-info"
+                        data-toggle="select" form="customer_form_<%=i%>"
+                        id='selectBankType'
+                        >
+                    <option value="BBL"> BBL</option>
+                    <option value="TFB"> TFB</option>
+                    <option value="SCB"> SCB</option>
+
+
+                </select>
+                <script>
+                    var element = document.getElementById('selectBankType');
+                    element.value = "<%=searchCustomer.bank[i].bankType%>";
+                </script>
+            </div>
+            <input class="btn btn-primary btn-lg btn-block"
+                   type="submit" value="Save Edit"/>
+        </div>
+        <% } %>
+
+
+
+    </div>
 </div>

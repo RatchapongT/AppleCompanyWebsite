@@ -11,24 +11,24 @@
 
 <div class="container">
     <h2>Customer's Bank</h2>
-
     <div align="center">
         <form name="search_customer" method="post" action="/customers/bank"
               id="search_customer">
 
-            <select name="customerID"
+
+            <select name="id"
                     class="form-control select select-info"
                     data-toggle="select" form="search_customer"
                     onchange='this.form.submit()'>
                 <% for(var i = 0; i < data.length; i++) { %>
 
-                <% if(data[i].customerID === searchCustomer.customerID) { %>
+                <% if(data[i].id === searchCustomer.id) { %>
 
-                <option value=<%= data[i].customerID %> selected> <%= data[i].customerID %>
+                <option value=<%= data[i].id %> selected> <%= data[i].customerID %>
                     (<%= data[i].nickname %>)
                 </option>
                 <% } else { %>
-                <option value=<%= data[i].customerID %>><%= data[i].customerID %>
+                <option value=<%= data[i].id %>><%= data[i].customerID %>
                     (<%= data[i].nickname %>)
                 </option>
                 <% } %>
@@ -41,10 +41,12 @@
     </div>
 
 
+
+
     <form method="post" action="/customers/addbank" id="bank_form">
         <div align="center">
             <div class="login-form" style="width:350px; margin-top: 30px; ">
-
+                <%= searchCustomer.id %>
                 <input type="hidden" value="<%= searchCustomer.id %>"
                        name="id"/>
                 <input type="hidden" value="<%= searchCustomer.customerID %>"
