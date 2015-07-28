@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+
+
+<div class="container">
+    <h2>Assign Customer</h2>
+
+    <div align="center">
+        <div class="login-form"
+             style="width:350px; margin-top: 30px; margin-bottom: 30px">
+            <strong>Worker</strong>
+
+            <form method="post" action="/users/assign" id="assign_form">
+                <div class="form-group">
+
+                    <select class="form-control select select-info"
+                            data-toggle="select" form="assign_form"
+                            name="username">
+                        <% for(var i = 0; i < dataUser.length; i++) { %>
+                        <% if(dataUser[i].username === searchUser.username) { %>
+
+                        <option selected value="<%= dataUser[i].username %>">
+                            <%= dataUser[i].username %>
+                            (<%= dataUser[i].nickname %>
+                            )
+                        </option>
+                        <% } else { %>
+
+                        <option value="<%= dataUser[i].username %>">
+                            <%= dataUser[i].username %>
+                            (<%= dataUser[i].nickname %>
+                            )
+                        </option>
+                        <% } %>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <strong>Customer</strong>
+                    <select class="form-control select select-info"
+                            data-toggle="select" form="assign_form"
+                            name="customerID">
+                        <% for(var i = 0; i < dataCustomer.length; i++) { %>
+                        <% if(i == 1) { %>
+                        <option selected
+                                value="<%= dataCustomer[i].customerID %>">
+                            <%= dataCustomer[i].customerID %>
+                            (<%= dataCustomer[i].nickname %>)
+                        </option>
+                        <% } else { %>
+                        <option value="<%= dataCustomer[i].customerID %>">
+                            <%= dataCustomer[i].customerID %>
+                            (<%= dataCustomer[i].nickname %>
+                            )
+                        </option>
+                        <% } %>
+                        <% } %>
+                    </select>
+                </div>
+
+                <input style="width:200px"
+                       class="btn btn-primary btn-lg btn-block"
+                       type="submit" value="Assign"/>
+            </form>
+        </div>
+
+
+    </div>
+    <div align="center" style="margin:25px auto; width:280px;">
+        <% if (typeof error != 'undefined' & error != "") { %>
+        <div class="form-group has-success">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= error %>" class="form-control"/>
+        </div>
+        <% } %>
+    </div>
+
+
+    <table id="sort" class="table">
+        <thead>
+        <tr>
+            <th style="text-align:center" class="sort-default">Worker ID</th>
+            <th style="text-align:center" class="sort-default">Customer ID</th>
+            <th style="text-align:center" class="sort-default">Created On</th>
+            <th style="text-align:center" class="no-sort">Delete</th>
+        </tr>
+        </thead>
+        <% for(var i = 0; i < dataRelationship.length; i++) { %>
+        <tr>
+            <td align="center"><%= dataRelationship[i].username %></td>
+            <td align="center"><%= dataRelationship[i].customerID %></td>
+            <% date = new Date(dataRelationship[i].created) %>
+            <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
+                /<%= date.getFullYear() %></td>
+            </td>
+            <td align="center"><a
+                        href="/users/delete_relationship/<%= dataRelationship[i].id %>/<%= dataRelationship[i].customerID %>/<%= dataRelationship[i].username %>"
+                        class="button"><span class="fui-cross"
+                                             style="color:#f93c3c"></span></a>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+</div>
+
+<% include ../partials/page/jsdefaults.ejs %>
+<script>
+    new Tablesort(document.getElementById('sort'));
+</script>
+
+<footer>
+    <% include ../partials/page/footer.ejs %>
+</footer>
+</body>
+</html>

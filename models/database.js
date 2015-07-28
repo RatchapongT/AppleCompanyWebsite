@@ -13,6 +13,13 @@ var userSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
+var relationshipSchema = new Schema({
+    customerID: String,
+    username: String,
+    created: {type: Date, default: Date.now}
+});
+
+
 userSchema.path('username').validate(function (value, next) {
 
     databaseService.findUser(value, function (err, user) {
@@ -34,6 +41,7 @@ var bankSchema = new Schema({
 
 var customerSchema = new Schema({
     customerID: String,
+    haveOwner: {type: Boolean, default: false},
     responsibleWorker: String,
     nickname: String,
     lineID: String,
@@ -41,9 +49,10 @@ var customerSchema = new Schema({
     percent: Number,
     paymentCondition: String,
     malay: {type: Boolean, default: false},
-    thai:  {type: Boolean, default: false},
+    thai: {type: Boolean, default: false},
     bank: [bankSchema],
     created: {type: Date, default: Date.now}
+
 });
 
 
@@ -62,8 +71,10 @@ customerSchema.path('customerID').validate(function (value, next) {
 var User = mongoose.model('User', userSchema);
 var Customer = mongoose.model('Customer', customerSchema);
 var Bank = mongoose.model('Bank', bankSchema);
+var Relationship = mongoose.model('Relationship', relationshipSchema);
 module.exports = {
     User: User,
     Customer: Customer,
-    Bank: Bank
+    Bank: Bank,
+    Relationship: Relationship
 };

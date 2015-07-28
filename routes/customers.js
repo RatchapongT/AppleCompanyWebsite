@@ -9,7 +9,7 @@ var Bank = require('../models/database').Bank;
 router.get('/', function (req, res, next) {
     res.render('homepage', {
         title: 'Homepage',
-        currentUser: req.session.passport.user
+        currentUser: req.session.passport.user.username
     });
 });
 
@@ -18,66 +18,62 @@ module.exports = router;
 
 
 router.get('/manage', function (req, res) {
-    databaseService.getCustomerList(req, function (err, object) {
-        if (err) {
-            console.log(err);
-            return res.render('error', {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.getCustomerList(req, function (err, object) {
+            if (err) {
+                console.log(err);
+                return res.render('error', {
+                    title: 'Error Page',
+                    message: 'Something went wrong',
+                    error: err
+                });
+            }
+            return res.render('customers/manage', {
+                title: 'Customer Management',
+                data: object,
+                error: req.flash('error')
             });
-        }
-        return res.render('customers/manage', {
-            title: 'Customer Management',
-            data: object,
-            error: req.flash('error')
         });
-    });
+    }
 });
-
 
 
 router.post('/create', function (req, res) {
-    databaseService.addCustomer(req.body, function (err) {
-        console.log(req.body);
-        if (err) {
-            console.log(err);
-            req.flash('error', "Customer ID Already Exists");
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.addCustomer(req.body, function (err) {
+            if (err) {
+                console.log(err);
+                req.flash('error', "Customer ID Already Exists");
+                return res.redirect('/customers/manage');
+            }
+            req.flash('error', "Successfully Added");
             return res.redirect('/customers/manage');
-        }
-        req.flash('error', "Successfully Added");
-        return res.redirect('/customers/manage');
-    });
+        });
+    }
 });
 
 router.get('/delete/:id', function (req, res) {
-    databaseService.deleteCustomer(req, function (err) {
-        if (err) {
-            console.log(err);
-            var vm = {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
-            };
-            return res.render('error', vm);
-        }
-        return res.redirect('/customers/manage');
-    });
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.deleteCustomer(req, function (err) {
+            if (err) {
+                console.log(err);
+                var vm = {
+                    title: 'Error Page',
+                    message: 'Something went wrong',
+                    error: err
+                };
+                return res.render('error', vm);
+            }
+            return res.redirect('/customers/manage');
+        });
+    }
 
 });
 
 
 router.get('/profiles', function (req, res) {
-    databaseService.getCustomerList(req, function (err, object) {
-        if (err) {
-            console.log(err);
-            return res.render('error', {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
-            });
-        }
-        Customer.findOne({}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.getCustomerList(req, function (err, object) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -86,29 +82,31 @@ router.get('/profiles', function (req, res) {
                     error: err
                 });
             }
-            return res.render('customers/profiles', {
-                title: 'Customer Management',
-                data: object,
-                currentUser: req.session.passport.user,
-                error: req.flash('error'),
-                searchCustomer: searchCustomer
+            Customer.findOne({}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+                if (err) {
+                    console.log(err);
+                    return res.render('error', {
+                        title: 'Error Page',
+                        message: 'Something went wrong',
+                        error: err
+                    });
+                }
+                return res.render('customers/profiles', {
+                    title: 'Customer Management',
+                    data: object,
+                    currentUser: req.session.passport.user.username,
+                    error: req.flash('error'),
+                    searchCustomer: searchCustomer
+                });
             });
-        });
 
-    });
+        });
+    }
 });
 
 router.get('/profiles/:id', function (req, res) {
-    databaseService.getCustomerList(req, function (err, object) {
-        if (err) {
-            console.log(err);
-            return res.render('error', {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
-            });
-        }
-        Customer.findOne({_id : req.params.id}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.getCustomerList(req, function (err, object) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -117,31 +115,32 @@ router.get('/profiles/:id', function (req, res) {
                     error: err
                 });
             }
-            return res.render('customers/profiles', {
-                title: 'Customer Management',
-                data: object,
-                currentUser: req.session.passport.user,
-                error: req.flash('error'),
-                searchCustomer: searchCustomer
+            Customer.findOne({_id: req.params.id}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+                if (err) {
+                    console.log(err);
+                    return res.render('error', {
+                        title: 'Error Page',
+                        message: 'Something went wrong',
+                        error: err
+                    });
+                }
+                return res.render('customers/profiles', {
+                    title: 'Customer Management',
+                    data: object,
+                    currentUser: req.session.passport.user.username,
+                    error: req.flash('error'),
+                    searchCustomer: searchCustomer
+                });
             });
-        });
 
-    });
+        });
+    }
 });
 
 
 router.post('/profiles', function (req, res) {
-    console.log(req.body);
-    databaseService.getCustomerList(req, function (err, object) {
-        if (err) {
-            console.log(err);
-            return res.render('error', {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
-            });
-        }
-        Customer.findOne({customerID: req.body.customerID}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.getCustomerList(req, function (err, object) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -150,50 +149,53 @@ router.post('/profiles', function (req, res) {
                     error: err
                 });
             }
-            return res.render('customers/profiles', {
-                title: 'Customer Management',
-                data: object,
-                currentUser: req.session.passport.user,
-                error: req.flash('error'),
-                searchCustomer: searchCustomer
+            Customer.findOne({customerID: req.body.customerID}, 'bank customerID created percent nickname phone lineID malay thai paymentCondition', function (err, searchCustomer) {
+                if (err) {
+                    console.log(err);
+                    return res.render('error', {
+                        title: 'Error Page',
+                        message: 'Something went wrong',
+                        error: err
+                    });
+                }
+                return res.render('customers/profiles', {
+                    title: 'Customer Management',
+                    data: object,
+                    currentUser: req.session.passport.user.username,
+                    error: req.flash('error'),
+                    searchCustomer: searchCustomer
+                });
             });
-        });
 
-    });
+        });
+    }
 });
 
 router.post('/edit', function (req, res) {
+    if (req.session.passport.user.accountType == "Admin") {
 
-    console.log(req.body.paymentCondition);
-    Customer.findByIdAndUpdate(req.body.id, {
-        $set: {
-            malay: req.body.malay,
-            thai: req.body.thai,
-            nickname: req.body.nickname,
-            phone: req.body.phone,
-            lineID: req.body.lineID,
-            percent: req.body.percent,
-            paymentCondition: req.body.paymentCondition
-        }
-    }, function (err, object) {
-        if (err) return handleError(err);
-        req.flash('error', "Successfully edit " + object.customerID);
-        return res.redirect('/customers/profiles/' + object.id);
-    });
+        Customer.findByIdAndUpdate(req.body.id, {
+            $set: {
+                malay: req.body.malay,
+                thai: req.body.thai,
+                nickname: req.body.nickname,
+                phone: req.body.phone,
+                lineID: req.body.lineID,
+                percent: req.body.percent,
+                paymentCondition: req.body.paymentCondition
+            }
+        }, function (err, object) {
+            if (err) return handleError(err);
+            req.flash('error', "Successfully edit " + object.customerID);
+            return res.redirect('/customers/profiles/' + object.id);
+        });
+    }
 });
 
 
 router.get('/bank', function (req, res) {
-    databaseService.getCustomerList(req, function (err, object) {
-        if (err) {
-            console.log(err);
-            return res.render('error', {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
-            });
-        }
-        Customer.findOne({}, 'customerID bank', function (err, searchCustomer) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.getCustomerList(req, function (err, object) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -202,30 +204,32 @@ router.get('/bank', function (req, res) {
                     error: err
                 });
             }
-            return res.render('customers/bank', {
-                title: 'Customer Management',
-                data: object,
-                currentUser: req.session.passport.user,
-                error: req.flash('error'),
-                searchCustomer: searchCustomer
+            Customer.findOne({}, 'customerID bank', function (err, searchCustomer) {
+                if (err) {
+                    console.log(err);
+                    return res.render('error', {
+                        title: 'Error Page',
+                        message: 'Something went wrong',
+                        error: err
+                    });
+                }
+                return res.render('customers/bank', {
+                    title: 'Customer Management',
+                    data: object,
+                    currentUser: req.session.passport.user.username,
+                    error: req.flash('error'),
+                    searchCustomer: searchCustomer
+                });
             });
-        });
 
-    });
+        });
+    }
 });
 
 
 router.get('/bank/:id', function (req, res) {
-    databaseService.getCustomerList(req, function (err, object) {
-        if (err) {
-            console.log(err);
-            return res.render('error', {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
-            });
-        }
-        Customer.findOne({_id: req.params.id}, 'customerID bank', function (err, searchCustomer) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.getCustomerList(req, function (err, object) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -234,29 +238,31 @@ router.get('/bank/:id', function (req, res) {
                     error: err
                 });
             }
-            return res.render('customers/bank', {
-                title: 'Customer Management',
-                data: object,
-                currentUser: req.session.passport.user,
-                error: req.flash('error'),
-                searchCustomer: searchCustomer
+            Customer.findOne({_id: req.params.id}, 'customerID bank', function (err, searchCustomer) {
+                if (err) {
+                    console.log(err);
+                    return res.render('error', {
+                        title: 'Error Page',
+                        message: 'Something went wrong',
+                        error: err
+                    });
+                }
+                return res.render('customers/bank', {
+                    title: 'Customer Management',
+                    data: object,
+                    currentUser: req.session.passport.user.username,
+                    error: req.flash('error'),
+                    searchCustomer: searchCustomer
+                });
             });
-        });
 
-    });
+        });
+    }
 });
 
 router.post('/bank', function (req, res) {
-    databaseService.getCustomerList(req, function (err, object) {
-        if (err) {
-            console.log(err);
-            return res.render('error', {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
-            });
-        }
-        Customer.findOne({_id: req.body.id}, 'customerID bank', function (err, searchCustomer) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseService.getCustomerList(req, function (err, object) {
             if (err) {
                 console.log(err);
                 return res.render('error', {
@@ -265,117 +271,95 @@ router.post('/bank', function (req, res) {
                     error: err
                 });
             }
-            return res.render('customers/bank', {
-                title: 'Customer Management',
-                data: object,
-                currentUser: req.session.passport.user,
-                error: req.flash('error'),
-                searchCustomer: searchCustomer
+            Customer.findOne({_id: req.body.id}, 'customerID bank', function (err, searchCustomer) {
+                if (err) {
+                    console.log(err);
+                    return res.render('error', {
+                        title: 'Error Page',
+                        message: 'Something went wrong',
+                        error: err
+                    });
+                }
+                return res.render('customers/bank', {
+                    title: 'Customer Management',
+                    data: object,
+                    currentUser: req.session.passport.user.username,
+                    error: req.flash('error'),
+                    searchCustomer: searchCustomer
+                });
             });
-        });
 
-    });
+        });
+    }
 });
 
 
 router.post('/addbank', function (req, res) {
+    if (req.session.passport.user.accountType == "Admin") {
 
-    Customer.update(
-        {_id: req.body.id},
-        {
-            $push: {
-                "bank": {
-                    bankName: req.body.bankName,
-                    bankNumber: req.body.bankNumber,
-                    bankType: req.body.bankType
-                }
-            }
-        },
-        function (err, model) {
-            if (err) return next(err);
-            req.flash('error', "Successfully Added Bank" + req.body.customerID);
-            return res.redirect('/customers/bank/' + req.body.id);
-        });
-
-});
-
-router.get('/bank/delete/:customerID/:bankId', function (req, res) {
-    Customer.update(
-        {_id: req.params.customerID},
-        {
-            $pull: {
-                "bank": {
-                    "_id" : req.params.bankId
-                }
-            }
-        },
-        function (err, model) {
-            if (err) return next(err);
-            req.flash('error', "Bank Deleted!");
-            return res.redirect('/customers/bank/' + req.params.customerID);
-        });
-
-});
-
-router.post('/bank/edit/:customerID/:bankId', function (req, res) {
-
-    //Customer.update(
-    //    req.params.customerID,
-    //    {
-    //        $set: {
-    //            "bank": {
-    //                "bankNumber" : req.params.bankNumber,
-    //                "bankName" : req.params.bankName,
-    //                "bankType" : req.params.bankType
-    //            }
-    //        }
-    //    },
-    //    function (err, model) {
-    //        if (err) return next(err);
-    //        req.flash('error', "Bank Updated!");
-    //        return res.redirect('/customers/profiles/' + req.params.customerID);
-    //    });
-
-    models.User.findOneAndUdate(
-        { "_id": user._id, "files._id": filedata._id },
-        {
-            "$set": {
-                "name": filedata.name,
-                "size": filedata.size,
-                "type": filedata.type
-            }
-        },
-        function(err,user) {
-
-            // Whatever in here, but the update is already done.
-        }
-    );
-
-    Customer.findOne({_id: req.params.customerID}, function (err, customer) {
-        if (err) {
-            console.log(err);
-            return res.render('error', {
-                title: 'Error Page',
-                message: 'Something went wrong',
-                error: err
-            });
-        }
-        customer.update({'bank._id': req.params.bankId},
+        Customer.update(
+            {_id: req.body.id},
             {
-                $set: {
+                $push: {
                     "bank": {
-                        "bankType" : req.body.bankType
+                        bankName: req.body.bankName,
+                        bankNumber: req.body.bankNumber,
+                        bankType: req.body.bankType
                     }
                 }
             },
             function (err, model) {
-                console.log(err);
                 if (err) return next(err);
-
+                req.flash('error', "Successfully Added Bank" + req.body.customerID);
+                return res.redirect('/customers/bank/' + req.body.id);
             });
-
-    });
+    }
 
 });
+
+router.get('/bank/delete/:customerID/:bankId', function (req, res) {
+    if (req.session.passport.user.accountType == "Admin") {
+        Customer.update(
+            {_id: req.params.customerID},
+            {
+                $pull: {
+                    "bank": {
+                        "_id": req.params.bankId
+                    }
+                }
+            },
+            function (err, result) {
+                if (err) return next(err);
+                req.flash('error', "Bank Deleted!");
+                return res.redirect('/customers/bank/' + req.params.customerID);
+            });
+    }
+
+});
+
+router.post('/bank/edit/:customerID/:bankID', function (req, res) {
+
+        if (req.session.passport.user.accountType == "Admin") {
+
+            Customer.findOneAndUpdate({
+                    _id: req.params.customerID,
+                    'bank._id': req.params.bankID
+                },
+                {
+                    $set: {
+                        'bank.$.bankType': req.body.bankType,
+                        'bank.$.bankName': req.body.bankName,
+                        'bank.$.bankNumber': req.body.bankNumber
+                    }
+                }, function (err, book) {
+                    if (err) return handleError(err);
+                    req.flash('error', "Edited bank of " + book.customerID);
+                    return res.redirect('/customers/profiles/' + book.id);
+                });
+
+
+        }
+    }
+);
 
 module.exports = router;

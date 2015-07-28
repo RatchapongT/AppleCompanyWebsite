@@ -13,13 +13,13 @@ router.get('/', function (req, res, next) {
         title: 'Login',
         error: req.flash('error')
     };
-    res.render('index', vm);
+    res.render('login', vm);
 
 });
 
 
 router.post('/login',
-    function(req, res, next) {
+    function (req, res, next) {
         req.session.cookie.maxAge = config.cookieMaxAge;
         next();
     },
@@ -27,7 +27,8 @@ router.post('/login',
         failureRedirect: '/',
         successRedirect: '/users',
         failureFlash: 'Invalid credentials'
-    }));
+    })
+);
 
 router.get('/logout', function (req, res, next) {
     req.logout();

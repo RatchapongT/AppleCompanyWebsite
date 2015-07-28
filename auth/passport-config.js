@@ -3,7 +3,8 @@ module.exports = function () {
     var passportLocal = require('passport-local');
     var databaseService = require('../services/database-service');
     var bcrypt = require('bcrypt');
-    passport.use(new passportLocal.Strategy({usernameField: 'username'}, function (username, password, next) {
+
+    passport.use(new passportLocal.Strategy({usernameField: 'username', passwordField: 'password'}, function (username, password, next) {
         databaseService.findUser(username, function (err, user) {
             if (err) {
                 return next(err);
@@ -26,11 +27,15 @@ module.exports = function () {
     }));
 
     passport.serializeUser(function (user, next) {
-        next(null, user.username);
+        var object = {
+            username: user.username,
+            accountType : user.accountType
+        }
+        next(null, object);
     });
 
-    passport.deserializeUser(function (username, next) {
-        databaseService.findUser(username, function (err, user) {
+    passport.deserializeUser(function (object, next) {
+        databaseService.findUser(object.username, function (err, user) {
             next(err, user);
         });
     });

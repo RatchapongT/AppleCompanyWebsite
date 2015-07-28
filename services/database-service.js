@@ -1,6 +1,7 @@
 var User = require('../models/database').User;
 var Customer = require('../models/database').Customer;
 var Bank = require('../models/database').Bank;
+var Relationship = require('../models/database').Relationship;
 var bcrypt = require('bcrypt');
 
 exports.addUser = function (user, next) {
@@ -50,6 +51,13 @@ exports.getUserList = function (req, res) {
     });
 };
 
+exports.getWorkerList = function (req, res) {
+    User.find({accountType: "Worker"}, 'username created accountType nickname phone lineID', function (err, object) {
+        if (err) throw err;
+        res(err, object);
+    });
+};
+
 
 exports.deleteUser = function (req, res, next) {
     User.findById(req.params.id, function (err, object) {
@@ -69,7 +77,21 @@ exports.findCustomer = function (customerID, next) {
 };
 
 exports.getCustomerList = function (req, res) {
-    Customer.find({}, 'paymentCondition customerID percent created nickname phone lineID malay thai', function (err, object) {
+    Customer.find({}, 'haveOwner paymentCondition customerID percent created nickname phone lineID malay thai', function (err, object) {
+        if (err) throw err;
+        res(err, object);
+    });
+};
+
+exports.getUnownedCustomerList = function (req, res) {
+    Customer.find({haveOwner: false}, function (err, object) {
+        if (err) throw err;
+        res(err, object);
+    });
+};
+
+exports.getRelationshipList = function (req, res) {
+    Relationship.find({}, function (err, object) {
         if (err) throw err;
         res(err, object);
     });
@@ -117,10 +139,63 @@ exports.deleteCustomer = function (req, res, next) {
     });
 };
 
-exports.addCustomerBank = function (req, res, next) {
 
+exports.addRelationship = function (relationship, next) {
+    var newRelationship = new Relationship({
+        customerID: relationship.customerID,
+        username: relationship.username,
+    });
 
-
+    newRelationship.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+        next(null);
+    });
 
 };
+
+exports.deleteRelationship = function (req, res, next) {
+    Relationship.findById(req.params.id, function (err, object) {
+
+        if (err) return next(err);
+        object.remove(function (err) {
+            res(err);
+        });
+    });
+};
+
+exports.getBankList = function (req, res) {
+    Bank.find({}, function (err, object) {
+        if (err) throw err;
+        res(err, object);
+    });
+};
+exports.addBank = function (bank, next) {
+    var newBank = new Bank({
+        bankName: bank.bankName,
+        bankType: bank.bankType,
+        bankNumber:bank.bankNumber
+    });
+
+    newBank.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+        next(null);
+    });
+
+};
+
+exports.deleteBank = function (req, res, next) {
+    Bank.findById(req.params.id, function (err, object) {
+
+        if (err) return next(err);
+        object.remove(function (err) {
+            res(err);
+        });
+    });
+};
+
+
 
