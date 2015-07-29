@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/page/head.ejs %>
+
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+
+<div class="container">
+    <h2>Payment History</h2>
+
+    <div align="center">
+        <div class="input-group date" id="datepicker" style="width: 300px">
+            <input type="text" class="form-control" style="text-align: center">
+            <span class="input-group-addon"><i
+                        class="fui-list-small-thumbnails"></i></span>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $('#datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            orientation: 'auto top'
+        });
+
+    });
+
+</script>

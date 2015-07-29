@@ -13,6 +13,17 @@ var userSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
+var recordSchema = new Schema({
+    username: String,
+    password: String,
+    accountType: String,
+    nickname: String,
+    phone: String,
+    lineID: String,
+    responsibleCustomer: [String],
+    date: {type: Date, default: Date.now}
+});
+
 var relationshipSchema = new Schema({
     customerID: String,
     username: String,

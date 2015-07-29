@@ -18,6 +18,7 @@ var config = require('./config');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var customers = require('./routes/customers');
+var records = require('./routes/records');
 var restrict = require('./auth/restrict');
 
 var MongoStore = connectMongo(expressSession);
@@ -60,6 +61,7 @@ app.use('/', routes);
 app.use(restrict);
 app.use('/users', users);
 app.use('/customers', customers);
+app.use('/records', records);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
