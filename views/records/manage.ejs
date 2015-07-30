@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <% include ../partials/page/head.ejs %>
-
 </head>
 <header>
     <% include ../partials/page/header.ejs %>
+    <% include ../partials/page/jsdefaults.ejs %>
 </header>
 
 
@@ -14,7 +14,7 @@
 
     <div align="center">
         <div class="input-group date" id="datepicker" style="width: 300px">
-            <input type="text" class="form-control" style="text-align: center">
+            <input type="text" class="form-control" style="text-align: center" value="">
             <span class="input-group-addon"><i
                         class="fui-list-small-thumbnails"></i></span>
         </div>
@@ -22,19 +22,20 @@
 
 </div>
 
-</div>
-
-
+<%=requestDate%>
 <script type="text/javascript">
-
-
     $(document).ready(function () {
-
         $('#datepicker').datepicker({
             format: "dd/mm/yyyy",
-            orientation: 'auto top'
+            orientation: 'auto top',
+            autoclose: true,
+            todayHighlight: true
         });
 
     });
 
 </script>
+
+<footer>
+    <% include ../partials/page/footer.ejs %>
+</footer>

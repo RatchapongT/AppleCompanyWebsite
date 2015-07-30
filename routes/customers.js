@@ -14,9 +14,6 @@ router.get('/', function (req, res, next) {
 });
 
 
-module.exports = router;
-
-
 router.get('/manage', function (req, res) {
     if (req.session.passport.user.accountType == "Admin") {
         databaseService.getCustomerList(req, function (err, object) {
@@ -35,6 +32,10 @@ router.get('/manage', function (req, res) {
             });
         });
     }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
 });
 
 
@@ -49,6 +50,10 @@ router.post('/create', function (req, res) {
             req.flash('error', "Successfully Added");
             return res.redirect('/customers/manage');
         });
+    }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
     }
 });
 
@@ -66,6 +71,10 @@ router.get('/delete/:id', function (req, res) {
             }
             return res.redirect('/customers/manage');
         });
+    }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
     }
 
 });
@@ -102,6 +111,10 @@ router.get('/profiles', function (req, res) {
 
         });
     }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
 });
 
 router.get('/profiles/:id', function (req, res) {
@@ -134,6 +147,10 @@ router.get('/profiles/:id', function (req, res) {
             });
 
         });
+    }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
     }
 });
 
@@ -169,6 +186,10 @@ router.post('/profiles', function (req, res) {
 
         });
     }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
 });
 
 router.post('/edit', function (req, res) {
@@ -189,6 +210,10 @@ router.post('/edit', function (req, res) {
             req.flash('error', "Successfully edit " + object.customerID);
             return res.redirect('/customers/profiles/' + object.id);
         });
+    }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
     }
 });
 
@@ -224,6 +249,10 @@ router.get('/bank', function (req, res) {
 
         });
     }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
 });
 
 
@@ -258,6 +287,10 @@ router.get('/bank/:id', function (req, res) {
 
         });
     }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
 });
 
 router.post('/bank', function (req, res) {
@@ -291,6 +324,10 @@ router.post('/bank', function (req, res) {
 
         });
     }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
 });
 
 
@@ -314,6 +351,10 @@ router.post('/addbank', function (req, res) {
                 return res.redirect('/customers/bank/' + req.body.id);
             });
     }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
 
 });
 
@@ -334,32 +375,39 @@ router.get('/bank/delete/:customerID/:bankId', function (req, res) {
                 return res.redirect('/customers/bank/' + req.params.customerID);
             });
     }
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
 
 });
 
 router.post('/bank/edit/:customerID/:bankID', function (req, res) {
 
-        if (req.session.passport.user.accountType == "Admin") {
+    if (req.session.passport.user.accountType == "Admin") {
 
-            Customer.findOneAndUpdate({
-                    _id: req.params.customerID,
-                    'bank._id': req.params.bankID
-                },
-                {
-                    $set: {
-                        'bank.$.bankType': req.body.bankType,
-                        'bank.$.bankName': req.body.bankName,
-                        'bank.$.bankNumber': req.body.bankNumber
-                    }
-                }, function (err, book) {
-                    if (err) return handleError(err);
-                    req.flash('error', "Edited bank of " + book.customerID);
-                    return res.redirect('/customers/profiles/' + book.id);
-                });
+        Customer.findOneAndUpdate({
+                _id: req.params.customerID,
+                'bank._id': req.params.bankID
+            },
+            {
+                $set: {
+                    'bank.$.bankType': req.body.bankType,
+                    'bank.$.bankName': req.body.bankName,
+                    'bank.$.bankNumber': req.body.bankNumber
+                }
+            }, function (err, book) {
+                if (err) return handleError(err);
+                req.flash('error', "Edited bank of " + book.customerID);
+                return res.redirect('/customers/profiles/' + book.id);
+            });
 
 
-        }
     }
-);
+    if (req.session.passport.user.accountType == "Worker" ||
+        req.session.passport.user.accountType == "Manager") {
+        return res.send("No permission");
+    }
+});
 
 module.exports = router;

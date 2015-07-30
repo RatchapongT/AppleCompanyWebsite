@@ -9,7 +9,10 @@ var userSchema = new Schema({
     nickname: String,
     phone: String,
     lineID: String,
+    responsibleWorker: [String],
     responsibleCustomer: [String],
+    manager:String,
+    haveManager: {type: Boolean, default: false},
     created: {type: Date, default: Date.now}
 });
 
@@ -27,6 +30,7 @@ var recordSchema = new Schema({
 var relationshipSchema = new Schema({
     customerID: String,
     username: String,
+    manager: String,
     created: {type: Date, default: Date.now}
 });
 
@@ -83,9 +87,12 @@ var User = mongoose.model('User', userSchema);
 var Customer = mongoose.model('Customer', customerSchema);
 var Bank = mongoose.model('Bank', bankSchema);
 var Relationship = mongoose.model('Relationship', relationshipSchema);
+var Record = mongoose.model('Record', recordSchema);
+
 module.exports = {
     User: User,
     Customer: Customer,
     Bank: Bank,
-    Relationship: Relationship
+    Relationship: Relationship,
+    Record: Record
 };

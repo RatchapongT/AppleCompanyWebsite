@@ -11,34 +11,34 @@
 </header>
 
 
-
 <div class="container">
-    <h2>Assign Customer</h2>
+    <h2>Assign Manager</h2>
+
 
     <div align="center">
         <div class="login-form"
              style="width:350px; margin-top: 30px; margin-bottom: 30px">
-            <strong>Worker</strong>
+            <strong>Manager</strong>
 
-            <form method="post" action="/users/assign" id="assign_form">
+            <form method="post" action="/managers/assign" id="assign_form">
                 <div class="form-group">
 
                     <select class="form-control select select-info"
                             data-toggle="select" form="assign_form"
-                            name="username" id="username">
-                        <% for(var i = 0; i < dataUser.length; i++) { %>
-                        <% if(dataUser[i].username === searchUser.username) { %>
+                            name="manager_username" id="manager_username">
+                        <% for(var i = 0; i < dataManager.length; i++) { %>
+                        <% if(dataManager[i].username === searchUser.username) { %>
 
-                        <option selected value="<%= dataUser[i].username %>">
-                            <%= dataUser[i].username %>
-                            (<%= dataUser[i].nickname %>
+                        <option selected value="<%= dataManager[i].username %>">
+                            <%= dataManager[i].username %>
+                            (<%= dataManager[i].nickname %>
                             )
                         </option>
                         <% } else { %>
 
-                        <option value="<%= dataUser[i].username %>">
-                            <%= dataUser[i].username %>
-                            (<%= dataUser[i].nickname %>
+                        <option value="<%= dataManager[i].username %>">
+                            <%= dataManager[i].username %>
+                            (<%= dataManager[i].nickname %>
                             )
                         </option>
                         <% } %>
@@ -46,21 +46,21 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <strong>Customer</strong>
+                    <strong>Worker</strong>
                     <select class="form-control select select-info"
                             data-toggle="select" form="assign_form"
-                            name="customerID" id="customerID">
-                        <% for(var i = 0; i < dataCustomer.length; i++) { %>
+                            name="worker_username" id="worker_username">
+                        <% for(var i = 0; i < dataWorker.length; i++) { %>
                         <% if(i == 0) { %>
                         <option selected
-                                value="<%= dataCustomer[i].customerID %>">
-                            <%= dataCustomer[i].customerID %>
-                            (<%= dataCustomer[i].nickname %>)
+                                value="<%= dataWorker[i].username %>">
+                            <%= dataWorker[i].username %>
+                            (<%= dataWorker[i].nickname %>)
                         </option>
                         <% } else { %>
-                        <option value="<%= dataCustomer[i].customerID %>">
-                            <%= dataCustomer[i].customerID %>
-                            (<%= dataCustomer[i].nickname %>
+                        <option value="<%= dataWorker[i].username %>">
+                            <%= dataWorker[i].username %>
+                            (<%= dataWorker[i].nickname %>
                             )
                         </option>
                         <% } %>
@@ -71,22 +71,28 @@
                 <input style="width:200px"
                        class="btn btn-primary btn-lg btn-block"
                        type="submit" value="Assign" id="submit_button"/>
+
+
             </form>
-            <script>
-                if (<%=dataCustomer.length%> === 0) {
-                    document.getElementById('customerID').disabled = true;
-                }
-                if (<%=dataUser.length%> === 0) {
-                    document.getElementById('username').disabled = true;
-                }
-                if (<%=dataUser.length%> === 0 || <%=dataCustomer.length%> == 0) {
-                    document.getElementById('submit_button').disabled = true;
-                }
-            </script>
         </div>
 
 
     </div>
+
+
+    <script>
+        if (<%=dataManager.length%> === 0) {
+            document.getElementById('manager_username').disabled = true;
+        }
+        if (<%=dataWorker.length%> === 0) {
+            document.getElementById('worker_username').disabled = true;
+        }
+        if (<%=dataWorker.length%> === 0 || <%=dataManager.length%> == 0) {
+            document.getElementById('submit_button').disabled = true;
+        }
+    </script>
+
+
     <div align="center" style="margin:25px auto; width:280px;">
         <% if (typeof error != 'undefined' & error != "") { %>
         <div class="form-group has-success">
@@ -100,22 +106,22 @@
     <table id="sort" class="table">
         <thead>
         <tr>
-            <th style="text-align:center" class="sort-default">Worker ID</th>
-            <th style="text-align:center" class="sort-default">Customer ID</th>
+            <th style="text-align:center" class="sort-default">Manager</th>
+            <th style="text-align:center" class="sort-default">Worker</th>
             <th style="text-align:center" class="sort-default">Created On</th>
             <th style="text-align:center" class="no-sort">Delete</th>
         </tr>
         </thead>
         <% for(var i = 0; i < dataRelationship.length; i++) { %>
         <tr>
+            <td align="center"><%= dataRelationship[i].manager %></td>
             <td align="center"><%= dataRelationship[i].username %></td>
-            <td align="center"><%= dataRelationship[i].customerID %></td>
             <% date = new Date(dataRelationship[i].created) %>
             <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
                 /<%= date.getFullYear() %></td>
             </td>
             <td align="center"><a
-                        href="/users/delete_relationship/<%= dataRelationship[i].id %>/<%= dataRelationship[i].customerID %>/<%= dataRelationship[i].username %>"
+                        href="/managers/delete_relationship/<%= dataRelationship[i].id %>/<%= dataRelationship[i].username %>/<%= dataRelationship[i].manager %>"
                         class="button"><span class="fui-cross"
                                              style="color:#f93c3c"></span></a>
             </td>

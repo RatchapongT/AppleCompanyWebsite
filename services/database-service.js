@@ -90,8 +90,15 @@ exports.getUnownedCustomerList = function (req, res) {
     });
 };
 
-exports.getRelationshipList = function (req, res) {
-    Relationship.find({}, function (err, object) {
+exports.getRelationshipListCustomer = function (req, res) {
+    Relationship.find({customerID : { $ne: null }}, function (err, object) {
+        if (err) throw err;
+        res(err, object);
+    });
+};
+
+exports.getRelationshipListWorker = function (req, res) {
+    Relationship.find({manager : { $ne: null }}, function (err, object) {
         if (err) throw err;
         res(err, object);
     });
@@ -140,10 +147,25 @@ exports.deleteCustomer = function (req, res, next) {
 };
 
 
-exports.addRelationship = function (relationship, next) {
+exports.addRelationshipCustomer = function (relationship, next) {
     var newRelationship = new Relationship({
         customerID: relationship.customerID,
-        username: relationship.username,
+        username: relationship.username
+    });
+
+    newRelationship.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+        next(null);
+    });
+
+};
+
+exports.addRelationshipWorker = function (relationship, next) {
+    var newRelationship = new Relationship({
+        manager: relationship.manager_username,
+        username: relationship.worker_username
     });
 
     newRelationship.save(function (err) {
@@ -197,5 +219,17 @@ exports.deleteBank = function (req, res, next) {
     });
 };
 
+exports.getUnownedWorkerList = function (req, res) {
+    User.find({haveManager: false, accountType : "Worker"}, function (err, object) {
+        if (err) throw err;
+        res(err, object);
+    });
+};
 
+exports.getManagerList = function (req, res) {
+    User.find({accountType : "Manager"}, function (err, object) {
+        if (err) throw err;
+        res(err, object);
+    });
+};
 

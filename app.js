@@ -18,6 +18,7 @@ var config = require('./config');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var customers = require('./routes/customers');
+var managers = require('./routes/managers');
 var records = require('./routes/records');
 var restrict = require('./auth/restrict');
 
@@ -60,6 +61,7 @@ app.use(passport.session());
 app.use('/', routes);
 app.use(restrict);
 app.use('/users', users);
+app.use('/managers', managers);
 app.use('/customers', customers);
 app.use('/records', records);
 
