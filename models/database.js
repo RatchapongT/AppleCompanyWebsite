@@ -11,21 +11,25 @@ var userSchema = new Schema({
     lineID: String,
     responsibleWorker: [String],
     responsibleCustomer: [String],
-    manager:String,
+    manager: String,
     haveManager: {type: Boolean, default: false},
     created: {type: Date, default: Date.now}
 });
 
-var recordSchema = new Schema({
-    username: String,
-    password: String,
-    accountType: String,
-    nickname: String,
-    phone: String,
-    lineID: String,
-    responsibleCustomer: [String],
-    date: {type: Date, default: Date.now}
+var entrySchema = new Schema({
+    recordDate: Date,
+    customerID: String,
+    sale: Number,
+    strike: Number,
+    created: {type: Date, default: Date.now}
 });
+
+var recordSchema = new Schema({
+    recordDate: Date,
+    locked: {type: Boolean, default: false},
+    created: {type: Date, default: Date.now}
+});
+
 
 var relationshipSchema = new Schema({
     customerID: String,
@@ -88,11 +92,13 @@ var Customer = mongoose.model('Customer', customerSchema);
 var Bank = mongoose.model('Bank', bankSchema);
 var Relationship = mongoose.model('Relationship', relationshipSchema);
 var Record = mongoose.model('Record', recordSchema);
+var Entry = mongoose.model('Entry', entrySchema);
 
 module.exports = {
     User: User,
     Customer: Customer,
     Bank: Bank,
     Relationship: Relationship,
-    Record: Record
+    Record: Record,
+    Entry: Entry
 };

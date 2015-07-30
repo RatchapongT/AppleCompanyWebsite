@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+    <% include ../partials/page/jsdefaults.ejs %>
+</header>
+
+
+<div class="container">
+    <h2>Payment History</h2>
+
+
+    <div align="center" style="margin-bottom: 50px">
+        <div class="input-group date" id="datepicker" style="width: 300px">
+            <input type="text" class="form-control" style="text-align: center"
+                   value="" onchange="parseDate()" id="date_input">
+            <span class="input-group-addon"><i
+                        class="fui-list-small-thumbnails"></i></span>
+        </div>
+    </div>
+
+    <div align="center">
+        <div class="login-form" style="width:150px; margin-top: 30px; ">
+            <form method="post" action="/records/lock" id="locked_form">
+                <input type=hidden name="date" value="<%= requestDate %>">
+                <label class="radio">
+                    <input type="radio" name="locked"
+                           id="optionsRadios1" value=true
+                           data-toggle="radio" checked="">
+                    Locked
+                </label>
+                <label class="radio">
+                    <input type="radio" name="locked"
+                           id="optionsRadios2" value=false
+                           data-toggle="radio">
+                    Unlocked
+                </label>
+                <input class="btn btn-primary btn-block"
+                       type="submit" value="Submit"/>
+            </form>
+        </div>
+    </div>
+
+    <form method="post" action="/records/update"
+          id="record_form">
+        <input type=hidden name="date" value="<%= requestDate %>">
+        <% for (var i = 0; i < workerObject.length; i++) { %>
+
+        <h5 align="center"
+            style="margin-top: 70px; color:#3498DB;"><%= workerObject[i].username %>
+            (<%= workerObject[i].nickname %>)</h5>
+
+
+        <table class="table">
+            <tr>
+
+                <th style="text-align:center">Customer ID</th>
+                <th style="text-align:center">Sale</th>
+                <th style="text-align:center">Strike</th>
+            </tr>
+
+            <% for (var j = 0; j < workerObject[i].responsibleCustomer.length; j++) { %>
+
+            <% if (entryObject.length === 0) { %>
+            <% var tempLength = 1; %>
+            <% } else { %>
+            <% var tempLength = entryObject.length; %>
+            <% } %>
+            <% for (var k = 0; k < tempLength; k++) { %>
+
+            <% if (entryObject.length === 0 || entryObject[k].customerID === workerObject[i].responsibleCustomer[j]) { %>
+            <tr>
+
+                <input type="hidden"
+                       value="<%= workerObject[i].responsibleCustomer[j] %>"
+                       name="customerID">
+                <td align="center"
+                    style="text-align: center;vertical-align: middle;">
+                    <%= workerObject[i].responsibleCustomer[j] %>
+                </td>
+                <% if (data.locked) { %>
+                <td align="center">
+                    <input type="text" class="form-control"
+                           style="width: 150px; text-align: right;" name="sale"
+                           value="<%= entryObject.length === 0 ? "" : entryObject[k].sale %>"
+                           disabled>
+                </td>
+                <td align="center">
+                    <input type="text" class="form-control"
+                           style="width: 150px; text-align: right;"
+                           name="strike"
+                           value="<%= entryObject.length === 0 ? "" : entryObject[k].strike %>"
+                           disabled>
+                </td>
+                <% } else { %>
+                <td align="center">
+                    <input type="text" class="form-control"
+                           style="width: 150px; text-align: right;" name="sale"
+                           value="<%= entryObject.length === 0 ? "" : entryObject[k].sale %>">
+                </td>
+                <td align="center">
+                    <input type="text" class="form-control"
+                           style="width: 150px; text-align: right;"
+                           name="strike"
+                           value="<%= entryObject.length === 0 ? "" : entryObject[k].strike %>">
+                </td>
+                <% } %>
+
+            </tr>
+            <% } %>
+            <% } %>
+            <% } %>
+        </table>
+
+        <% } %>
+        <div align="center">
+            <% if (data.locked) { %>
+
+            <input style="width: 300px; margin-bottom: 50px;"
+                   class="btn btn-primary btn-lg btn-block"
+                   type="submit" value="Save Record" disabled>
+            <% } else { %>
+            <input style="width: 300px; margin-bottom: 50px;"
+                   class="btn btn-primary btn-lg btn-block"
+                   type="submit" value="Save Record">
+            <% } %>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            orientation: 'auto top',
+            autoclose: true,
+            todayHighlight: true
+        });
+        var date = new Date();
+
+        if ((date.getMonth() + 1) < 10) {
+            var today = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+        } else {
+            var today = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+        }
+        document.getElementById('date_input').value = today;
+
+    });
+
+    function parseDate() {
+        var unformatted = document.getElementById('date_input').value;
+        var result = unformatted.split("/");
+        var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
+    }
+
+
+</script>
+
+
+<footer>
+    <% include ../partials/page/footer.ejs %>
+</footer>

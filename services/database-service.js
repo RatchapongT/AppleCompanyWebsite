@@ -52,7 +52,7 @@ exports.getUserList = function (req, res) {
 };
 
 exports.getWorkerList = function (req, res) {
-    User.find({accountType: "Worker"}, 'username created accountType nickname phone lineID', function (err, object) {
+    User.find({accountType: "Worker"}, 'username created accountType nickname phone lineID responsibleCustomer', function (err, object) {
         if (err) throw err;
         res(err, object);
     });
