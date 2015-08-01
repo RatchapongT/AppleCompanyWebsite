@@ -15,7 +15,7 @@
         if (selectedValue === "Other") {
 
             document.getElementById('other_field').type = 'text';
-        } else{
+        } else {
             document.getElementById('other_field').type = 'hidden';
         }
 
@@ -39,28 +39,31 @@
 
 <div class="container">
     <h2>Customer's Bank</h2>
+
     <div align="center">
         <form name="search_customer" method="post" action="/customers/bank"
               id="search_customer">
 
 
-            <select name="id"
+            <select name="request_customer_id"
                     class="form-control select select-info"
                     data-toggle="select" form="search_customer"
                     onchange='this.form.submit()'>
-                <% for(var i = 0; i < data.length; i++) { %>
-
-                <% if(data[i].id === searchCustomer.id) { %>
-
-                <option value=<%= data[i].id %> selected> <%= data[i].customerID %>
-                    (<%= data[i].nickname %>)
+                <% for(var i = 0; i < customerObject.length; i++) { %>
+                <% if (requestCustomerID == undefined && i == 0) { %>
+                <% requestCustomerID = customerObject[0].id %>
+                <option value=<%= customerObject[0].id %> selected><%= customerObject[i].customerID %>
+                    (<%= customerObject[i].nickname %>)
+                </option>
+                <% } else if (requestCustomerID == customerObject[i].id){ %>
+                <option value=<%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
+                    (<%= customerObject[i].nickname %>)
                 </option>
                 <% } else { %>
-                <option value=<%= data[i].id %>><%= data[i].customerID %>
-                    (<%= data[i].nickname %>)
+                <option value=<%= customerObject[i].id %>><%= customerObject[i].customerID %>
+                    (<%= customerObject[i].nickname %>)
                 </option>
                 <% } %>
-
                 <% } %>
 
             </select>
@@ -68,31 +71,27 @@
         </form>
     </div>
 
-
-
-
-    <form method="post" action="/customers/addbank" id="bank_form">
+    <form method="post" action="/customers/bank/add" id="bank_form">
         <div align="center">
             <div class="login-form" style="width:350px; margin-top: 30px; ">
 
-                <input type="hidden" value="<%= searchCustomer.id %>"
-                       name="id"/>
-                <input type="hidden" value="<%= searchCustomer.customerID %>"
-                       name="customerID"/>
+                <input type="hidden" value="<%= requestCustomerID %>"
+                       name="customerID">
+
 
                 <div class="form-group">
-                    <input type="text" class="form-control login-field" value=""
+                    <input type="number"
+                           class="form-control login-field" value=""
                            placeholder="Bank Number" name="bankNumber"
-                           required/>
+                           maxlength="14" required>
                 </div>
 
                 <div class="form-group">
                     <input type="text" class="form-control login-field" value=""
                            placeholder="Bank Name" name="bankName"
-                           required/>
+                           required>
 
                 </div>
-
 
 
                 <div style="margin-bottom: 30px ">
@@ -100,8 +99,8 @@
                     <select name="bankType"
                             class="form-control select select-info"
                             data-toggle="select" form="bank_form"
-                            onchange = 'GetSelectedTextValue()'
-                            id = 'default_field'>
+                            onchange='GetSelectedTextValue()'
+                            id='default_field'>
                         <option value="BBL"> BBL</option>
                         <option value="TFB"> TFB</option>
                         <option value="SCB"> SCB</option>
@@ -110,26 +109,35 @@
                 </div>
 
                 <div class="form-group">
-                    <input  type="hidden" class="form-control login-field" value=""
-                            placeholder="Other" name="bankType" id="other_field"/>
+                    <input type="hidden" class="form-control login-field"
+                           value=""
+                           placeholder="Other" name="bankType"
+                           id="other_field">
                 </div>
 
 
-
                 <input class="btn btn-primary btn-lg btn-block"
-                       type="submit" value="Add Bank" onclick='SubmitForm()'/>
+                       type="submit" value="Add Bank" onclick='SubmitForm()'>
 
             </div>
 
         </div>
     </form>
 
-    <% if (typeof error != 'undefined' & error != "") { %>
-
-    <div align="center" style="margin:25px auto; width:200px;">
-        <div class="form-group has-success">
+    <% if (typeof failureMessage != 'undefined' && failureMessage != '') { %>
+    <div class="form-group has-error">
+        <div align="center" style="margin:25px auto; width:200px;">
             <input style="text-align:center" type="text" value=""
-                   placeholder="<%= error %>" class="form-control"/>
+                   placeholder="<%= failureMessage %>" class="form-control">
+        </div>
+    </div>
+    <% } %>
+
+    <% if (typeof successMessage != 'undefined' && successMessage != '') { %>
+    <div class="form-group has-success">
+        <div align="center" style="margin:25px auto; width:200px;">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= successMessage %>" class="form-control">
         </div>
     </div>
     <% } %>
@@ -143,18 +151,20 @@
             <th style="text-align:center" class="no-sort">Delete Bank</th>
         </tr>
         </thead>
-        <% for(var i = 0; i < searchCustomer.bank.length; i++) { %>
+        <% for(var i = 0; i < bankObject.length; i++) { %>
+        <% if (bankObject[i]._customerDetail._id == requestCustomerID) { %>
         <tr>
-            <td align="center"><%= searchCustomer.bank[i].bankNumber %></td>
-            <td align="center"><%= searchCustomer.bank[i].bankName %></td>
-            <td align="center"><%= searchCustomer.bank[i].bankType %></td>
+            <td align="center"><%= bankObject[i].bankNumber %></td>
+            <td align="center"><%= bankObject[i].bankName %></td>
+            <td align="center"><%= bankObject[i].bankType %></td>
 
             <td align="center"><a
-                        href="/customers/bank/delete/<%= searchCustomer.id %>/<%= searchCustomer.bank[i].id %>"
+                        href="/customers/bank/delete/<%= bankObject[i].id %>/<%= requestCustomerID %>"
                         class="button"><span class="fui-cross"
                                              style="color:#f93c3c"></span></a>
             </td>
         </tr>
+        <% } %>
         <% } %>
     </table>
 

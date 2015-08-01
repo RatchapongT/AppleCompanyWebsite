@@ -12,16 +12,18 @@
 <div class="container">
     <h2>Payment History</h2>
 
-
-    <div align="center" style="margin-bottom: 50px">
-        <div class="input-group date" id="datepicker" style="width: 300px">
-            <input type="text" class="form-control" style="text-align: center"
-                   value="" onchange="parseDate()" id="date_input">
+    <form method="post" id="date_form">
+        <div align="center" style="margin-bottom: 50px">
+            <div class="input-group date" id="datepicker" style="width: 300px">
+                <input type="text" class="form-control"
+                       style="text-align: center"
+                       value="" name="date_input"
+                       onchange='submitParseDate()' id="date_input">
             <span class="input-group-addon"><i
                         class="fui-list-small-thumbnails"></i></span>
+            </div>
         </div>
-    </div>
-
+    </form>
     <div align="center">
         <div class="login-form" style="width:150px; margin-top: 30px; ">
             <form method="post" action="/records/lock" id="locked_form">
@@ -83,26 +85,28 @@
                 </td>
                 <% if (data.locked) { %>
                 <td align="center">
-                    <input type="text" class="form-control"
-                           style="width: 150px; text-align: right;" name="sale"
+                    <input type="number" class="form-control"
+                           style="width: 150px; color:#0; text-align: right;"
+                           name="sale"
                            value="<%= entryObject.length === 0 ? "" : entryObject[k].sale %>"
-                           disabled>
+                           readonly>
                 </td>
                 <td align="center">
-                    <input type="text" class="form-control"
+                    <input type="number" class="form-control"
                            style="width: 150px; text-align: right;"
                            name="strike"
                            value="<%= entryObject.length === 0 ? "" : entryObject[k].strike %>"
-                           disabled>
+                           readonly
+                            >
                 </td>
                 <% } else { %>
                 <td align="center">
-                    <input type="text" class="form-control"
+                    <input type="number" class="form-control"
                            style="width: 150px; text-align: right;" name="sale"
                            value="<%= entryObject.length === 0 ? "" : entryObject[k].sale %>">
                 </td>
                 <td align="center">
-                    <input type="text" class="form-control"
+                    <input type="number" class="form-control"
                            style="width: 150px; text-align: right;"
                            name="strike"
                            value="<%= entryObject.length === 0 ? "" : entryObject[k].strike %>">
@@ -131,6 +135,7 @@
     </form>
 </div>
 
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#datepicker').datepicker({
@@ -139,21 +144,40 @@
             autoclose: true,
             todayHighlight: true
         });
-        var date = new Date();
+        var date = new Date("<%=requestDate%>");
+
 
         if ((date.getMonth() + 1) < 10) {
-            var today = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            if (date.getDate() < 10) {
+                var selectDate = '0' + date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            } else {
+                var selectDate = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            }
+
         } else {
-            var today = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            if (date.getDate() < 10) {
+                var selectDate = '0' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            } else {
+                var selectDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            }
         }
-        document.getElementById('date_input').value = today;
+        document.getElementById('date_input').value = selectDate;
 
     });
 
-    function parseDate() {
+    function submitParseDate() {
         var unformatted = document.getElementById('date_input').value;
         var result = unformatted.split("/");
         var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
+        document.getElementById("date_form").action = "/records/manage/" + select;
+        document.getElementById("date_form").submit();
+    }
+    if (<%=data.locked%>) {
+        document.getElementById("optionsRadios1").checked = true;
+        document.getElementById("optionsRadios2").checked = false;
+    } else {
+        document.getElementById("optionsRadios1").checked = false;
+        document.getElementById("optionsRadios2").checked = true;
     }
 
 

@@ -16,22 +16,15 @@
         <form name="search_user" method="post" action="/users/profiles"
               id="search_user">
 
-            <select name="username"
+            <select name="select_user_id"
                     class="form-control select select-info"
                     data-toggle="select" form="search_user"
-                    onchange='this.form.submit()'>
+                    onchange='this.form.submit()' id="select_user">
                 <% for(var i = 0; i < data.length; i++) { %>
 
-                <% if(data[i].username === searchUser.username) { %>
-
-                <option value=<%= data[i].username %> selected> <%= data[i].username %>
+                <option value=<%= data[i]._userDetail._id %>><%= data[i]._userDetail.username %>
                     (<%= data[i].nickname %>)
                 </option>
-                <% } else { %>
-                <option value=<%= data[i].username %>><%= data[i].username %>
-                    (<%= data[i].nickname %>)
-                </option>
-                <% } %>
 
                 <% } %>
 
@@ -40,41 +33,59 @@
         </form>
     </div>
 
-
+    <% for (var i = 0 ; i < data.length; i++) { %>
+    <% if (requestUserID == data[i]._userDetail._id) { %>
     <form method="post" action="/users/edit">
         <div align="center">
-            <input type="hidden" value="<%= searchUser.id %>" name="id"/>
+            <input type="hidden" name="requestUserID" id="requestUserID"
+                   value='<%= requestUserID %>'>
+            <input type="hidden" name="editUserID" id="editUserID"
+                   value='<%= data[i].id %>'>
 
             <div class="login-form" style="width:350px; margin-top: 30px; ">
                 <div class="form-group">
                     Nickname
                     <input type="text" class="form-control login-field"
-                           placeholder="Nickname" name="nickname"
-                           value="<%= searchUser.nickname %>"/>
+                           placeholder="Nickname" name="nickname" id="nickname"
+                           value='<%= data[i].nickname %>'>
                 </div>
                 <div class="form-group">
-                    Phone <input type="text" class="form-control login-field"
-                                 placeholder="Phone" name="phone"
-                                 value="<%= searchUser.phone %>"/>
+                    Phone
+                    <input type="text" class="form-control login-field"
+                           placeholder="Phone" name="phone" id="phone"
+                           value='<%= data[i].phone %>'>
                 </div>
                 <div class="form-group">
-                    Line ID<input type="text" class="form-control login-field"
-                                  placeholder="Line ID" name="lineID"
-                                  value="<%= searchUser.lineID %>"/>
+                    Line ID
+                    <input type="text" class="form-control login-field"
+                           placeholder="Line ID" name="lineID"
+                           id="lineID"
+                           value='<%= data[i].lineID %>'>
                 </div>
                 <input class="btn btn-primary btn-lg btn-block"
-                       type="submit" value="Save Edit"/>
+                       type="submit" value="Save Edit">
             </div>
         </div>
     </form>
-    <% if (typeof error != 'undefined' & error != "") { %>
+    <% } %>
+    <% } %>
+
+    <% if (typeof successMessage != 'undefined' & successMessage != "") { %>
 
     <div align="center" style="margin:25px auto; width:200px;">
         <div class="form-group has-success">
             <input style="text-align:center" type="text" value=""
-                   placeholder="<%= error%>" class="form-control"/>
+                   placeholder="<%= successMessage %>" class="form-control"/>
         </div>
     </div>
     <% } %>
 
 </div>
+
+<script>
+    for (var i = 0; i < '<%=data.length%>'; i++) {
+        if (document.getElementById("select_user").options[i].value === '<%=requestUserID%>') {
+            document.getElementById("select_user").selectedIndex = i;
+        }
+    }
+</script>

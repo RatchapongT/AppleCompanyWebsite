@@ -33,7 +33,7 @@
                     </label>
                     <label class="checkbox" for="checkbox2">
                         <input name="thai" type="checkbox"
-                               value=1  id="checkbox2" data-toggle="checkbox">
+                               value=1 id="checkbox2" data-toggle="checkbox">
                         Thai
                     </label>
                 </div>
@@ -83,23 +83,22 @@
         </div>
     </form>
 
-    <% if (typeof error != 'undefined' & error != "") { %>
-
-    <div align="center" style="margin:25px auto; width:200px;">
-        <% if (error == "Successfully Added") { %>
-        <div class="form-group has-success">
+    <% if (typeof failureMessage != 'undefined' && failureMessage != '') { %>
+    <div class="form-group has-error">
+        <div align="center" style="margin:25px auto; width:200px;">
             <input style="text-align:center" type="text" value=""
-                   placeholder="<%= error %>" class="form-control"/>
+                   placeholder="<%= failureMessage %>" class="form-control">
         </div>
-        <% } else { %>
-        <div class="form-group has-error">
-            <input style="text-align:center" type="text" value=""
-                   placeholder="<%= error %>" class="form-control"/>
-        </div>
-        <% } %>
-
     </div>
+    <% } %>
 
+    <% if (typeof successMessage != 'undefined' && successMessage != '') { %>
+    <div class="form-group has-success">
+        <div align="center" style="margin:25px auto; width:200px;">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= successMessage %>" class="form-control">
+        </div>
+    </div>
     <% } %>
 
     <br></br>
@@ -116,17 +115,17 @@
             <th style="text-align:center" class="no-sort">Delete Customer</th>
         </tr>
         </thead>
-        <% for(var i = 0; i < data.length; i++) { %>
+        <% for(var i = 0; i < customerObject.length; i++) { %>
         <tr>
-            <td align="center"><%= data[i].customerID %></td>
-            <td align="center"><%= data[i].paymentCondition %></td>
-            <% date = new Date(data[i].created) %>
+            <td align="center"><%= customerObject[i].customerID %></td>
+            <td align="center"><%= customerObject[i].paymentCondition %></td>
+            <% date = new Date(customerObject[i].created) %>
             <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
                 /<%= date.getFullYear() %></td>
-            <td align="center"><%= data[i].percent %> %</td>
-            <td align="center"><%= data[i].malay %></td>
-            <td align="center"><%= data[i].thai %></td>
-            <td align="center"><a href="/customers/delete/<%= data[i].id %>"
+            <td align="center"><%= customerObject[i].percent %> %</td>
+            <td align="center"><%= customerObject[i].malay %></td>
+            <td align="center"><%= customerObject[i].thai %></td>
+            <td align="center"><a href="/customers/delete/<%= customerObject[i].id %>"
                                   class="button"><span class="fui-cross"
                                                        style="color:#f93c3c"></span></a>
             </td>
