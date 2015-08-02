@@ -33,6 +33,7 @@ userSchema.pre('remove', function (next) {
                         if (err) throw err;
                         UserDetail.remove({_userDetail: userID}).exec();
                         Worker.remove({_profileDetail: userObject._id}).exec();
+                        WorkerCustomer.remove({_workerDetail: workerObject._id}).exec();
                         next();
                     });
             });
@@ -43,6 +44,7 @@ userSchema.pre('remove', function (next) {
                         if (err) throw err;
                         UserDetail.remove({_userDetail: userID}).exec();
                         Manager.remove({_profileDetail: userObject._id}).exec();
+                        ManagerWorker.remove({_managerDetail: managerObject._id}).exec();
                         next();
                     });
             });
@@ -109,6 +111,7 @@ customerSchema.path('customerID').validate(function (customerID, next) {
 
 customerSchema.pre('remove', function (next) {
     Bank.remove({_customerDetail: this._id}).exec();
+    WorkerCustomer.remove({_customerDetail: this._id}).exec();
     next();
 });
 
@@ -127,13 +130,17 @@ var systemBankSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
-var relationshipSchema = new Schema({
-    _customerDetail: {type: Schema.Types.ObjectId, ref: 'Customer'},
-    _userDetail: {type: Schema.Types.ObjectId, ref: 'User'},
+var managerWorkerSchema = new Schema({
+    _workerDetail: {type: Schema.Types.ObjectId, ref: 'Worker'},
     _managerDetail: {type: Schema.Types.ObjectId, ref: 'Manager'},
     created: {type: Date, default: Date.now}
 });
 
+var workerCustomerSchema = new Schema({
+    _customerDetail: {type: Schema.Types.ObjectId, ref: 'Customer'},
+    _workerDetail: {type: Schema.Types.ObjectId, ref: 'Worker'},
+    created: {type: Date, default: Date.now}
+});
 
 var User = mongoose.model('User', userSchema);
 var UserDetail = mongoose.model('UserDetail', userDetailSchema);
@@ -141,12 +148,16 @@ var Manager = mongoose.model('Manager', managerSchema);
 var Worker = mongoose.model('Worker', workerSchema);
 var Customer = mongoose.model('Customer', customerSchema);
 var Bank = mongoose.model('Bank', bankSchema);
-var Relationship = mongoose.model('Relationship', relationshipSchema);
+var ManagerWorker = mongoose.model('ManagerWorker', managerWorkerSchema);
+var WorkerCustomer = mongoose.model('WorkerCustomer', workerCustomerSchema);
 var SystemBank = mongoose.model('SystemBank', systemBankSchema);
 
 
 workerSchema.plugin(deepPopulate, {});
+managerSchema.plugin(deepPopulate, {});
 customerSchema.plugin(deepPopulate, {});
+workerCustomerSchema.plugin(deepPopulate, {});
+managerWorkerSchema.plugin(deepPopulate, {});
 
 module.exports = {
     User: User,
@@ -155,6 +166,7 @@ module.exports = {
     UserDetail: UserDetail,
     Manager: Manager,
     Worker: Worker,
-    Relationship: Relationship,
+    ManagerWorker: ManagerWorker,
+    WorkerCustomer: WorkerCustomer,
     SystemBank: SystemBank
 };

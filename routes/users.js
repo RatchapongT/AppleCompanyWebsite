@@ -80,15 +80,14 @@ router.get('/assign/:id?', function (req, res) {
             if (err) {
                 return res.send(err);
             }
-            databaseFunction.getOwnedCustomerList(req, function (err, ownedCustomerObject) {
+            databaseFunction.getWorkerCustomerRelationship(req, function (err, workerCustomerObject) {
                 if (err) {
                     return res.send(err);
                 }
-
                 return res.render('users/assign', {
                     title: 'Assign Customer',
                     workerObject: workerObject,
-                    ownedCustomerObject: ownedCustomerObject,
+                    workerCustomerObject: workerCustomerObject,
                     unownedCustomerObject: unownedCustomerObject,
                     requestWorkerID: req.params.id,
                     error: req.flash('error')
@@ -110,7 +109,7 @@ router.post('/assign', function (req, res) {
 });
 
 router.get('/delete_relationship/:customerID/:requestWorkerID', function (req, res, next) {
-    databaseFunction.deleteRelationship(req.params, function (err) {
+    databaseFunction.deleteWorkerCustomerRelationship(req.params, function (err) {
         if (err) {
             return res.send(err);
         }

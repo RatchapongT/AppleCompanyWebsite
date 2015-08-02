@@ -15,7 +15,7 @@
         if (selectedValue === "Other") {
 
             document.getElementById('other_field').type = 'text';
-        } else{
+        } else {
             document.getElementById('other_field').type = 'hidden';
         }
 
@@ -41,14 +41,13 @@
     <h2>System's Bank</h2>
 
 
-
-
     <form method="post" action="/users/payment" id="bank_form">
         <div align="center">
             <div class="login-form" style="width:350px; margin-top: 30px; ">
 
                 <div class="form-group">
-                    <input type="number" class="form-control login-field" value=""
+                    <input type="number" class="form-control login-field"
+                           value=""
                            placeholder="Bank Number" name="bankNumber"
                            required>
                 </div>
@@ -61,13 +60,13 @@
                 </div>
 
 
-
                 <div style="margin-bottom: 30px ">
                     Bank Type
                     <select name="bankType"
                             class="form-control select select-info"
-                            data-toggle="select" form="bank_form" id="default_field"
-                            onchange='GetSelectedTextValue()' >
+                            data-toggle="select" form="bank_form"
+                            id="default_field"
+                            onchange='GetSelectedTextValue()'>
                         <option value="BBL" selected> BBL</option>
                         <option value="TFB"> TFB</option>
                         <option value="SCB"> SCB</option>
@@ -76,10 +75,10 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <input  type="hidden" class="form-control login-field" value=""
+                    <input type="hidden" class="form-control login-field"
+                           value=""
                            placeholder="Other" name="bankType" id="other_field">
                 </div>
-
 
 
                 <input class="btn btn-primary btn-lg btn-block"
@@ -88,8 +87,6 @@
 
         </div>
     </form>
-
-
 
     <% if (typeof error != 'undefined' & error != "") { %>
 

@@ -12,8 +12,7 @@
 
 
 <div class="container">
-    <h2>Assign Manager</h2>
-
+    <h2>Assign Worker</h2>
 
     <div align="center">
         <div class="login-form"
@@ -25,43 +24,42 @@
 
                     <select class="form-control select select-info"
                             data-toggle="select" form="assign_form"
-                            name="manager_username" id="manager_username">
-                        <% for(var i = 0; i < dataManager.length; i++) { %>
-                        <% if(dataManager[i].username === searchUser.username) { %>
-
-                        <option selected value="<%= dataManager[i].username %>">
-                            <%= dataManager[i].username %>
-                            (<%= dataManager[i].nickname %>
-                            )
+                            name="requestManagerID" id="requestManagerID">
+                        <% for(var i = 0; i < managerObject.length; i++) { %>
+                        <% if (requestManagerID == undefined && i == 0) { %>
+                        <% requestManagerID = managerObject[0].id %>
+                        <option value=<%= managerObject[0].id %> selected><%= managerObject[0]._profileDetail._userDetail.username %>
+                            (<%= managerObject[0]._profileDetail.nickname %>)
+                        </option>
+                        <% } else if (requestManagerID == managerObject[i].id){ %>
+                        <option value=<%= managerObject[i].id %> selected><%= managerObject[i]._profileDetail._userDetail.username %>
+                            (<%= managerObject[i]._profileDetail.nickname %>)
                         </option>
                         <% } else { %>
-
-                        <option value="<%= dataManager[i].username %>">
-                            <%= dataManager[i].username %>
-                            (<%= dataManager[i].nickname %>
-                            )
+                        <option value=<%= managerObject[i].id %>><%= managerObject[i]._profileDetail._userDetail.username %>
+                            (<%= managerObject[i]._profileDetail.nickname %>)
                         </option>
                         <% } %>
                         <% } %>
                     </select>
+
                 </div>
                 <div class="form-group">
                     <strong>Worker</strong>
                     <select class="form-control select select-info"
                             data-toggle="select" form="assign_form"
-                            name="worker_username" id="worker_username">
-                        <% for(var i = 0; i < dataWorker.length; i++) { %>
+                            name="workerID" id="workerID">
+                        <% for(var i = 0; i < unownedWorkerObject.length; i++) { %>
                         <% if(i == 0) { %>
                         <option selected
-                                value="<%= dataWorker[i].username %>">
-                            <%= dataWorker[i].username %>
-                            (<%= dataWorker[i].nickname %>)
+                                value="<%= unownedWorkerObject[i].id %>">
+                            <%= unownedWorkerObject[i]._profileDetail._userDetail.username %>
+                            (<%= unownedWorkerObject[i]._profileDetail.nickname %>)
                         </option>
                         <% } else { %>
-                        <option value="<%= dataWorker[i].username %>">
-                            <%= dataWorker[i].username %>
-                            (<%= dataWorker[i].nickname %>
-                            )
+                        <option value="<%= unownedWorkerObject[i].id %>">
+                            <%= unownedWorkerObject[i]._profileDetail._userDetail.username %>
+                            (<%= unownedWorkerObject[i]._profileDetail.nickname %>)
                         </option>
                         <% } %>
                         <% } %>
@@ -71,28 +69,21 @@
                 <input style="width:200px"
                        class="btn btn-primary btn-lg btn-block"
                        type="submit" value="Assign" id="submit_button"/>
-
-
             </form>
+            <script>
+                if (<%=unownedWorkerObject.length%> ===0) {
+                    document.getElementById('workerID').disabled = true;
+                }
+                if (<%=managerObject.length%> ===0){
+                    document.getElementById('requestManagerID').disabled = true;
+                }
+                if (<%=managerObject.length%> ===0 || <%=unownedWorkerObject.length%> == 0){
+                    document.getElementById('submit_button').disabled = true;}
+            </script>
         </div>
 
 
     </div>
-
-
-    <script>
-        if (<%=dataManager.length%> === 0) {
-            document.getElementById('manager_username').disabled = true;
-        }
-        if (<%=dataWorker.length%> === 0) {
-            document.getElementById('worker_username').disabled = true;
-        }
-        if (<%=dataWorker.length%> === 0 || <%=dataManager.length%> == 0) {
-            document.getElementById('submit_button').disabled = true;
-        }
-    </script>
-
-
     <div align="center" style="margin:25px auto; width:280px;">
         <% if (typeof error != 'undefined' & error != "") { %>
         <div class="form-group has-success">
@@ -112,23 +103,27 @@
             <th style="text-align:center" class="no-sort">Delete</th>
         </tr>
         </thead>
-        <% for(var i = 0; i < dataRelationship.length; i++) { %>
+
+
+        <% for(var i = 0; i < managerWorkerObject.length; i++) { %>
         <tr>
-            <td align="center"><%= dataRelationship[i].manager %></td>
-            <td align="center"><%= dataRelationship[i].username %></td>
-            <% date = new Date(dataRelationship[i].created) %>
+            <td align="center"><%= managerWorkerObject[i]._managerDetail._profileDetail._userDetail.username %> (<%= managerWorkerObject[i]._managerDetail._profileDetail.nickname %>)</td>
+            <td align="center"><%= managerWorkerObject[i]._workerDetail._profileDetail._userDetail.username %> (<%= managerWorkerObject[i]._workerDetail._profileDetail.nickname %>)</td>
+            <% date = new Date(managerWorkerObject[i].created) %>
             <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
                 /<%= date.getFullYear() %></td>
             </td>
             <td align="center"><a
-                        href="/managers/delete_relationship/<%= dataRelationship[i].id %>/<%= dataRelationship[i].username %>/<%= dataRelationship[i].manager %>"
+                        href="/managers/delete_relationship/<%=managerWorkerObject[i]._workerDetail.id%>/<%=requestManagerID%>"
                         class="button"><span class="fui-cross"
                                              style="color:#f93c3c"></span></a>
             </td>
         </tr>
         <% } %>
+
     </table>
 </div>
+
 
 <% include ../partials/page/jsdefaults.ejs %>
 <script>

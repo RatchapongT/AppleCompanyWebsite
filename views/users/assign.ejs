@@ -75,7 +75,7 @@
                     document.getElementById('customerID').disabled = true;
                 }
                 if (<%=workerObject.length%> ===0){
-                    document.getElementById('username').disabled = true;
+                    document.getElementById('requestWorkerID').disabled = true;
                 }
                 if (<%=workerObject.length%> ===0 || <%=unownedCustomerObject.length%> == 0){
                     document.getElementById('submit_button').disabled = true;}
@@ -105,16 +105,16 @@
         </thead>
 
 
-        <% for(var i = 0; i < ownedCustomerObject.length; i++) { %>
+        <% for(var i = 0; i < workerCustomerObject.length; i++) { %>
         <tr>
-            <td align="center"><%= ownedCustomerObject[i]._workerDetail._profileDetail._userDetail.username %> (<%= ownedCustomerObject[i]._workerDetail._profileDetail.nickname %>)</td>
-            <td align="center"><%= ownedCustomerObject[i].customerID %> (<%= ownedCustomerObject[i].nickname %>)</td>
-            <% date = new Date(ownedCustomerObject[i].created) %>
+            <td align="center"><%= workerCustomerObject[i]._workerDetail._profileDetail._userDetail.username %> (<%= workerCustomerObject[i]._workerDetail._profileDetail.nickname %>)</td>
+            <td align="center"><%= workerCustomerObject[i]._customerDetail.customerID %> (<%= workerCustomerObject[i]._customerDetail.nickname %>)</td>
+            <% date = new Date(workerCustomerObject[i].created) %>
             <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
                 /<%= date.getFullYear() %></td>
             </td>
             <td align="center"><a
-                        href="/users/delete_relationship/<%=ownedCustomerObject[i].id%>/<%=requestWorkerID%>"
+                        href="/users/delete_relationship/<%=workerCustomerObject[i]._customerDetail.id%>/<%=requestWorkerID%>"
                         class="button"><span class="fui-cross"
                                              style="color:#f93c3c"></span></a>
             </td>

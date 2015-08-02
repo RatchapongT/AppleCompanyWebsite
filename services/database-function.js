@@ -4,8 +4,9 @@ var Manager = require('../models/databaseModels').Manager;
 var Worker = require('../models/databaseModels').Worker;
 var Customer = require('../models/databaseModels').Customer;
 var Bank = require('../models/databaseModels').Bank;
-var Relationship = require('../models/databaseModels').Relationship;
 var SystemBank = require('../models/databaseModels').SystemBank;
+var ManagerWorker = require('../models/databaseModels').ManagerWorker;
+var WorkerCustomer = require('../models/databaseModels').WorkerCustomer;
 
 var bcrypt = require('bcrypt');
 
@@ -147,31 +148,6 @@ exports.getCustomerList = function (input, next) {
     });
 };
 
-exports.assignCustomer = function (input, next) {
-
-    Customer.findByIdAndUpdate(input.customerID, {
-        $set: {
-            _workerDetail: input.requestWorkerID,
-        }
-    }, function (err, object) {
-        if (err) throw err;
-        next(err, object);
-    });
-
-
-};
-
-exports.deleteRelationship = function (input, next) {
-    Customer.findByIdAndUpdate(input.customerID, {
-        $unset: {
-            _workerDetail: 1,
-        }
-    }, function (err, object) {
-        if (err) throw err;
-        next(err, object);
-    });
-};
-
 exports.addCustomer = function (input, next) {
     if (input.nickname == '') {
         input.nickname = 'No Name';
@@ -214,27 +190,7 @@ exports.deleteCustomer = function (input, res, next) {
     });
 };
 
-exports.getUnownedCustomerList = function (input, next) {
-    Customer.find({_workerDetail : null}, function (err, object) {
-        if (err) throw err;
-        next(err, object);
 
-    });
-};
-
-exports.getOwnedCustomerList = function (input, next) {
-    Customer.find({_workerDetail : { $ne: null }}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
-        if (err) throw err;
-        next(err, object);
-    });
-};
-
-exports.getWorkerList = function (input, next) {
-    Worker.find().deepPopulate(['_profileDetail', '_profileDetail._userDetail']).exec(function (err, object) {
-        if (err) throw err;
-        next(err, object);
-    });
-};
 
 exports.editCustomerProfiles = function (input, next) {
     Customer.findByIdAndUpdate(input.editCustomerID, {
@@ -318,4 +274,128 @@ exports.deleteSystemBank = function (input, res, next) {
     });
 };
 
-/* RELATIONSHIP */
+/* RELATIONSHIP WORKER CUSTOMER*/
+
+exports.assignCustomer = function (input, next) {
+    Customer.findByIdAndUpdate(input.customerID, {
+        $set: {
+            _workerDetail: input.requestWorkerID,
+        }
+    }, function (err, object) {
+        if (err) throw err;
+        var newWorkerCustomer = new WorkerCustomer({
+            _workerDetail: input.requestWorkerID,
+            _customerDetail: input.customerID
+        });
+
+        newWorkerCustomer.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+            next(err, object);
+        });
+    });
+};
+
+exports.getUnownedCustomerList = function (input, next) {
+    Customer.find({_workerDetail : null}, function (err, object) {
+        if (err) throw err;
+        next(err, object);
+
+    });
+};
+
+exports.deleteWorkerCustomerRelationship = function (input, next) {
+    Customer.findByIdAndUpdate(input.customerID, {
+        $unset: {
+            _workerDetail: 1,
+        }
+    }, function (err, object) {
+        if (err) throw err;
+        WorkerCustomer.remove({_customerDetail: input.customerID}).exec();
+        next(err, object);
+    });
+};
+
+exports.getWorkerCustomerRelationship = function (input, next) {
+    WorkerCustomer.find().deepPopulate(['_customerDetail',
+        '_customerDetail._workerDetail',
+        '_customerDetail._workerDetail._profileDetail',
+        '_customerDetail._workerDetail._profileDetail._userDetail',
+        '_workerDetail',
+        '_workerDetail._profileDetail',
+        '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
+};
+
+exports.getWorkerList = function (input, next) {
+    Worker.find().deepPopulate(['_profileDetail', '_profileDetail._userDetail']).exec(function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
+};
+
+/* RELATIONSHIP WORKER CUSTOMER*/
+
+exports.assignWorker = function (input, next) {
+    Worker.findByIdAndUpdate(input.workerID, {
+        $set: {
+            _managerDetail: input.requestManagerID,
+        }
+    }, function (err, object) {
+        if (err) throw err;
+        var newManagerWorker = new ManagerWorker({
+            _managerDetail: input.requestManagerID,
+            _workerDetail: input.workerID
+        });
+
+        newManagerWorker.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+            next(err, object);
+        });
+    });
+};
+
+exports.getUnownedWorkerList = function (input, next) {
+    Worker.find({_managerDetail : null}).deepPopulate(['_profileDetail', '_profileDetail._userDetail']).exec(function (err, object) {
+        if (err) throw err;
+        next(err, object);
+
+    });
+};
+
+exports.deleteManagerWorkerRelationship = function (input, next) {
+    Worker.findByIdAndUpdate(input.workerID, {
+        $unset: {
+            _managerDetail: 1,
+        }
+    }, function (err, object) {
+        if (err) throw err;
+        ManagerWorker.remove({_workerDetail: input.workerID}).exec();
+        next(err, object);
+    });
+};
+
+exports.getManagerWorkerRelationship = function (input, next) {
+    ManagerWorker.find().deepPopulate(['_customerDetail',
+        '_workerDetail',
+        '_workerDetail._profileDetail',
+        '_workerDetail._profileDetail._userDetail',
+        '_managerDetail',
+        '_managerDetail._profileDetail',
+        '_managerDetail._profileDetail._userDetail']).exec(function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
+};
+
+exports.getManagerList = function (input, next) {
+    Manager.find().deepPopulate(['_profileDetail', '_profileDetail._userDetail']).exec(function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
+};
