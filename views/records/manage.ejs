@@ -10,7 +10,7 @@
 
 
 <div class="container">
-    <h2>Payment History (Thai)</h2>
+    <h2><%= title %></h2>
 
     <form method="post" id="date_form">
         <div align="center" style="margin-bottom: 50px">
@@ -26,7 +26,8 @@
     </form>
     <div align="center">
         <div class="login-form" style="width:150px; margin-top: 30px; ">
-            <form method="post" action="/records/lock-thai-page"
+            <% var submitLockString = "/records/lock-page/" + redirectRecordType;%>
+            <form method="post" action='<%=submitLockString%>'
                   id="locked_form">
                 <input type=hidden name="date" value="<%= requestDate %>">
                 <input type=hidden name="recordPageID"
@@ -125,8 +126,8 @@
     </div>
 
     <% } else { %>
-    <form method="post" action="/records/manage-thai/update-entry/"
-          id="record_form">
+    <% var submitFormString = "/records/manage/" + redirectRecordType + "/update-entry";%>
+    <form method="post" id="record_form" action= '<%=submitFormString%>'>
         <input type=hidden name="date" value="<%= requestDate %>">
         <input type=hidden name="recordPageID" value="<%= recordPageID %>">
         <% for (var i = 0; i < organizedEntryObject.length; i++) { %>
@@ -201,7 +202,7 @@
         <div align="center">
             <input style="width: 300px; margin-bottom: 50px; margin-top: 60px"
                    class="btn btn-primary btn-lg btn-block"
-                   type="submit" value="Save Record">
+                   type="submit" value="Save Record" >
 
         </div>
     </form>
@@ -251,9 +252,11 @@
         var unformatted = document.getElementById('date_input').value;
         var result = unformatted.split("/");
         var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
-        document.getElementById("date_form").action = "/records/manage-thai/initialize-record/" + select;
+        document.getElementById("date_form").action = "/records/manage" + redirectRecordType + "/initialize-record/" + select;
         document.getElementById("date_form").submit();
     }
+
+
 </script>
 
 

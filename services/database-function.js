@@ -151,6 +151,23 @@ exports.getCustomerList = function (input, next) {
         next(err, object);
     });
 };
+exports.getCustomerTypeList = function (input, next) {
+    if (input.malay) {
+        Customer.find({malay : true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+            if (err) throw err;
+            next(err, object);
+        });
+    } else if (input.thai) {
+        Customer.find({thai : true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+            if (err) throw err;
+            next(err, object);
+        });
+    } else {
+        next(null);
+    }
+
+};
+
 
 exports.addCustomer = function (input, next) {
     if (input.nickname == '') {
@@ -462,6 +479,7 @@ exports.createEntry = function (input, next) {
                 '_managerDetail._profileDetail',
                 '_managerDetail._profileDetail._userDetail']).exec(function (err, managerWorkerObject) {
                 if (err) throw err;
+
                 callback(null, managerWorkerObject);
             });
         },
@@ -474,6 +492,7 @@ exports.createEntry = function (input, next) {
                 '_workerDetail._profileDetail',
                 '_workerDetail._profileDetail._userDetail']).exec(function (err, workerCustomerObject) {
                 if (err) throw err;
+
                 callback(null, managerWorkerObject, workerCustomerObject);
             });
         },
@@ -499,7 +518,7 @@ exports.createEntry = function (input, next) {
 
                     if (workerCustomerData._workerDetail._profileDetail._id.equals(managerWorkerData._workerDetail._profileDetail._id)) {
 
-
+                        console.log(_customerMalay);
                         if (_customerMalay && input.customerType == 'Malay') {
                             relationshipModel.push(
                                 {
@@ -659,6 +678,7 @@ exports.findEntry = function (input, next) {
             });
         });
 
+
         RecordPage.update({
             recordDate: input.date,
             recordType: input.customerType
@@ -716,8 +736,11 @@ exports.updateEntry = function (input, next) {
 
 
 exports.getCustomerFinancialHistory = function (input, next) {
-    Entry.find({customer_id : input}, function(err, object) {
-       if (err) throw err;
+    Entry.find({
+        customer_id: input.requestCustomer_id,
+        customerType: input.requestRecordType
+    }, function (err, object) {
+        if (err) throw err;
         next(err, underscore.sortBy(object, 'recordDate'));
     });
 }

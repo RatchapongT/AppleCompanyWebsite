@@ -13,7 +13,9 @@
     <h2>Customer's Central Sheet</h2>
 
     <div align="center">
-        <form name="search_customer" method="post" action="/records/centralsheet-malay"
+        <% var submitLockString = "/records/centralsheet/" + redirectRecordType;%>
+
+        <form name="search_customer" method="post" action='<%=submitLockString%>'
               id="search_customer">
 
             <select name="request_customer_id"
