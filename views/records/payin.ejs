@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+    <% include ../partials/page/jsdefaults.ejs %>
+</header>
+
+
+<div class = "container">
+    <h2><%= title %></h2>
+
+    <div align = "center">
+        <div class = "login-form" style = "width:350px; margin-top: 30px; ">
+            <form method = "post" id = "date_form">
+
+                <div class = "input-group date" id = "datepicker"
+                     style = "width: 300px; margin-bottom: 30px">
+                    <input type = "text" class = "form-control"
+                           style = "text-align: center" value = ""
+                           name = "date_input" onchange = 'submitParseDate()'
+                           id = "date_input">
+            <span class = "input-group-addon"><i
+                        class = "fui-list-small-thumbnails"></i></span>
+                </div>
+
+            </form>
+            <form method = "post" id = "customer_form">
+                <select name = "request_customer_id" id="request_customer_id"
+                        class = "form-control select select-info"
+                        data-toggle = "select" form = "customer_form"
+                        onchange = 'submitCustomerForm()' style="margin-bottom: 30px;">
+                    <% for(var i = 0; i < customerObject.length; i++) { %>
+
+                    <% if (requestCustomerID == customerObject[i].id){ %>
+                    <% var requestCustomer = customerObject[i]%>
+                    <option value = <%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
+                        (<%= customerObject[i].nickname %>)
+                    </option>
+                    <% } else { %>
+                    <option value =<%= customerObject[i].id %>><%= customerObject[i].customerID %>
+                        (<%= customerObject[i].nickname %>)
+                    </option>
+                    <% } %>
+                    <% } %>
+                </select>
+            </form>
+            <% var submitString = '/records/payin/' + redirectRecordType%>
+            <form method = "post" id = "payment_form" action = '<%=submitString%>'>
+
+                <input type = "hidden" name = "requestDate"
+                       id = "requestDate" value = '<%=requestDate%>'>
+
+                <input type = "hidden" name = "requestPaymentID"
+                       id = "requestPaymentID" value = '<%=requestPaymentID%>'>
+
+                <input type = "hidden" name = "requestCustomerID" id = "requestCustomerID"
+                       value = '<%=requestCustomerID%>'>
+
+
+                <div class = "form-group">
+                    PayIn
+                    <input type = "number" class = "form-control login-field"
+                           placeholder = "Pay In" name = "payIn"
+                           id = "payIn" value = ''>
+                </div>
+                <div class = "form-group">
+                    Customer Transfer To:
+                    <select name = "requestBankID"
+                            class = "form-control select select-info"
+                            data-toggle = "select" form = "payment_form" style="margin-bottom: 30px;">
+                        <% for(var i = 0; i < systemBankObject.length; i++) { %>
+                        <% if (requestPaymentID == systemBankObject[i].id){ %>
+                        <option value = <%= systemBankObject[i].id %> selected><%= systemBankObject[i].bankName %>
+                            (<%= systemBankObject[i].bankType %>)
+                        </option>
+                        <% } else { %>
+                        <option value =<%= systemBankObject[i].id %>><%= systemBankObject[i].bankName %>
+                            (<%= systemBankObject[i].bankType %>)
+                        </option>
+                        <% } %>
+                        <% } %>
+                    </select>
+                </div>
+                <input class = "btn btn-primary btn-lg btn-block"
+                       type = "submit" value = "Save Edit">
+            </form>
+
+        </div>
+
+        <table id="sort" class="table">
+            <thead>
+            <tr>
+                <th style="text-align:center" class="sort-default">Customer</th>
+                <th style="text-align:center" class="sort-default">Pay In</th>
+                <th style="text-align:center" class="sort-default">Transfer To</th>
+                <th style="text-align:center" class="sort-default">Time</th>
+                <th style="text-align:center" class="sort-default">Delete</th>
+
+            </tr>
+            </thead>
+            <% for(var i = 0; i < payInDetails.length; i++) { %>
+            <tr>
+                <td align="center"><%= requestCustomer.customerID %> (<%= requestCustomer.nickname %>)</td>
+                <td align="center"><%= payInDetails[i].payin %></td>
+                <td align="center"><%= payInDetails[i].paymentMethodBankName %> (<%= payInDetails[i].paymentMethodBankType %>)</td>
+                <% var time = new Date(payInDetails[i].created).toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3") %>
+                <td align="center"><%= time %></td>
+                <td align="center"><a
+                            href="/records/payin/<%= redirectRecordType %>/delete/<%= requestDate %>/<%= requestCustomerID %>/<%=requestPaymentID%>/<%= entryObjectID %>/<%= payInDetails[i].id %>"
+                            class="button"><span class="fui-cross"
+                                                 style="color:#f93c3c"></span></a>
+                </td>
+            </tr>
+            <% } %>
+        </table>
+    </div>
+
+
+    <script type = "text/javascript">
+        $(document).ready(function () {
+            $('#datepicker').datepicker({
+                format: "dd/mm/yyyy",
+                orientation: 'auto top',
+                autoclose: true,
+                todayHighlight: true
+            });
+            var date = new Date("<%=requestDate%>");
+
+            if ((date.getMonth() + 1) < 10) {
+                if (date.getDate() < 10) {
+                    var selectDate = '0' + date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                } else {
+                    var selectDate = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                }
+
+            } else {
+                if (date.getDate() < 10) {
+                    var selectDate = '0' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                } else {
+                    var selectDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                }
+            }
+            document.getElementById('date_input').value = selectDate;
+
+        });
+
+        function submitParseDate() {
+            var unformatted = document.getElementById('date_input').value;
+            var result = unformatted.split("/");
+            var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
+            document.getElementById("date_form").action = '/records/payin/' + '<%=redirectRecordType%>' + '/' + select + '/' + '<%=requestCustomerID%>' + '/' + '<%=requestPaymentID%>';
+            document.getElementById("date_form").submit();
+        }
+
+        function submitCustomerForm() {
+
+            var select = document.getElementById('request_customer_id').value;
+            document.getElementById("customer_form").action = '/records/payin/' + '<%=redirectRecordType%>' + '/' + '<%=requestDate%>' + '/' + select + '/' + '<%=requestPaymentID%>';
+            document.getElementById("customer_form").submit();
+        }
+    </script>

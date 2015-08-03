@@ -252,7 +252,7 @@
         var unformatted = document.getElementById('date_input').value;
         var result = unformatted.split("/");
         var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
-        document.getElementById("date_form").action = "/records/manage" + redirectRecordType + "/initialize-record/" + select;
+        document.getElementById("date_form").action = "/records/initialize/" + '<%=redirectRecordType%>' + "/manage/" + select;
         document.getElementById("date_form").submit();
     }
 

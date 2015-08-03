@@ -150,6 +150,15 @@ var recordPageSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
+var payInSchema = new Schema({
+    payin: {type: Number, Default: 0},
+    paymentMethod_id: String,
+    paymentMethodBankName: String,
+    paymentMethodBankNumber: Number,
+    paymentMethodBankType: String,
+    created: {type: Date, default: Date.now}
+});
+
 var entrySchema = new Schema({
     _recordDetail: {type: Schema.Types.ObjectId, ref: 'RecordPage'},
     recordDate: Date,
@@ -164,9 +173,15 @@ var entrySchema = new Schema({
     workerNickname: String,
     strike: {type: Number, Default: 0},
     sale: {type: Number, Default: 0},
+    payIn: {type: Number, default: 0},
+    payOut: {type: Number, default: 0},
+    balance: {type: Number, Default: 0},
+    payInDetails: [payInSchema],
     customerType: String,
     created: {type: Date, default: Date.now}
 });
+
+
 
 var User = mongoose.model('User', userSchema);
 var UserDetail = mongoose.model('UserDetail', userDetailSchema);

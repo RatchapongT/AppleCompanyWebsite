@@ -20,20 +20,17 @@ exports.findUser = function (username, next) {
         next(err, user);
     });
 };
-
 exports.findUserDetailById = function (id, next) {
     UserDetail.findById(id).populate('_userDetail').exec(function (err, object) {
         next(err, object);
     });
 };
-
 exports.getUserDetailList = function (input, next) {
     UserDetail.find({}).populate('_userDetail', 'username created').exec(function (err, object) {
         if (err) throw err;
         next(err, object);
     });
 };
-
 exports.addUser = function (input, next) {
     if (input.nickname == '') {
         input.nickname = 'No Name';
@@ -114,7 +111,6 @@ exports.addUser = function (input, next) {
         });
     });
 };
-
 exports.editUserProfiles = function (input, next) {
     UserDetail.findByIdAndUpdate(input.editUserID, {
         $set: {
@@ -127,7 +123,6 @@ exports.editUserProfiles = function (input, next) {
         next(err, object);
     });
 };
-
 exports.deleteUser = function (input, res, next) {
     User.findById(input, function (err, object) {
         if (err) return next(err);
@@ -144,7 +139,6 @@ exports.findCustomer = function (customerID, next) {
         next(err, user);
     });
 };
-
 exports.getCustomerList = function (input, next) {
     Customer.find().deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
         if (err) throw err;
@@ -153,22 +147,19 @@ exports.getCustomerList = function (input, next) {
 };
 exports.getCustomerTypeList = function (input, next) {
     if (input.malay) {
-        Customer.find({malay : true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+        Customer.find({malay: true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
             if (err) throw err;
             next(err, object);
         });
     } else if (input.thai) {
-        Customer.find({thai : true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+        Customer.find({thai: true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
             if (err) throw err;
             next(err, object);
         });
     } else {
         next(null);
     }
-
 };
-
-
 exports.addCustomer = function (input, next) {
     if (input.nickname == '') {
         input.nickname = 'No Name';
@@ -200,7 +191,6 @@ exports.addCustomer = function (input, next) {
         next(null);
     });
 };
-
 exports.deleteCustomer = function (input, res, next) {
     Customer.findById(input, function (err, object) {
         if (err) return next(err);
@@ -209,8 +199,6 @@ exports.deleteCustomer = function (input, res, next) {
         });
     });
 };
-
-
 exports.editCustomerProfiles = function (input, next) {
     Customer.findByIdAndUpdate(input.editCustomerID, {
         $set: {
@@ -236,7 +224,6 @@ exports.getBankList = function (input, next) {
         next(err, object);
     });
 };
-
 exports.addBank = function (input, next) {
     var newBank = new Bank({
         _customerDetail: input.customerID,
@@ -252,7 +239,6 @@ exports.addBank = function (input, next) {
         next(null);
     });
 };
-
 exports.deleteBank = function (input, res, next) {
     Bank.findById(input, function (err, object) {
         if (err) return next(err);
@@ -261,14 +247,12 @@ exports.deleteBank = function (input, res, next) {
         });
     });
 };
-
 exports.getSystemBankList = function (input, next) {
     SystemBank.find({}, function (err, object) {
         if (err) throw err;
         next(err, object);
     });
 };
-
 exports.addSystemBank = function (input, next) {
     var newSystemBank = new SystemBank({
         bankNumber: input.bankNumber,
@@ -283,7 +267,6 @@ exports.addSystemBank = function (input, next) {
         next(null);
     });
 };
-
 exports.deleteSystemBank = function (input, res, next) {
     SystemBank.findById(input, function (err, object) {
         if (err) return next(err);
@@ -315,7 +298,6 @@ exports.assignCustomer = function (input, next) {
         });
     });
 };
-
 exports.getUnownedCustomerList = function (input, next) {
     Customer.find({_workerDetail: null}, function (err, object) {
         if (err) throw err;
@@ -323,7 +305,6 @@ exports.getUnownedCustomerList = function (input, next) {
 
     });
 };
-
 exports.deleteWorkerCustomerRelationship = function (input, next) {
     Customer.findByIdAndUpdate(input.customerID, {
         $unset: {
@@ -335,7 +316,6 @@ exports.deleteWorkerCustomerRelationship = function (input, next) {
         next(err, object);
     });
 };
-
 exports.getWorkerCustomerRelationship = function (input, next) {
     WorkerCustomer.find().deepPopulate(['_customerDetail',
         '_customerDetail._workerDetail',
@@ -348,7 +328,6 @@ exports.getWorkerCustomerRelationship = function (input, next) {
         next(err, object);
     });
 };
-
 exports.getWorkerList = function (input, next) {
     Worker.find().deepPopulate(['_profileDetail', '_profileDetail._userDetail']).exec(function (err, object) {
         if (err) throw err;
@@ -378,7 +357,6 @@ exports.assignWorker = function (input, next) {
         });
     });
 };
-
 exports.getUnownedWorkerList = function (input, next) {
     Worker.find({_managerDetail: null}).deepPopulate(['_profileDetail', '_profileDetail._userDetail']).exec(function (err, object) {
         if (err) throw err;
@@ -386,7 +364,6 @@ exports.getUnownedWorkerList = function (input, next) {
 
     });
 };
-
 exports.deleteManagerWorkerRelationship = function (input, next) {
     Worker.findByIdAndUpdate(input.workerID, {
         $unset: {
@@ -398,7 +375,6 @@ exports.deleteManagerWorkerRelationship = function (input, next) {
         next(err, object);
     });
 };
-
 exports.getManagerWorkerRelationship = function (input, next) {
     ManagerWorker.find().deepPopulate(['_customerDetail',
         '_workerDetail',
@@ -411,7 +387,6 @@ exports.getManagerWorkerRelationship = function (input, next) {
         next(err, object);
     });
 };
-
 exports.getManagerList = function (input, next) {
     Manager.find().deepPopulate(['_profileDetail', '_profileDetail._userDetail']).exec(function (err, object) {
         if (err) throw err;
@@ -427,11 +402,9 @@ exports.findRecord = function (input, next) {
         recordDate: input.date,
         recordType: input.recordType
     }, function (err, object) {
-        if (err) throw err;
         next(err, object);
     });
 };
-
 exports.findRecordByID = function (input, next) {
     RecordPage.findById(input
         , function (err, object) {
@@ -439,7 +412,6 @@ exports.findRecordByID = function (input, next) {
             next(err, object);
         });
 };
-
 exports.initializeRecord = function (input, next) {
 
     var newRecordPage = new RecordPage({
@@ -454,7 +426,6 @@ exports.initializeRecord = function (input, next) {
         next(null);
     });
 };
-
 exports.lockPage = function (input, next) {
 
     RecordPage.findOneAndUpdate({_id: input.recordPageID}, {
@@ -518,7 +489,6 @@ exports.createEntry = function (input, next) {
 
                     if (workerCustomerData._workerDetail._profileDetail._id.equals(managerWorkerData._workerDetail._profileDetail._id)) {
 
-                        console.log(_customerMalay);
                         if (_customerMalay && input.customerType == 'Malay') {
                             relationshipModel.push(
                                 {
@@ -588,7 +558,14 @@ exports.createEntry = function (input, next) {
                             workerNickname: relationshipModelData.workerNickname,
                             customerType: relationshipModelData.customerType
                         },
-                        $setOnInsert: {strike: 0, sale: 0}
+                        $setOnInsert: {
+                            strike: 0,
+                            sale: 0,
+                            payIn: 0,
+                            payOut: 0,
+                            balance: 0,
+                            payInDetails: []
+                        }
                     }
                     , {upsert: true}, function (err, object) {
                         if (err) {
@@ -602,7 +579,6 @@ exports.createEntry = function (input, next) {
         next();
     });
 };
-
 exports.findEntry = function (input, next) {
 
     Entry.find({
@@ -692,7 +668,6 @@ exports.findEntry = function (input, next) {
         });
     });
 };
-
 exports.updateEntry = function (input, next) {
     if (typeof(input.customer_id) === 'object') {
         async.each(input.customer_id, function (customer_id, callback) {
@@ -733,8 +708,6 @@ exports.updateEntry = function (input, next) {
     }
 
 }
-
-
 exports.getCustomerFinancialHistory = function (input, next) {
     Entry.find({
         customer_id: input.requestCustomer_id,
@@ -743,4 +716,114 @@ exports.getCustomerFinancialHistory = function (input, next) {
         if (err) throw err;
         next(err, underscore.sortBy(object, 'recordDate'));
     });
+}
+
+exports.getRecordInfo = function (input, next) {
+    RecordPage.findOne({
+        recordDate: input.date,
+        recordType: input.recordType
+    }, function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
+}
+
+exports.updatePayIn = function (input, next) {
+    async.waterfall([
+        function(callback) {
+            SystemBank.findOne({_id: input.requestBankID}, function (err, bankObject) {
+                Entry.findOneAndUpdate({
+                    recordDate: input.requestDate,
+                    customer_id: input.requestCustomerID,
+                    customerType: input.customerType
+                }, {
+                    $push: {
+                        "payInDetails": {
+                            payin: input.payIn,
+                            paymentMethod_id: bankObject.id,
+                            paymentMethodBankName: bankObject.bankName,
+                            paymentMethodBankNumber: bankObject.bankNumber,
+                            paymentMethodBankType: bankObject.bankType
+                        }
+                    }
+                }, function (err, entryObject) {
+                    callback(null, entryObject.id);
+                });
+            });
+        },
+        function(entryObjectID, callback) {
+            Entry.findOne({
+                _id: entryObjectID
+            }, function (err, entryObject) {
+                callback(null, entryObject);
+            });
+        },
+        function(entryObject, callback) {
+            var payInArray = underscore.pluck(entryObject.payInDetails, 'payin');
+            var sum = underscore.reduce(payInArray, function(memo, num){ return memo + num; }, 0);
+            Entry.findOneAndUpdate({
+                _id: entryObject.id,
+            }, {
+                $set: {
+                    "payIn": sum
+                }
+            }, function (err, recordObject) {
+                callback(null, 'done');
+            });
+        }
+    ], function (err, result) {
+        next(err, result)
+    });
+}
+
+exports.getEntryPayIn = function (input, next) {
+    Entry.findOne({
+        recordDate: input.requestDate,
+        customer_id: input.requestCustomerID,
+        customerType: input.requestRecordType
+    }, 'payInDetails', function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    })
+}
+
+exports.deletePayIn = function (input, next) {
+    async.waterfall([
+        function(callback) {
+            Entry.findOneAndUpdate({
+                _id: input.entry_id
+            }, {
+                $pull: {
+                    "payInDetails": {
+                        _id: input.delete_id
+                    }
+                }
+            }, function (err, entryObject) {
+                callback(null);
+            });
+        },
+        function(callback) {
+            Entry.findOne({
+                _id: input.entry_id
+            }, function (err, entryObject) {
+                callback(null, entryObject);
+            });
+        },
+        function(entryObject, callback) {
+            var payInArray = underscore.pluck(entryObject.payInDetails, 'payin');
+            var sum = underscore.reduce(payInArray, function(memo, num){ return memo + num; }, 0);
+            Entry.findOneAndUpdate({
+                _id: entryObject.id,
+            }, {
+                $set: {
+                    "payIn": sum
+                }
+            }, function (err, recordObject) {
+                callback(null, 'done');
+            });
+        }
+    ], function (err, recordObject) {
+        next(err, recordObject)
+    });
+
 }
