@@ -151,7 +151,16 @@ var recordPageSchema = new Schema({
 });
 
 var payInSchema = new Schema({
-    payin: {type: Number, Default: 0},
+    payIn: {type: Number, Default: 0},
+    paymentMethod_id: String,
+    paymentMethodBankName: String,
+    paymentMethodBankNumber: Number,
+    paymentMethodBankType: String,
+    created: {type: Date, default: Date.now}
+});
+
+var payOutSchema = new Schema({
+    payOut: {type: Number, Default: 0},
     paymentMethod_id: String,
     paymentMethodBankName: String,
     paymentMethodBankNumber: Number,
@@ -177,6 +186,7 @@ var entrySchema = new Schema({
     payOut: {type: Number, default: 0},
     balance: {type: Number, Default: 0},
     payInDetails: [payInSchema],
+    payOutDetails: [payOutSchema],
     customerType: String,
     created: {type: Date, default: Date.now}
 });

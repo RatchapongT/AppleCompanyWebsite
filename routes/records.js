@@ -47,7 +47,6 @@ router.get('/initialize/:recordType/:page/:date?/:customer_id?/:payment_id?', fu
                     if (err) {
                         return res.send(err);
                     }
-
                     if (req.params.customer_id != undefined && req.params.payment_id != undefined) {
                         return res.redirect('/records/initialize/' + req.params.recordType + '/' + req.params.page + '/' + requestDate + '/' + req.params.customer_id + '/' + req.params.payment_id);
 
@@ -79,7 +78,12 @@ router.get('/initialize/:recordType/:page/:date?/:customer_id?/:payment_id?', fu
                     }
 
                     if (req.params.page == 'payout') {
-                        return res.redirect('/records/payout/' + req.params.recordType + '/' + requestDate);
+                        if (req.params.customer_id != undefined && req.params.payment_id != undefined) {
+                            return res.redirect('/records/payout/' + req.params.recordType + '/' + requestDate + '/' + req.params.customer_id + '/' + req.params.payment_id);
+
+                        } else {
+                            return res.redirect('/records/payout/' + req.params.recordType + '/' + requestDate);
+                        }
                     }
 
                     if (req.params.page == 'manage') {
@@ -195,37 +199,40 @@ router.get('/payin/:recordType/:date/:customer_id?/:payment_id?', function (req,
             if (err) {
                 return res.send(err);
             }
-            databaseFunction.getCustomerTypeList(reqInput, function (err, customerObject) {
-                if (err) {
-                    return res.send(err);
-                }
-                var requestPayment_id = req.params.payment_id ? req.params.payment_id : systemBankObject[0]._id;
-                var requestCustomer_id = req.params.customer_id ? req.params.customer_id : customerObject[0]._id;
-
-                var entryInput = {
-                    requestDate: requestDate,
-                    requestCustomerID: requestCustomer_id,
-                    requestRecordType: requestRecordType
-                }
-                databaseFunction.getEntryPayIn(entryInput, function (err, entryObject) {
+            if (systemBankObject[0] != undefined) {
+                databaseFunction.getCustomerTypeList(reqInput, function (err, customerObject) {
                     if (err) {
                         return res.send(err);
                     }
-                    return res.render('records/payin', {
-                        title: 'Pay In (' + requestRecordType + ')',
-                        customerObject: customerObject,
-                        systemBankObject: systemBankObject,
-                        requestPaymentID: requestPayment_id,
-                        requestCustomerID: requestCustomer_id,
+                    var requestPayment_id = req.params.payment_id ? req.params.payment_id : systemBankObject[0]._id;
+                    var requestCustomer_id = req.params.customer_id ? req.params.customer_id : customerObject[0]._id;
+
+                    var entryInput = {
                         requestDate: requestDate,
-                        redirectRecordType: req.params.recordType,
-                        entryObjectID : entryObject.id,
-                        payInDetails: entryObject.payInDetails
+                        requestRecordType: requestRecordType
+                    }
+                    databaseFunction.getEntryPayIn(entryInput, function (err, entryObject) {
+                        if (err) {
+                            return res.send(err);
+                        }
+                        console.log(entryObject);
+                        return res.render('records/payin', {
+                            title: 'Pay In (' + requestRecordType + ')',
+                            customerObject: customerObject,
+                            systemBankObject: systemBankObject,
+                            requestPaymentID: requestPayment_id,
+                            requestCustomerID: requestCustomer_id,
+                            requestDate: requestDate,
+                            redirectRecordType: req.params.recordType,
+                            entryObject: entryObject
+                        });
                     });
+
+
                 });
-
-
-            });
+            } else {
+                return res.send('Please create system bank.');
+            }
         });
 
     } else {
@@ -275,6 +282,131 @@ router.post('/payin/:recordType', function (req, res) {
     }
 });
 
+router.get('/payin/:recordType/delete/:date/:customer_id/:payment_id/:entry_id/:delete_id' , function (req, res, next) {
+    databaseFunction.deletePayIn(req.params, function(err) {
+        if (err) {
+            return res.send(err);
+        }
+        return res.redirect('/records/payin/' + req.params.recordType + '/' + req.params.date + '/' + req.params.customer_id + '/' + req.params.payment_id);
+    });
+});
+
+
+
+router.get('/payout/:recordType/:date/:customer_id?/:payment_id?', function (req, res) {
+    if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
+        var requestDate = req.params.date;
+        var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
+        var reqInput = {
+            malay: req.params.recordType == 'malay',
+            thai: req.params.recordType == 'thai'
+        }
+        databaseFunction.getSystemBankList(req, function (err, systemBankObject) {
+            if (err) {
+                return res.send(err);
+            }
+            if (systemBankObject[0] != undefined) {
+                databaseFunction.getCustomerTypeList(reqInput, function (err, customerObject) {
+                    if (err) {
+                        return res.send(err);
+                    }
+                    var requestPayment_id = req.params.payment_id ? req.params.payment_id : systemBankObject[0]._id;
+                    var requestCustomer_id = req.params.customer_id ? req.params.customer_id : customerObject[0]._id;
+
+                    var entryInput = {
+                        requestDate: requestDate,
+                        requestRecordType: requestRecordType
+                    }
+                    databaseFunction.getEntryPayOut(entryInput, function (err, entryObject) {
+                        if (err) {
+                            return res.send(err);
+                        }
+                        databaseFunction.getCustomerBankList(requestCustomer_id, function(err, customerBankObject) {
+                            if (err) {
+                                return res.send(err);
+                            }
+                            console.log(entryObject);
+                            return res.render('records/payout', {
+                                title: 'Pay Out (' + requestRecordType + ')',
+                                customerObject: customerObject,
+                                systemBankObject: systemBankObject,
+                                requestPaymentID: requestPayment_id,
+                                requestCustomerID: requestCustomer_id,
+                                requestDate: requestDate,
+                                redirectRecordType: req.params.recordType,
+                                entryObject : entryObject,
+                                customerBankObject: customerBankObject
+                            });
+                        });
+
+                    });
+
+
+                });
+            } else {
+                return res.send('Please create system bank.');
+            }
+
+        });
+
+    } else {
+        return res.send("Invalid Request");
+    }
+});
+
+router.post('/payout/:recordType/:date/:customer_id/:payment_id', function (req, res) {
+    if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
+        return res.redirect('/records/initialize/' + req.params.recordType + '/payout/' + req.params.date + '/' + req.params.customer_id + '/' + req.params.payment_id);
+    } else {
+        return res.send("Invalid Request");
+    }
+});
+
+router.post('/payout/:recordType', function (req, res) {
+    var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
+    if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
+        var recordInput = {
+            date: req.body.requestDate,
+            recordType: requestRecordType
+        };
+
+        databaseFunction.findRecord(recordInput, function (err, recordObject) {
+            if (recordObject.locked) {
+                return res.send("Document is locked");
+            } else {
+                var updateInput = {
+                    requestDate: req.body.requestDate,
+                    requestCustomerID: req.body.requestCustomerID,
+                    customerType: requestRecordType,
+                    requestBankID: req.body.requestPaymentID,
+                    payOut: req.body.payOut
+
+                };
+                databaseFunction.updatePayOut(updateInput, function (err) {
+                    if (err) {
+                        return res.send(err);
+                    }
+                    return res.redirect('/records/payout/' + req.params.recordType + '/' + req.body.requestDate + '/' + req.body.requestCustomerID + '/' + req.body.requestBankID);
+                });
+            }
+
+        });
+    } else {
+        return res.send("Invalid Request");
+    }
+});
+
+router.get('/payout/:recordType/delete/:date/:customer_id/:payment_id/:entry_id/:delete_id' , function (req, res, next) {
+    databaseFunction.deletePayOut(req.params, function(err) {
+        if (err) {
+            return res.send(err);
+        }
+        return res.redirect('/records/payout/' + req.params.recordType + '/' + req.params.date + '/' + req.params.customer_id + '/' + req.params.payment_id);
+    });
+});
+
+
+
 router.post('/lock-page/:recordType', function (req, res, next) {
     if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
         databaseFunction.lockPage(req.body, function (err, object) {
@@ -287,17 +419,6 @@ router.post('/lock-page/:recordType', function (req, res, next) {
         return res.send("Invalid Request");
     }
 });
-
-router.get('/payin/:recordType/delete/:date/:customer_id/:payment_id/:entry_id/:delete_id' , function (req, res, next) {
-    databaseFunction.deletePayIn(req.params, function(err) {
-        if (err) {
-            return res.send(err);
-        }
-        return res.redirect('/records/payin/' + req.params.recordType + '/' + req.params.date + '/' + req.params.customer_id + '/' + req.params.payment_id);
-    });
-});
-
-
 
 router.get('/centralsheet/:recordType/:id?', function (req, res) {
     if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {

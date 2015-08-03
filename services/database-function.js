@@ -564,7 +564,8 @@ exports.createEntry = function (input, next) {
                             payIn: 0,
                             payOut: 0,
                             balance: 0,
-                            payInDetails: []
+                            payInDetails: [],
+                            payOutDetails: []
                         }
                     }
                     , {upsert: true}, function (err, object) {
@@ -730,7 +731,7 @@ exports.getRecordInfo = function (input, next) {
 
 exports.updatePayIn = function (input, next) {
     async.waterfall([
-        function(callback) {
+        function (callback) {
             SystemBank.findOne({_id: input.requestBankID}, function (err, bankObject) {
                 Entry.findOneAndUpdate({
                     recordDate: input.requestDate,
@@ -739,7 +740,7 @@ exports.updatePayIn = function (input, next) {
                 }, {
                     $push: {
                         "payInDetails": {
-                            payin: input.payIn,
+                            payIn: input.payIn,
                             paymentMethod_id: bankObject.id,
                             paymentMethodBankName: bankObject.bankName,
                             paymentMethodBankNumber: bankObject.bankNumber,
@@ -751,16 +752,18 @@ exports.updatePayIn = function (input, next) {
                 });
             });
         },
-        function(entryObjectID, callback) {
+        function (entryObjectID, callback) {
             Entry.findOne({
                 _id: entryObjectID
             }, function (err, entryObject) {
                 callback(null, entryObject);
             });
         },
-        function(entryObject, callback) {
-            var payInArray = underscore.pluck(entryObject.payInDetails, 'payin');
-            var sum = underscore.reduce(payInArray, function(memo, num){ return memo + num; }, 0);
+        function (entryObject, callback) {
+            var payInArray = underscore.pluck(entryObject.payInDetails, 'payIn');
+            var sum = underscore.reduce(payInArray, function (memo, num) {
+                return memo + num;
+            }, 0);
             Entry.findOneAndUpdate({
                 _id: entryObject.id,
             }, {
@@ -777,11 +780,10 @@ exports.updatePayIn = function (input, next) {
 }
 
 exports.getEntryPayIn = function (input, next) {
-    Entry.findOne({
+    Entry.find({
         recordDate: input.requestDate,
-        customer_id: input.requestCustomerID,
         customerType: input.requestRecordType
-    }, 'payInDetails', function (err, object) {
+    }, function (err, object) {
         if (err) throw err;
         next(err, object);
     })
@@ -789,7 +791,7 @@ exports.getEntryPayIn = function (input, next) {
 
 exports.deletePayIn = function (input, next) {
     async.waterfall([
-        function(callback) {
+        function (callback) {
             Entry.findOneAndUpdate({
                 _id: input.entry_id
             }, {
@@ -802,21 +804,133 @@ exports.deletePayIn = function (input, next) {
                 callback(null);
             });
         },
-        function(callback) {
+        function (callback) {
             Entry.findOne({
                 _id: input.entry_id
             }, function (err, entryObject) {
                 callback(null, entryObject);
             });
         },
-        function(entryObject, callback) {
-            var payInArray = underscore.pluck(entryObject.payInDetails, 'payin');
-            var sum = underscore.reduce(payInArray, function(memo, num){ return memo + num; }, 0);
+        function (entryObject, callback) {
+            var payInArray = underscore.pluck(entryObject.payInDetails, 'payIn');
+            var sum = underscore.reduce(payInArray, function (memo, num) {
+                return memo + num;
+            }, 0);
             Entry.findOneAndUpdate({
                 _id: entryObject.id,
             }, {
                 $set: {
                     "payIn": sum
+                }
+            }, function (err, recordObject) {
+                callback(null, 'done');
+            });
+        }
+    ], function (err, recordObject) {
+        next(err, recordObject)
+    });
+
+}
+
+exports.getCustomerBankList = function (input, next) {
+    Bank.find({_customerDetail: input}).populate('_customerDetail').exec(function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
+};
+
+exports.getEntryPayOut = function (input, next) {
+    Entry.find({
+        recordDate: input.requestDate,
+        customerType: input.requestRecordType
+    }, function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    })
+}
+
+exports.updatePayOut = function (input, next) {
+    async.waterfall([
+        function (callback) {
+            SystemBank.findOne({_id: input.requestBankID}, function (err, bankObject) {
+                Entry.findOneAndUpdate({
+                    recordDate: input.requestDate,
+                    customer_id: input.requestCustomerID,
+                    customerType: input.customerType
+                }, {
+                    $push: {
+                        "payOutDetails": {
+                            payOut: input.payOut,
+                            paymentMethod_id: bankObject.id,
+                            paymentMethodBankName: bankObject.bankName,
+                            paymentMethodBankNumber: bankObject.bankNumber,
+                            paymentMethodBankType: bankObject.bankType
+                        }
+                    }
+                }, function (err, entryObject) {
+                    callback(null, entryObject.id);
+                });
+            });
+        },
+        function (entryObjectID, callback) {
+            Entry.findOne({
+                _id: entryObjectID
+            }, function (err, entryObject) {
+                callback(null, entryObject);
+            });
+        },
+        function (entryObject, callback) {
+            var payOutArray = underscore.pluck(entryObject.payOutDetails, 'payOut');
+            var sum = underscore.reduce(payOutArray, function (memo, num) {
+                return memo + num;
+            }, 0);
+            Entry.findOneAndUpdate({
+                _id: entryObject.id,
+            }, {
+                $set: {
+                    "payOut": sum
+                }
+            }, function (err, recordObject) {
+                callback(null, 'done');
+            });
+        }
+    ], function (err, result) {
+        next(err, result)
+    });
+}
+
+exports.deletePayOut = function (input, next) {
+    async.waterfall([
+        function (callback) {
+            Entry.findOneAndUpdate({
+                _id: input.entry_id
+            }, {
+                $pull: {
+                    "payOutDetails": {
+                        _id: input.delete_id
+                    }
+                }
+            }, function (err, entryObject) {
+                callback(null);
+            });
+        },
+        function (callback) {
+            Entry.findOne({
+                _id: input.entry_id
+            }, function (err, entryObject) {
+                callback(null, entryObject);
+            });
+        },
+        function (entryObject, callback) {
+            var payOutArray = underscore.pluck(entryObject.payOutDetails, 'payOut');
+            var sum = underscore.reduce(payOutArray, function (memo, num) {
+                return memo + num;
+            }, 0);
+            Entry.findOneAndUpdate({
+                _id: entryObject.id,
+            }, {
+                $set: {
+                    "payOut": sum
                 }
             }, function (err, recordObject) {
                 callback(null, 'done');
