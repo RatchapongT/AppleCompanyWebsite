@@ -63,7 +63,7 @@ app.use(restrict);
 app.use('/users', users);
 app.use('/managers', managers);
 app.use('/customers', customers);
-//app.use('/records', records);
+app.use('/records', records);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

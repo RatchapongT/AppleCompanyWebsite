@@ -92,7 +92,6 @@ var customerSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
-
 customerSchema.path('customerID').validate(function (customerID, next) {
     databaseFunction.findCustomer(customerID, function (err, user) {
         if (err) {
@@ -142,6 +141,33 @@ var workerCustomerSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
+var recordPageSchema = new Schema({
+    recordDate: Date,
+    recordType: String,
+    totalSale: {type: Number, default: 0},
+    totalStrike: {type: Number, default: 0},
+    locked: {type: Boolean, default: false},
+    created: {type: Date, default: Date.now}
+});
+
+var entrySchema = new Schema({
+    _recordDetail: {type: Schema.Types.ObjectId, ref: 'RecordPage'},
+    recordDate: Date,
+    manager_id: String,
+    managerUsername: String,
+    managerNickname: String,
+    customer_id: String,
+    customerID: String,
+    customerNickname: String,
+    worker_id: String,
+    workerUsername: String,
+    workerNickname: String,
+    strike: {type: Number, Default: 0},
+    sale: {type: Number, Default: 0},
+    customerType: String,
+    created: {type: Date, default: Date.now}
+});
+
 var User = mongoose.model('User', userSchema);
 var UserDetail = mongoose.model('UserDetail', userDetailSchema);
 var Manager = mongoose.model('Manager', managerSchema);
@@ -150,6 +176,8 @@ var Customer = mongoose.model('Customer', customerSchema);
 var Bank = mongoose.model('Bank', bankSchema);
 var ManagerWorker = mongoose.model('ManagerWorker', managerWorkerSchema);
 var WorkerCustomer = mongoose.model('WorkerCustomer', workerCustomerSchema);
+var RecordPage = mongoose.model('RecordPage', recordPageSchema);
+var Entry = mongoose.model('Entry', entrySchema);
 var SystemBank = mongoose.model('SystemBank', systemBankSchema);
 
 
@@ -158,6 +186,7 @@ managerSchema.plugin(deepPopulate, {});
 customerSchema.plugin(deepPopulate, {});
 workerCustomerSchema.plugin(deepPopulate, {});
 managerWorkerSchema.plugin(deepPopulate, {});
+entrySchema.plugin(deepPopulate, {});
 
 module.exports = {
     User: User,
@@ -168,5 +197,7 @@ module.exports = {
     Worker: Worker,
     ManagerWorker: ManagerWorker,
     WorkerCustomer: WorkerCustomer,
+    RecordPage: RecordPage,
+    Entry: Entry,
     SystemBank: SystemBank
 };

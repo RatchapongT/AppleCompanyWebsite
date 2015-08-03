@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+<% include ../partials/page/jsdefaults.ejs %>
+
+<div class="container">
+    <h2>Customer's Central Sheet</h2>
+
+    <div align="center">
+        <form name="search_customer" method="post" action="/records/centralsheet-malay"
+              id="search_customer">
+
+            <select name="request_customer_id"
+                    class="form-control select select-info"
+                    data-toggle="select" form="search_customer"
+                    onchange='this.form.submit()'>
+                <% for(var i = 0; i < customerObject.length; i++) { %>
+                <% if (requestCustomerID == undefined && i == 0) { %>
+                <% requestCustomerID = customerObject[0].id %>
+                <option value=<%= customerObject[0].id %> selected><%= customerObject[i].customerID %>
+                    (<%= customerObject[i].nickname %>)
+                </option>
+                <% } else if (requestCustomerID == customerObject[i].id){ %>
+                <option value=<%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
+                    (<%= customerObject[i].nickname %>)
+                </option>
+                <% } else { %>
+                <option value=<%= customerObject[i].id %>><%= customerObject[i].customerID %>
+                    (<%= customerObject[i].nickname %>)
+                </option>
+                <% } %>
+                <% } %>
+            </select>
+        </form>
+    </div>
+
+    <table id="sort" class="table">
+        <thead>
+        <tr>
+            <th style="text-align:center" class="sort-default">Date</th>
+            <th style="text-align:center" class="sort-default">Buy</th>
+            <th style="text-align:center" class="sort-default">Strike</th>
+
+            <th style="text-align:center" class="no-sort">Payment To Customer</th>
+            <th style="text-align:center" class="no-sort">Customer Pay to System</th>
+            <th style="text-align:center" class="no-sort">Balance</th>
+        </tr>
+        </thead>
+        <% for(var i = 0; i < financeObject.length; i++) { %>
+        <tr>
+
+            <td align="center"><%= financeObject[i].recordDate.getDate() %>/<%= financeObject[i].recordDate.getMonth() %>
+                /<%= financeObject[i].recordDate.getFullYear() %></td>
+            <td align="center"><%= financeObject[i].sale %></td>
+            <td align="center"><%= financeObject[i].strike %></td>
+            <td align="center">0</td>
+            <td align="center">0</td>
+            <td align="center">0</td>
+        </tr>
+        <% } %>
+    </table>
+
+
+</div>
