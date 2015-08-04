@@ -168,6 +168,7 @@ var payOutSchema = new Schema({
     paymentMethodBankName: String,
     paymentMethodBankNumber: Number,
     paymentMethodBankType: String,
+    approved: {type: Boolean, default: false},
     created: {type: Date, default: Date.now}
 });
 

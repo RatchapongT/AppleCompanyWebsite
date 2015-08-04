@@ -76,7 +76,9 @@
         </tr>
         </thead>
         <% var totalDebt = 0 %>
+
         <% for(var i = 0; i < financeObject.length; i++) { %>
+        <% if (!(financeObject[i].sale == 0 && financeObject[i].strike == 0 && financeObject[i].payIn == 0 && financeObject[i].payOut == 0)) { %>
         <tr>
             <td align = "center"><%= financeObject[i].recordDate.getDate() %>
                 /<%= financeObject[i].recordDate.getMonth() %>
@@ -89,6 +91,7 @@
 <% totalDebt = totalDebt + financeObject[i].sale - financeObject[i].strike +  financeObject[i].payIn - financeObject[i].payOut%>
             <td align = "center"><%=totalDebt%></td>
         </tr>
+        <% } %>
         <% } %>
     </table>
 

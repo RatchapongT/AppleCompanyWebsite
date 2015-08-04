@@ -66,7 +66,7 @@ exports.createEntry = function (input, next) {
         function (managerWorkerObject, workerCustomerObject, callback) {
             async.each(managerWorkerObject, function (managerWorkerData, callback) {
                 async.each(workerCustomerObject, function (workerCustomerData, callback) {
-                    var _worker_id = workerCustomerData._workerDetail._profileDetail._id;
+                    var _worker_id = workerCustomerData._workerDetail._id;
                     var _workerUsername = workerCustomerData._workerDetail._profileDetail._userDetail.username;
                     var _workerNickname = workerCustomerData._workerDetail._profileDetail.nickname;
                     var _customer_id = workerCustomerData._customerDetail._id;
@@ -76,7 +76,7 @@ exports.createEntry = function (input, next) {
                     var _customerThai = workerCustomerData._customerDetail.thai;
 
 
-                    var _manager_id = managerWorkerData._managerDetail._profileDetail._id;
+                    var _manager_id = managerWorkerData._managerDetail._id;
                     var _managerUsername = managerWorkerData._managerDetail._profileDetail._userDetail.username;
                     var _managerNickname = managerWorkerData._managerDetail._profileDetail.nickname;
 
@@ -177,10 +177,7 @@ exports.createEntry = function (input, next) {
 
 exports.findEntry = function (input, next) {
 
-    Entry.find({
-        recordDate: input.date,
-        customerType: input.customerType
-    }).populate('_recordDetail').exec(function (err, object) {
+    Entry.find(input).populate('_recordDetail').exec(function (err, object) {
 
 
         var customerArray = [];
@@ -330,20 +327,11 @@ exports.getSystemBankList = function (input, next) {
     });
 };
 
-exports.getCustomerTypeList = function (input, next) {
-    if (input.malay) {
-        Customer.find({malay: true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
-            if (err) throw err;
-            next(err, object);
-        });
-    } else if (input.thai) {
-        Customer.find({thai: true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
-            if (err) throw err;
-            next(err, object);
-        });
-    } else {
-        next(null);
-    }
+exports.getCustomerTypeList = function (query, next) {
+    Customer.find(query).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
 };
 
 exports.getEntryPayIn = function (input, next) {
@@ -486,7 +474,8 @@ exports.updatePayOut = function (input, next) {
             }, {
                 $push: {
                     "payOutDetails": {
-                        payOut: input.payOut
+                        payOut: input.payOut,
+                        approved: false
                     }
                 }
             }, function (err, entryObject) {

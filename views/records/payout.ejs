@@ -36,7 +36,6 @@
                     <% for(var i = 0; i < customerObject.length; i++) { %>
 
                     <% if (requestCustomerID == customerObject[i].id){ %>
-                    <% var requestCustomer = customerObject[i] %>
                     <option value = <%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
                         (<%= customerObject[i].nickname %>)
                     </option>
