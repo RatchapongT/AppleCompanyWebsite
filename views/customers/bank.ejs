@@ -48,7 +48,7 @@
             <select name="request_customer_id"
                     class="form-control select select-info"
                     data-toggle="select" form="search_customer"
-                    onchange='this.form.submit()'>
+                    onchange='this.form.submit()' id="request_customer_id">
                 <% for(var i = 0; i < customerObject.length; i++) { %>
                 <% if (requestCustomerID == undefined && i == 0) { %>
                 <% requestCustomerID = customerObject[0].id %>
@@ -117,7 +117,7 @@
 
 
                 <input class="btn btn-primary btn-lg btn-block"
-                       type="submit" value="Add Bank" onclick='SubmitForm()'>
+                       type="submit" value="Add Bank" onclick='SubmitForm()' id="submit_button">
 
             </div>
 
@@ -173,8 +173,12 @@
 <% include ../partials/page/jsdefaults.ejs %>
 <script>
     new Tablesort(document.getElementById('sort'));
-</script>
 
+    if (<%=customerObject.length%> ===0) {
+        document.getElementById('submit_button').disabled = true;
+    }
+
+</script>
 <footer>
     <% include ../partials/page/footer.ejs %>
 </footer>

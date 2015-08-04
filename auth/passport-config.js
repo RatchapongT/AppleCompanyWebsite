@@ -1,7 +1,7 @@
 module.exports = function () {
     var passport = require('passport');
     var passportLocal = require('passport-local');
-    var databaseFunction = require('../services/database-function');
+    var databaseFunction = require('../services/users')
     var bcrypt = require('bcrypt');
 
     passport.use(new passportLocal.Strategy({usernameField: 'username', passwordField: 'password'}, function (username, password, next) {
@@ -27,18 +27,30 @@ module.exports = function () {
             bcrypt.compare(password, user.password, function (err, same) {
                 if (err) {
                     return next(err);
-
                 }
                 if (!same) {
                     return next(null, null);
                 }
-                next(null, user);
+
+                databaseFunction.findUserDetailById(user.id, function (err, object) {
+                    if (err) {
+                        return next(err);
+                    }
+                    var serializeObject = {
+                        username:  user.username,
+                        id: user.id,
+                        accountType: object.accountType
+
+                    }
+                    next(null, serializeObject);
+                });
+
             });
         });
     }));
 
-    passport.serializeUser(function (user, next) {
-        next(null, {username: user.username, id: user.id});
+    passport.serializeUser(function (serializeObject, next) {
+        next(null, serializeObject);
     });
 
     passport.deserializeUser(function (userObject, next) {

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var databaseFunction = require('../services/database-function');
+var databaseFunction = require('../services/customers');
 
 router.get('/', function (req, res, next) {
     res.render('homepage', {
@@ -10,61 +10,98 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/manage', function (req, res) {
-    databaseFunction.getCustomerList(req, function (err, customerObject) {
-        if (err) {
-            return res.send(err);
-        }
-        return res.render('customers/manage', {
-            title: 'Customer Management',
-            customerObject: customerObject,
-            successMessage: req.flash('successMessage'),
-            failureMessage: req.flash('failureMessage')
-        });
-    });
-});
-
-router.post('/create', function (req, res) {
-    databaseFunction.addCustomer(req.body, function (err) {
-        if (err) {
-            req.flash('failureMessage', err.errors.customerID.message);
-            return res.redirect('/customers/manage');
-        }
-        req.flash('successMessage', "Successfully Added");
-        return res.redirect('/customers/manage');
-    });
-});
-
-router.get('/delete/:id', function (req, res) {
-    databaseFunction.deleteCustomer(req.params.id, function (err) {
-        if (err) {
-            return res.send(err);
-        }
-        req.flash('successMessage', 'Successfully Deleted');
-        return res.redirect('/customers/manage');
-    });
-});
-
-router.get('/bank/:id?', function (req, res) {
-
-    databaseFunction.getBankList(req, function (err, bankObject) {
-        if (err) {
-            return res.send(err);
-        }
+    if (req.session.passport.user.accountType == "Admin") {
         databaseFunction.getCustomerList(req, function (err, customerObject) {
             if (err) {
                 return res.send(err);
             }
-            return res.render('customers/bank', {
-                title: 'Bank Management',
-                bankObject: bankObject,
+            return res.render('customers/manage', {
+                title: 'Customer Management',
                 customerObject: customerObject,
                 successMessage: req.flash('successMessage'),
-                failureMessage: req.flash('failureMessage'),
-                requestCustomerID: req.params.id
+                failureMessage: req.flash('failureMessage')
             });
         });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
+});
 
-    });
+router.post('/create', function (req, res) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.addCustomer(req.body, function (err) {
+            if (err) {
+                req.flash('failureMessage', err.errors.customerID.message);
+                return res.redirect('/customers/manage');
+            }
+            req.flash('successMessage', "Successfully Added");
+            return res.redirect('/customers/manage');
+        });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
+});
+
+router.get('/delete/:id', function (req, res) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.deleteCustomer(req.params.id, function (err) {
+            if (err) {
+                return res.send(err);
+            }
+            req.flash('successMessage', 'Successfully Deleted');
+            return res.redirect('/customers/manage');
+        });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
+});
+
+router.get('/bank/:id?', function (req, res) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.getBankList(req, function (err, bankObject) {
+            if (err) {
+                return res.send(err);
+            }
+            databaseFunction.getCustomerList(req, function (err, customerObject) {
+                if (err) {
+                    return res.send(err);
+                }
+                return res.render('customers/bank', {
+                    title: 'Bank Management',
+                    bankObject: bankObject,
+                    customerObject: customerObject,
+                    successMessage: req.flash('successMessage'),
+                    failureMessage: req.flash('failureMessage'),
+                    requestCustomerID: req.params.id
+                });
+            });
+
+        });
+    } else if (req.session.passport.user.accountType == "Worker") {
+
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
 
 });
 

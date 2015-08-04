@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
 <head>
     <% include ../partials/page/head.ejs %>
 </head>
@@ -8,116 +8,129 @@
 </header>
 
 
-<div class="container">
+<div class = "container">
     <h2>User Management</h2>
 
-    <form method="post" action="/users/create" style="margin-bottom: 30px;">
-        <div align="center">
-            <div class="login-form" style="width:350px; margin-top: 30px; ">
+    <form method = "post" action = "/users/create"
+          style = "margin-bottom: 30px;">
+        <div align = "center">
+            <div class = "login-form" style = "width:350px; margin-top: 30px; ">
 
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value=""
-                           placeholder="Username" name="username" required>
-                    <label class="login-field-icon fui-user"></label>
+                <div class = "form-group">
+                    <input type = "text" class = "form-control login-field"
+                           value = "" placeholder = "Username" name = "username"
+                           required>
+                    <label class = "login-field-icon fui-user"></label>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value=""
-                           placeholder="Password" name="password" required>
-                    <label class="login-field-icon fui-lock"></label>
+                <div class = "form-group">
+                    <input type = "text" class = "form-control login-field"
+                           value = "" placeholder = "Password" name = "password"
+                           required>
+                    <label class = "login-field-icon fui-lock"></label>
                 </div>
 
-                <div style="text-align:left; margin-left: 100px;">
+                <div style = "text-align:left; margin-left: 100px;">
 
-                    <label class="radio">
-                        <input type="radio" name="accountType"
-                               id="optionsRadios1" value="Admin"
-                               data-toggle="radio" checked="">
+                    <label class = "radio">
+                        <input type = "radio" name = "accountType"
+                               id = "optionsRadios1" value = "Admin"
+                               data-toggle = "radio" checked = "">
                         Admin
                     </label>
-                    <label class="radio">
-                        <input type="radio" name="accountType"
-                               id="optionsRadios2" value="Manager"
-                               data-toggle="radio">
+                    <label class = "radio">
+                        <input type = "radio" name = "accountType"
+                               id = "optionsRadios2" value = "Manager"
+                               data-toggle = "radio">
                         Manager
                     </label>
-                    <label class="radio">
-                        <input type="radio" name="accountType"
-                               id="optionsRadios3" value="Worker"
-                               data-toggle="radio" checked="">
+                    <label class = "radio">
+                        <input type = "radio" name = "accountType"
+                               id = "optionsRadios3" value = "Worker"
+                               data-toggle = "radio" checked = "">
                         Worker
                     </label>
 
                 </div>
                 <strong>Optional</strong>
 
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value=""
-                           placeholder="Nickname" name="nickname">
+                <div class = "form-group">
+                    <input type = "text" class = "form-control login-field"
+                           value = "" placeholder = "Nickname"
+                           name = "nickname">
 
                 </div>
 
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value=""
-                           placeholder="Phone" name="phone">
+                <div class = "form-group">
+                    <input type = "text" class = "form-control login-field"
+                           value = "" placeholder = "Phone" name = "phone">
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control login-field"
-                           placeholder="Line ID" name="lineID">
+                <div class = "form-group">
+                    <input type = "text" class = "form-control login-field"
+                           placeholder = "Line ID" name = "lineID">
                 </div>
-                <input class="btn btn-primary btn-lg btn-block"
-                       type="submit" value="Add User">
+                <input class = "btn btn-primary btn-lg btn-block"
+                       type = "submit" value = "Add User">
             </div>
 
         </div>
     </form>
     <% if (typeof failureMessage != 'undefined' && failureMessage != '') { %>
-    <div class="form-group has-error">
-        <div align="center" style="margin:25px auto; width:200px;">
-            <input style="text-align:center" type="text" value=""
-                   placeholder="<%= failureMessage %>" class="form-control">
+    <div class = "form-group has-error">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= failureMessage %>" class = "form-control">
         </div>
     </div>
     <% } %>
 
     <% if (typeof successMessage != 'undefined' && successMessage != '') { %>
-    <div class="form-group has-success">
-        <div align="center" style="margin:25px auto; width:200px;">
-            <input style="text-align:center" type="text" value=""
-                   placeholder="<%= successMessage %>" class="form-control">
+    <div class = "form-group has-success">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= successMessage %>" class = "form-control">
         </div>
     </div>
     <% } %>
 
-    <table id="sort" class="table">
+    <table id = "sort" class = "table">
         <thead>
         <tr>
-            <th style="text-align:center" class="sort-default">Name</th>
-            <th style="text-align:center" class="sort-default">Account Type</th>
-            <th style="text-align:center" class="sort-default">Created On</th>
+            <th style = "text-align:center" class = "sort-default">Name</th>
+            <th style = "text-align:center" class = "sort-default">Account
+                Type
+            </th>
+            <th style = "text-align:center" class = "sort-default">Created On
+            </th>
 
-            <th style="text-align:center" class="no-sort">Reset Password</th>
-            <th style="text-align:center" class="no-sort">Delete User</th>
+            <th style = "text-align:center" class = "no-sort">Reset Password
+            </th>
+            <th style = "text-align:center" class = "no-sort">Delete User</th>
         </tr>
         </thead>
         <% for(var i = 0; i < data.length; i++) { %>
         <tr>
-            <td align="center"><%= data[i]._userDetail.username %></td>
-            <td align="center"><%= data[i].accountType %></td>
+            <td align = "center"><%= data[i]._userDetail.username %></td>
+            <td align = "center"><%= data[i].accountType %></td>
             <% date = new Date(data[i]._userDetail.created) %>
-            <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
-                /<%= date.getFullYear() %></td>
-            <td align="center"><a href="/users/reset" class="button">Reset</a>
+            <td align = "center"><%= date.getDate() %>/<%= date.getMonth() %>/<%= date.getFullYear() %></td>
+            <td align = "center"><a href = "/users/reset"
+                                    class = "button">Reset</a>
             </td>
-            <td align="center"><a
-                        href="/users/delete/<%= data[i]._userDetail.id %>"
-                        class="button"><span class="fui-cross"
-                                             style="color:#f93c3c"></span></a>
+            <% if (currentSessionID == data[i]._userDetail.id) { %>
+            <td align = "center"><span class = "fui-checkbox-unchecked"
+                                       style = "color:#34495E"></span>
             </td>
+            <% } else { %>
+            <td align = "center"><a
+                        href = "/users/delete/<%= data[i]._userDetail.id %>"
+                        class = "button"><span class = "fui-cross"
+                                               style = "color:#f93c3c"></span></a>
+            </td>
+            <% } %>
         </tr>
         <% } %>
     </table>
-
 
 </div>
 

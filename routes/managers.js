@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var databaseFunction = require('../services/database-function');
+var databaseFunction = require('../services/managers');
 
 
 router.get('/', function (req, res, next) {
@@ -11,48 +11,77 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/assign/:id?', function (req, res) {
-
-    databaseFunction.getUnownedWorkerList(req, function (err, unownedWorkerObject) {
-        databaseFunction.getManagerList(req, function (err, managerObject) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.getUnownedWorkerList(req, function (err, unownedWorkerObject) {
             if (err) {
                 return res.send(err);
             }
-            databaseFunction.getManagerWorkerRelationship(req, function (err, managerWorkerObject) {
+            databaseFunction.getManagerList(req, function (err, managerObject) {
                 if (err) {
                     return res.send(err);
                 }
+                databaseFunction.getManagerWorkerRelationship(req, function (err, managerWorkerObject) {
+                    if (err) {
+                        return res.send(err);
+                    }
 
-                return res.render('managers/assign', {
-                    title: 'Assign Worker',
-                    managerObject: managerObject,
-                    managerWorkerObject: managerWorkerObject,
-                    unownedWorkerObject: unownedWorkerObject,
-                    requestManagerID: req.params.id,
-                    error: req.flash('error')
+                    return res.render('managers/assign', {
+                        title: 'Assign Worker',
+                        managerObject: managerObject,
+                        managerWorkerObject: managerWorkerObject,
+                        unownedWorkerObject: unownedWorkerObject,
+                        requestManagerID: req.params.id,
+                        error: req.flash('error')
+                    });
                 });
             });
         });
-    });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
 });
 
 router.post('/assign', function (req, res) {
-    databaseFunction.assignWorker(req.body, function (err, workerObject) {
-        if (err) {
-            return res.send(err);
-        }
-        return res.redirect('/managers/assign/' + req.body.requestManagerID);
-    });
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.assignWorker(req.body, function (err, workerObject) {
+            if (err) {
+                return res.send(err);
+            }
+            return res.redirect('/managers/assign/' + req.body.requestManagerID);
+        });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
 });
 
 
 router.get('/delete_relationship/:workerID/:requestManagerID', function (req, res, next) {
-    databaseFunction.deleteManagerWorkerRelationship(req.params, function (err) {
-        if (err) {
-            return res.send(err);
-        }
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.deleteManagerWorkerRelationship(req.params, function (err) {
+            if (err) {
+                return res.send(err);
+            }
 
-        return res.redirect('/managers/assign/' + req.params.requestManagerID);
-    });
+            return res.redirect('/managers/assign/' + req.params.requestManagerID);
+        });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var databaseFunction = require('../services/database-function');
+var databaseFunction = require('../services/users');
 var deepPopulate = require('mongoose-deep-populate');
 
 var userSchema = new Schema({
@@ -12,7 +12,6 @@ var userSchema = new Schema({
 userSchema.path('username').validate(function (username, next) {
     databaseFunction.findUser(username, function (err, user) {
         if (err) {
-            console.log(err);
             return next(false);
         }
         if (!user) {

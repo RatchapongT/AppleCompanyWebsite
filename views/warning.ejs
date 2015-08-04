@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang = "en">
+<% include partials/page/jsdefaults.ejs %>
+<head>
+    <% include partials/page/head.ejs %>
+</head>
+<header>
+    <nav class = "navbar navbar-inverse navbar-embossed" role = "navigation">
+        <div class = "navbar-header">
+            <button type = "button" class = "navbar-toggle"
+                    data-toggle = "collapse"
+                    data-target = "#navbar-collapse-01">
+                <span class = "sr-only">Toggle navigation</span>
+            </button>
+            <a class = "navbar-brand" href = "/">iCoreReport</a>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </nav>
+</header>
+<div align = "center">
+    <h3 style = "color:#E74C3C"><%= title %></h3>
+    <h5><%= warningText %></h5>
+    <i><h6 style = "color:#95A5A6">Administrator has been informed </h6></i>
+
+</div>
