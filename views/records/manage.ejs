@@ -27,7 +27,7 @@
     <div align="center">
         <div class="login-form" style="width:150px; margin-top: 30px; ">
             <% var submitLockString = "/records/lock-page/" + redirectRecordType;%>
-            <form method="post" action='<%=submitLockString%>'
+            <form method="post" onchange="this.submit()" action='<%=submitLockString%>'
                   id="locked_form">
                 <input type=hidden name="date" value="<%= requestDate %>">
                 <input type=hidden name="recordPageID"
@@ -36,96 +36,17 @@
                     <input type="radio" name="locked"
                            id="optionsRadios1" value=true
                            data-toggle="radio">
-                    Locked
+                    Lock
                 </label>
                 <label class="radio">
                     <input type="radio" name="locked"
                            id="optionsRadios2" value=false
                            data-toggle="radio">
-                    Unlocked
+                    Unlock
                 </label>
-                <input class="btn btn-primary btn-block"
-                       type="submit" value="Submit"/>
             </form>
         </div>
     </div>
-
-    <% if (pageLocked) { %>
-
-    <input type=hidden name="date" value="<%= requestDate %>">
-    <input type=hidden name="recordPageID" value="<%= recordPageID %>">
-    <% for (var i = 0; i < organizedEntryObject.length; i++) { %>
-    <div align="center" style="margin-top: 80px">
-        <h5 style="color:#7F8C8D;"><%= organizedEntryObject[i].managerProfiles.managerUsername %>
-            [<%= organizedEntryObject[i].managerProfiles.managerNickname %>
-            ]</h5>
-
-    </div>
-    <hr style="height:1px;border:none;color:#7F8C8D;background-color:#7F8C8D;"/>
-    <% for (var j = 0; j < organizedEntryObject[i].workers.length; j++) { %>
-    <div align="left" style="padding-left:65px; margin-top: 20px;">
-        <strong style="color:#3498DB; font-size:20px"><%= organizedEntryObject[i].workers[j].workerProfiles.workerUsername %>
-            [<%= organizedEntryObject[i].workers[j].workerProfiles.workerNickname %>
-            ]</strong>
-    </div>
-
-    <table class="table">
-        <tr>
-            <th style="text-align:center">Customer</th>
-            <th style="text-align:center">Sale</th>
-            <th style="text-align:center">Strike</th>
-        </tr>
-
-        <% for (var k = 0; k < organizedEntryObject[i].workers[j].customers.length; k++) { %>
-
-        <tr>
-
-            <input type="hidden"
-                   value="<%= organizedEntryObject[i].workers[j].customers[k].customerProfiles.customer_id %>"
-                   name="customer_id">
-            <td align="center"
-                style="text-align: center;vertical-align: middle;">
-                <%= organizedEntryObject[i].workers[j].customers[k].customerProfiles.customerID %>
-                (<%= organizedEntryObject[i].workers[j].customers[k].customerProfiles.customerNickname %>
-                )
-            </td>
-
-            <td align="center">
-                <div class="form-control"
-                     style="width: 150px; text-align: right;">
-                    <%= organizedEntryObject[i].workers[j].customers[k].customerProfiles.sale %>
-                </div>
-            </td>
-            <td align="center">
-                <div class="form-control"
-                     style="width: 150px; text-align: right;">
-                    <%= organizedEntryObject[i].workers[j].customers[k].customerProfiles.strike %>
-                </div>
-            </td>
-
-        </tr>
-
-        <% } %>
-    </table>
-    <% } %>
-    <% } %>
-
-    <div align="center" style="margin-top: 50px">
-        <strong style="color:#2ECC71">Total Sale :</strong>
-
-        <div class="form-control"
-             style="display:inline-block ; width: 150px; text-align: right; margin-right: 30px">
-            <%= totalSale %>
-        </div>
-        <strong style="color:#E74C3C">Total Strike :</strong>
-
-        <div class="form-control"
-             style="display:inline-block ; width: 150px; text-align: right;">
-            <%= totalStrike %>
-        </div>
-    </div>
-
-    <% } else { %>
     <% var submitFormString = "/records/manage/" + redirectRecordType + "/update-entry";%>
     <form method="post" id="record_form" action= '<%=submitFormString%>'>
         <input type=hidden name="date" value="<%= requestDate %>">
@@ -166,6 +87,20 @@
                     )
                 </td>
 
+                <%if (pageLocked)  {%>
+                <td align="center">
+                    <input readonly type="number" class="form-control"
+                           style="width: 150px; text-align: right; color:black" name="sale"
+                           value="<%= organizedEntryObject[i].workers[j].customers[k].customerProfiles.sale %>">
+                </td>
+                <td align="center">
+                    <input readonly type="number" class="form-control"
+                           style="width: 150px; text-align: right; color:black"
+                           name="strike"
+                           value="<%= organizedEntryObject[i].workers[j].customers[k].customerProfiles.strike %>">
+                </td>
+
+                <% } else {%>
                 <td align="center">
                     <input type="number" class="form-control"
                            style="width: 150px; text-align: right;" name="sale"
@@ -177,8 +112,8 @@
                            name="strike"
                            value="<%= organizedEntryObject[i].workers[j].customers[k].customerProfiles.strike %>">
                 </td>
-
-            </tr>
+                <% }%>
+                </tr>
 
             <% } %>
         </table>
@@ -200,14 +135,20 @@
             </div>
         </div>
         <div align="center">
-            <input style="width: 300px; margin-bottom: 50px; margin-top: 60px"
+        <%if (pageLocked)  {%>
+
+            <input disabled style="width: 300px; margin-bottom: 50px; margin-top: 60px"
                    class="btn btn-primary btn-lg btn-block"
                    type="submit" value="Save Record" >
 
-        </div>
-    </form>
-    <% } %>
 
+        <% } else { %>
+        <input style="width: 300px; margin-bottom: 50px; margin-top: 60px"
+               class="btn btn-primary btn-lg btn-block"
+               type="submit" value="Save Record" >
+        <% }%>
+        </form>
+</div>
 </div>
 
 

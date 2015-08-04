@@ -1,64 +1,13 @@
-
-
-
-
-
 var RecordPage = require('../models/databaseModels').RecordPage;
-
 var Entry = require('../models/databaseModels').Entry;
+var ManagerWorker = require('../models/databaseModels').ManagerWorker;
+var WorkerCustomer = require('../models/databaseModels').WorkerCustomer;
+var SystemBank = require('../models/databaseModels').SystemBank;
+var Bank = require('../models/databaseModels').Bank;
+var Customer = require('../models/databaseModels').Customer;
 
 var async = require('async');
-
 var underscore = require('underscore');
-
-/* USER */
-
-
-
-
-
-
-/* CUSTOMER */
-
-
-
-exports.getCustomerTypeList = function (input, next) {
-    if (input.malay) {
-        Customer.find({malay: true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
-            if (err) throw err;
-            next(err, object);
-        });
-    } else if (input.thai) {
-        Customer.find({thai: true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
-            if (err) throw err;
-            next(err, object);
-        });
-    } else {
-        next(null);
-    }
-};
-
-
-
-
-/* BANK */
-
-
-
-
-
-
-/* RELATIONSHIP WORKER CUSTOMER*/
-
-
-
-
-/* RELATIONSHIP WORKER CUSTOMER*/
-
-
-
-
-/* RECORD */
 
 exports.findRecord = function (input, next) {
     RecordPage.findOne({
@@ -68,13 +17,7 @@ exports.findRecord = function (input, next) {
         next(err, object);
     });
 };
-exports.findRecordByID = function (input, next) {
-    RecordPage.findById(input
-        , function (err, object) {
-            if (err) throw err;
-            next(err, object);
-        });
-};
+
 exports.initializeRecord = function (input, next) {
 
     var newRecordPage = new RecordPage({
@@ -89,18 +32,7 @@ exports.initializeRecord = function (input, next) {
         next(null);
     });
 };
-exports.lockPage = function (input, next) {
 
-    RecordPage.findOneAndUpdate({_id: input.recordPageID}, {
-        $set: {
-            locked: input.locked
-        }
-    }, function (err, object) {
-
-        if (err) throw err;
-        next(null, object);
-    });
-};
 exports.createEntry = function (input, next) {
     var relationshipModel = [];
     async.waterfall([
@@ -132,7 +64,6 @@ exports.createEntry = function (input, next) {
         },
 
         function (managerWorkerObject, workerCustomerObject, callback) {
-
             async.each(managerWorkerObject, function (managerWorkerData, callback) {
                 async.each(workerCustomerObject, function (workerCustomerData, callback) {
                     var _worker_id = workerCustomerData._workerDetail._profileDetail._id;
@@ -151,7 +82,6 @@ exports.createEntry = function (input, next) {
 
 
                     if (workerCustomerData._workerDetail._profileDetail._id.equals(managerWorkerData._workerDetail._profileDetail._id)) {
-
                         if (_customerMalay && input.customerType == 'Malay') {
                             relationshipModel.push(
                                 {
@@ -198,6 +128,7 @@ exports.createEntry = function (input, next) {
         },
 
         function (relationshipModel, callback) {
+
             async.each(relationshipModel, function (relationshipModelData, callback) {
                 Entry.findOneAndUpdate({
                         _recordDetail: input.recordPageID,
@@ -243,6 +174,7 @@ exports.createEntry = function (input, next) {
         next();
     });
 };
+
 exports.findEntry = function (input, next) {
 
     Entry.find({
@@ -332,6 +264,25 @@ exports.findEntry = function (input, next) {
         });
     });
 };
+
+exports.getRecordInfo = function (input, next) {
+    RecordPage.findOne({
+        recordDate: input.date,
+        recordType: input.recordType
+    }, function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
+};
+
+exports.findRecordByID = function (input, next) {
+    RecordPage.findById(input
+        , function (err, object) {
+            if (err) throw err;
+            next(err, object);
+        });
+};
+
 exports.updateEntry = function (input, next) {
     if (typeof(input.customer_id) === 'object') {
         async.each(input.customer_id, function (customer_id, callback) {
@@ -371,48 +322,66 @@ exports.updateEntry = function (input, next) {
         next(null);
     }
 
-}
-exports.getCustomerFinancialHistory = function (input, next) {
+};
+
+exports.getSystemBankList = function (input, next) {
+    SystemBank.find({}, function (err, object) {
+        next(err, object);
+    });
+};
+
+exports.getCustomerTypeList = function (input, next) {
+    if (input.malay) {
+        Customer.find({malay: true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+            if (err) throw err;
+            next(err, object);
+        });
+    } else if (input.thai) {
+        Customer.find({thai: true}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+            if (err) throw err;
+            next(err, object);
+        });
+    } else {
+        next(null);
+    }
+};
+
+exports.getEntryPayIn = function (input, next) {
     Entry.find({
-        customer_id: input.requestCustomer_id,
+        recordDate: input.requestDate,
         customerType: input.requestRecordType
     }, function (err, object) {
         if (err) throw err;
-        next(err, underscore.sortBy(object, 'recordDate'));
-    });
-}
-
-exports.getRecordInfo = function (input, next) {
-    RecordPage.findOne({
-        recordDate: input.date,
-        recordType: input.recordType
-    }, function (err, object) {
-        if (err) throw err;
         next(err, object);
-    });
-}
+    })
+};
 
 exports.updatePayIn = function (input, next) {
     async.waterfall([
         function (callback) {
             SystemBank.findOne({_id: input.requestBankID}, function (err, bankObject) {
-                Entry.findOneAndUpdate({
-                    recordDate: input.requestDate,
-                    customer_id: input.requestCustomerID,
-                    customerType: input.customerType
-                }, {
-                    $push: {
-                        "payInDetails": {
-                            payIn: input.payIn,
-                            paymentMethod_id: bankObject.id,
-                            paymentMethodBankName: bankObject.bankName,
-                            paymentMethodBankNumber: bankObject.bankNumber,
-                            paymentMethodBankType: bankObject.bankType
+                if (bankObject != null) {
+                    Entry.findOneAndUpdate({
+                        recordDate: input.requestDate,
+                        customer_id: input.requestCustomerID,
+                        customerType: input.customerType
+                    }, {
+                        $push: {
+                            "payInDetails": {
+                                payIn: input.payIn,
+                                paymentMethod_id: bankObject.id,
+                                paymentMethodBankName: bankObject.bankName,
+                                paymentMethodBankNumber: bankObject.bankNumber,
+                                paymentMethodBankType: bankObject.bankType
+                            }
                         }
-                    }
-                }, function (err, entryObject) {
-                    callback(null, entryObject.id);
-                });
+                    }, function (err, entryObject) {
+                        callback(null, entryObject.id);
+                    });
+                } else {
+                    callback(null, null);
+                }
+
             });
         },
         function (entryObjectID, callback) {
@@ -423,34 +392,29 @@ exports.updatePayIn = function (input, next) {
             });
         },
         function (entryObject, callback) {
-            var payInArray = underscore.pluck(entryObject.payInDetails, 'payIn');
-            var sum = underscore.reduce(payInArray, function (memo, num) {
-                return memo + num;
-            }, 0);
-            Entry.findOneAndUpdate({
-                _id: entryObject.id,
-            }, {
-                $set: {
-                    "payIn": sum
-                }
-            }, function (err, recordObject) {
+            if (entryObject != null) {
+                var payInArray = underscore.pluck(entryObject.payInDetails, 'payIn');
+                var sum = underscore.reduce(payInArray, function (memo, num) {
+                    return memo + num;
+                }, 0);
+                Entry.findOneAndUpdate({
+                    _id: entryObject.id,
+                }, {
+                    $set: {
+                        "payIn": sum
+                    }
+                }, function (err, recordObject) {
+                    callback(null, 'done');
+                });
+            } else {
                 callback(null, 'done');
-            });
+            }
+
         }
     ], function (err, result) {
         next(err, result)
     });
-}
-
-exports.getEntryPayIn = function (input, next) {
-    Entry.find({
-        recordDate: input.requestDate,
-        customerType: input.requestRecordType
-    }, function (err, object) {
-        if (err) throw err;
-        next(err, object);
-    })
-}
+};
 
 exports.deletePayIn = function (input, next) {
     async.waterfall([
@@ -493,13 +457,6 @@ exports.deletePayIn = function (input, next) {
         next(err, recordObject)
     });
 
-}
-
-exports.getCustomerBankList = function (input, next) {
-    Bank.find({_customerDetail: input}).populate('_customerDetail').exec(function (err, object) {
-        if (err) throw err;
-        next(err, object);
-    });
 };
 
 exports.getEntryPayOut = function (input, next) {
@@ -510,29 +467,30 @@ exports.getEntryPayOut = function (input, next) {
         if (err) throw err;
         next(err, object);
     })
-}
+};
+
+exports.getCustomerBankList = function (input, next) {
+    Bank.find({_customerDetail: input}).populate('_customerDetail').exec(function (err, object) {
+        if (err) throw err;
+        next(err, object);
+    });
+};
 
 exports.updatePayOut = function (input, next) {
     async.waterfall([
         function (callback) {
-            SystemBank.findOne({_id: input.requestBankID}, function (err, bankObject) {
-                Entry.findOneAndUpdate({
-                    recordDate: input.requestDate,
-                    customer_id: input.requestCustomerID,
-                    customerType: input.customerType
-                }, {
-                    $push: {
-                        "payOutDetails": {
-                            payOut: input.payOut,
-                            paymentMethod_id: bankObject.id,
-                            paymentMethodBankName: bankObject.bankName,
-                            paymentMethodBankNumber: bankObject.bankNumber,
-                            paymentMethodBankType: bankObject.bankType
-                        }
+            Entry.findOneAndUpdate({
+                recordDate: input.requestDate,
+                customer_id: input.requestCustomerID,
+                customerType: input.customerType
+            }, {
+                $push: {
+                    "payOutDetails": {
+                        payOut: input.payOut
                     }
-                }, function (err, entryObject) {
-                    callback(null, entryObject.id);
-                });
+                }
+            }, function (err, entryObject) {
+                callback(null, entryObject.id);
             });
         },
         function (entryObjectID, callback) {
@@ -543,24 +501,28 @@ exports.updatePayOut = function (input, next) {
             });
         },
         function (entryObject, callback) {
-            var payOutArray = underscore.pluck(entryObject.payOutDetails, 'payOut');
-            var sum = underscore.reduce(payOutArray, function (memo, num) {
-                return memo + num;
-            }, 0);
-            Entry.findOneAndUpdate({
-                _id: entryObject.id,
-            }, {
-                $set: {
-                    "payOut": sum
-                }
-            }, function (err, recordObject) {
+            if (entryObject != null) {
+                var payOutArray = underscore.pluck(entryObject.payOutDetails, 'payOut');
+                var sum = underscore.reduce(payOutArray, function (memo, num) {
+                    return memo + num;
+                }, 0);
+                Entry.findOneAndUpdate({
+                    _id: entryObject.id,
+                }, {
+                    $set: {
+                        "payOut": sum
+                    }
+                }, function (err, recordObject) {
+                    callback(null, 'done');
+                });
+            } else {
                 callback(null, 'done');
-            });
+            }
         }
     ], function (err, result) {
         next(err, result)
     });
-}
+};
 
 exports.deletePayOut = function (input, next) {
     async.waterfall([
@@ -603,4 +565,27 @@ exports.deletePayOut = function (input, next) {
         next(err, recordObject)
     });
 
-}
+};
+
+exports.lockPage = function (input, next) {
+
+    RecordPage.findOneAndUpdate({_id: input.recordPageID}, {
+        $set: {
+            locked: input.locked
+        }
+    }, function (err, object) {
+
+        if (err) throw err;
+        next(null, object);
+    });
+};
+
+exports.getCustomerFinancialHistory = function (input, next) {
+    Entry.find({
+        customer_id: input.requestCustomer_id,
+        customerType: input.requestRecordType
+    }, function (err, object) {
+        if (err) throw err;
+        next(err, underscore.sortBy(object, 'recordDate'));
+    });
+};

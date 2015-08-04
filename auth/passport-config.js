@@ -36,7 +36,6 @@ module.exports = function () {
                     if (err) {
                         return next(err);
                     }
-                    console.log(object);
                     databaseFunction.getWorkerID(object.id, function (err, workerIDObject) {
                         if (err) {
                             return next(err);

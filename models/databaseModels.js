@@ -148,6 +148,9 @@ var recordPageSchema = new Schema({
 });
 
 var payInSchema = new Schema({
+    worker_id: String,
+    workerUsername: String,
+    workerNickname: String,
     payIn: {type: Number, Default: 0},
     paymentMethod_id: String,
     paymentMethodBankName: String,
@@ -157,6 +160,9 @@ var payInSchema = new Schema({
 });
 
 var payOutSchema = new Schema({
+    worker_id: String,
+    workerUsername: String,
+    workerNickname: String,
     payOut: {type: Number, Default: 0},
     paymentMethod_id: String,
     paymentMethodBankName: String,

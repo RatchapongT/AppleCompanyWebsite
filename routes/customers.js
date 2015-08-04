@@ -167,7 +167,7 @@ router.get('/profiles/:id?', function (req, res) {
                 return res.render('customers/profiles', {
                     title: 'Customer Profile',
                     customerObject: customerObject,
-                    bankObject: bankObject,
+                    customerBankObject: bankObject,
                     currentUser: req.session.passport.user.username,
                     error: req.flash('error'),
                     successMessage: req.flash('successMessage'),
@@ -190,7 +190,7 @@ router.get('/profiles/:id?', function (req, res) {
                 return res.render('customers/profiles', {
                     title: 'Customer Profile',
                     customerObject: customerObject,
-                    bankObject: bankObject,
+                    customerBankObject: bankObject,
                     currentUser: req.session.passport.user.username,
                     error: req.flash('error'),
                     successMessage: req.flash('successMessage'),

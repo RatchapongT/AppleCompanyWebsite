@@ -41,38 +41,53 @@
            style = "margin-top: 60px; border-color:#BDC3C7">
         <thead>
         <tr>
+            <colgroup>
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#ECF0F1">
+
+            </colgroup>
             <th style = "text-align:center; width: 100px"
                 class = "sort-default">Date
             </th>
             <th style = "text-align:center; width: 150px"
+                class = "sort-default">Previous Debt
+            </th>
+            <th style = "text-align:center; width: 150px; color: #2ECC71"
                 class = "sort-default">Buy
             </th>
-            <th style = "text-align:center; width: 150px"
+            <th style = "text-align:center; width: 150px;color:#E74C3C"
                 class = "sort-default">Strike
+            </th>
+            <th style = "text-align:center; width: 150px; color: #2ECC71" class = "no-sort">
+                Pay In
+            </th>
+            <th style = "text-align:center; width: 150px; color:#E74C3C" class = "no-sort">
+                Pay Out
             </th>
 
             <th style = "text-align:center; width: 150px" class = "no-sort">
-                Pay In
-            </th>
-            <th style = "text-align:center; width: 150px" class = "no-sort">
-                Pay Out
-            </th>
-            <th style = "text-align:center; width: 150px" class = "no-sort">
-                Balance
+                Debt
             </th>
         </tr>
         </thead>
+        <% var totalDebt = 0 %>
         <% for(var i = 0; i < financeObject.length; i++) { %>
         <tr>
-
             <td align = "center"><%= financeObject[i].recordDate.getDate() %>
                 /<%= financeObject[i].recordDate.getMonth() %>
                 /<%= financeObject[i].recordDate.getFullYear() %></td>
+            <td align = "center"><%= totalDebt %></td>
             <td align = "center"><%= financeObject[i].sale %></td>
             <td align = "center"><%= financeObject[i].strike %></td>
             <td align = "center"><%= financeObject[i].payIn %></td>
             <td align = "center"><%= financeObject[i].payOut %></td>
-            <td align = "center">0</td>
+<% totalDebt = totalDebt + financeObject[i].sale - financeObject[i].strike +  financeObject[i].payIn - financeObject[i].payOut%>
+            <td align = "center"><%=totalDebt%></td>
         </tr>
         <% } %>
     </table>
