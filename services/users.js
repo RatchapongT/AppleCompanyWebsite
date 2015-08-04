@@ -4,6 +4,8 @@ var SystemBank = require('../models/databaseModels').SystemBank;
 var Customer = require('../models/databaseModels').Customer;
 var WorkerCustomer = require('../models/databaseModels').WorkerCustomer;
 var Worker = require('../models/databaseModels').Worker;
+var Manager = require('../models/databaseModels').Manager;
+
 var bcrypt = require('bcrypt');
 
 exports.findUser = function (input, next) {
@@ -207,5 +209,29 @@ exports.deleteSystemBank = function (input, res, next) {
         object.remove(function (err) {
             res(err);
         });
+    });
+};
+
+exports.getWorkerID = function (input, next) {
+    Worker.findOne({_profileDetail : input}, function (err, object) {
+        if (err) return next(err);
+
+        if (object != null) {
+            next(err, object.id);
+        } else {
+            next(err, null);
+        }
+    });
+};
+
+exports.getManagerID = function (input, next) {
+    Manager.findOne({_profileDetail : input}, function (err, object) {
+        if (err) return next(err);
+        if (object != null) {
+            next(err, object.id);
+        } else {
+            next(err, null);
+        }
+
     });
 };

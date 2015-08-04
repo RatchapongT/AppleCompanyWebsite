@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
 <head>
     <% include ../partials/page/head.ejs %>
 </head>
@@ -9,7 +9,7 @@
 
 <% include ../partials/page/jsdefaults.ejs %>
 
-<script type="text/javascript">
+<script type = "text/javascript">
     function GetSelectedTextValue() {
         var selectedValue = document.getElementById('default_field').value;
         if (selectedValue === "Other") {
@@ -37,30 +37,25 @@
 
 </script>
 
-<div class="container">
+<div class = "container">
     <h2>Customer's Bank</h2>
 
-    <div align="center">
-        <form name="search_customer" method="post" action="/customers/bank"
-              id="search_customer">
+    <div align = "center">
+        <form name = "search_customer" method = "post"
+              action = "/customers/bank" id = "search_customer">
 
 
-            <select name="request_customer_id"
-                    class="form-control select select-info"
-                    data-toggle="select" form="search_customer"
-                    onchange='this.form.submit()' id="request_customer_id">
+            <select name = "request_customer_id"
+                    class = "form-control select select-info"
+                    data-toggle = "select" form = "search_customer"
+                    onchange = 'this.form.submit()' id = "request_customer_id">
                 <% for(var i = 0; i < customerObject.length; i++) { %>
-                <% if (requestCustomerID == undefined && i == 0) { %>
-                <% requestCustomerID = customerObject[0].id %>
-                <option value=<%= customerObject[0].id %> selected><%= customerObject[i].customerID %>
-                    (<%= customerObject[i].nickname %>)
-                </option>
-                <% } else if (requestCustomerID == customerObject[i].id){ %>
-                <option value=<%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
+                <% if (requestCustomerID == customerObject[i].id){ %>
+                <option value = <%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
                     (<%= customerObject[i].nickname %>)
                 </option>
                 <% } else { %>
-                <option value=<%= customerObject[i].id %>><%= customerObject[i].customerID %>
+                <option value =<%= customerObject[i].id %>><%= customerObject[i].customerID %>
                     (<%= customerObject[i].nickname %>)
                 </option>
                 <% } %>
@@ -71,53 +66,52 @@
         </form>
     </div>
 
-    <form method="post" action="/customers/bank/add" id="bank_form">
-        <div align="center">
-            <div class="login-form" style="width:350px; margin-top: 30px; ">
+    <form method = "post" action = "/customers/bank/add" id = "bank_form">
+        <div align = "center">
+            <div class = "login-form" style = "width:350px; margin-top: 30px; ">
 
-                <input type="hidden" value="<%= requestCustomerID %>"
-                       name="customerID">
+                <input type = "hidden" value = "<%= requestCustomerID %>"
+                       name = "customerID">
 
 
-                <div class="form-group">
-                    <input type="number"
-                           class="form-control login-field" value=""
-                           placeholder="Bank Number" name="bankNumber"
-                           maxlength="14" required>
+                <div class = "form-group">
+                    <input type = "number" class = "form-control login-field"
+                           value = "" placeholder = "Bank Number"
+                           name = "bankNumber" maxlength = "14" required>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value=""
-                           placeholder="Bank Name" name="bankName"
-                           required>
+                <div class = "form-group">
+                    <input type = "text" class = "form-control login-field"
+                           value = "" placeholder = "Bank Name"
+                           name = "bankName" required>
 
                 </div>
 
 
-                <div style="margin-bottom: 30px ">
+                <div style = "margin-bottom: 30px ">
                     Bank Type
-                    <select name="bankType"
-                            class="form-control select select-info"
-                            data-toggle="select" form="bank_form"
-                            onchange='GetSelectedTextValue()'
-                            id='default_field'>
-                        <option value="BBL"> BBL</option>
-                        <option value="TFB"> TFB</option>
-                        <option value="SCB"> SCB</option>
-                        <option value="Other"> Other</option>
+                    <select name = "bankType"
+                            class = "form-control select select-info"
+                            data-toggle = "select" form = "bank_form"
+                            onchange = 'GetSelectedTextValue()'
+                            id = 'default_field'>
+                        <option value = "BBL"> BBL</option>
+                        <option value = "TFB"> TFB</option>
+                        <option value = "SCB"> SCB</option>
+                        <option value = "Other"> Other</option>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <input type="hidden" class="form-control login-field"
-                           value=""
-                           placeholder="Other" name="bankType"
-                           id="other_field">
+                <div class = "form-group">
+                    <input type = "hidden" class = "form-control login-field"
+                           value = "" placeholder = "Other" name = "bankType"
+                           id = "other_field">
                 </div>
 
 
-                <input class="btn btn-primary btn-lg btn-block"
-                       type="submit" value="Add Bank" onclick='SubmitForm()' id="submit_button">
+                <input class = "btn btn-primary btn-lg btn-block"
+                       type = "submit" value = "Add Bank"
+                       onclick = 'SubmitForm()' id = "submit_button">
 
             </div>
 
@@ -125,46 +119,47 @@
     </form>
 
     <% if (typeof failureMessage != 'undefined' && failureMessage != '') { %>
-    <div class="form-group has-error">
-        <div align="center" style="margin:25px auto; width:200px;">
-            <input style="text-align:center" type="text" value=""
-                   placeholder="<%= failureMessage %>" class="form-control">
+    <div class = "form-group has-error">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= failureMessage %>" class = "form-control">
         </div>
     </div>
     <% } %>
 
     <% if (typeof successMessage != 'undefined' && successMessage != '') { %>
-    <div class="form-group has-success">
-        <div align="center" style="margin:25px auto; width:200px;">
-            <input style="text-align:center" type="text" value=""
-                   placeholder="<%= successMessage %>" class="form-control">
+    <div class = "form-group has-success">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= successMessage %>" class = "form-control">
         </div>
     </div>
     <% } %>
 
-    <table id="sort" class="table" style="margin-top: 50px">
+    <table id = "sort" class = "table" style = "margin-top: 50px">
         <thead>
         <tr>
-            <th style="text-align:center" class="sort-default">Bank Number</th>
-            <th style="text-align:center" class="sort-default">Bank Name</th>
-            <th style="text-align:center" class="sort-default">Bank Type</th>
-            <th style="text-align:center" class="no-sort">Delete Bank</th>
+            <th style = "text-align:center" class = "sort-default">Bank Number
+            </th>
+            <th style = "text-align:center" class = "sort-default">Bank Name
+            </th>
+            <th style = "text-align:center" class = "sort-default">Bank Type
+            </th>
+            <th style = "text-align:center" class = "no-sort">Delete Bank</th>
         </tr>
         </thead>
         <% for(var i = 0; i < bankObject.length; i++) { %>
-        <% if (bankObject[i]._customerDetail._id == requestCustomerID) { %>
         <tr>
-            <td align="center"><%= bankObject[i].bankNumber %></td>
-            <td align="center"><%= bankObject[i].bankName %></td>
-            <td align="center"><%= bankObject[i].bankType %></td>
+            <td align = "center"><%= bankObject[i].bankNumber %></td>
+            <td align = "center"><%= bankObject[i].bankName %></td>
+            <td align = "center"><%= bankObject[i].bankType %></td>
 
-            <td align="center"><a
-                        href="/customers/bank/delete/<%= bankObject[i].id %>/<%= requestCustomerID %>"
-                        class="button"><span class="fui-cross"
-                                             style="color:#f93c3c"></span></a>
+            <td align = "center"><a
+                        href = "/customers/bank/delete/<%= bankObject[i].id %>/<%= requestCustomerID %>"
+                        class = "button"><span class = "fui-cross"
+                                               style = "color:#f93c3c"></span></a>
             </td>
         </tr>
-        <% } %>
         <% } %>
     </table>
 
@@ -174,7 +169,8 @@
 <script>
     new Tablesort(document.getElementById('sort'));
 
-    if (<%=customerObject.length%> ===0) {
+    if (<%=customerObject.length%> ===0)
+    {
         document.getElementById('submit_button').disabled = true;
     }
 

@@ -20,11 +20,7 @@ var underscore = require('underscore');
 
 /* CUSTOMER */
 
-exports.findCustomer = function (customerID, next) {
-    Customer.findOne({customerID: customerID}, function (err, user) {
-        next(err, user);
-    });
-};
+
 
 exports.getCustomerTypeList = function (input, next) {
     if (input.malay) {

@@ -73,11 +73,12 @@ router.get('/delete/:id', function (req, res) {
 
 router.get('/bank/:id?', function (req, res) {
     if (req.session.passport.user.accountType == "Admin") {
-        databaseFunction.getBankList(req, function (err, bankObject) {
+        databaseFunction.getCustomerList(req, function (err, customerObject) {
+            var requestCustomerID = req.params.id ? req.params.id : (customerObject[0] ? customerObject[0].id : null);
             if (err) {
                 return res.send(err);
             }
-            databaseFunction.getCustomerList(req, function (err, customerObject) {
+            databaseFunction.getBankList(requestCustomerID, function (err, bankObject) {
                 if (err) {
                     return res.send(err);
                 }
@@ -87,13 +88,33 @@ router.get('/bank/:id?', function (req, res) {
                     customerObject: customerObject,
                     successMessage: req.flash('successMessage'),
                     failureMessage: req.flash('failureMessage'),
-                    requestCustomerID: req.params.id
+                    requestCustomerID: requestCustomerID
                 });
             });
 
         });
-    } else if (req.session.passport.user.accountType == "Worker") {
+    }
+    else if (req.session.passport.user.accountType == "Worker") {
+        databaseFunction.getCustomerListLimited(req.session.passport.user.workerID, function (err, customerObject) {
+            var requestCustomerID = req.params.id ? req.params.id : (customerObject[0] ? customerObject[0].id : null);
+            if (err) {
+                return res.send(err);
+            }
+            databaseFunction.getBankList(requestCustomerID, function (err, bankObject) {
+                if (err) {
+                    return res.send(err);
+                }
+                return res.render('customers/bank', {
+                    title: 'Bank Management',
+                    bankObject: bankObject,
+                    customerObject: customerObject,
+                    successMessage: req.flash('successMessage'),
+                    failureMessage: req.flash('failureMessage'),
+                    requestCustomerID: requestCustomerID
+                });
+            });
 
+        });
     } else {
         return res.render('warning',
             {
@@ -132,27 +153,60 @@ router.get('/bank/delete/:bankID/:customerID', function (req, res) {
 
 router.get('/profiles/:id?', function (req, res) {
 
-    databaseFunction.getBankList(req, function (err, bankObject) {
-        if (err) {
-            return res.send(err);
-        }
+    if (req.session.passport.user.accountType == "Admin") {
         databaseFunction.getCustomerList(req, function (err, customerObject) {
             if (err) {
                 return res.send(err);
             }
+            var requestCustomerID = req.params.id ? req.params.id : (customerObject[0] ? customerObject[0].id : null);
+            databaseFunction.getBankList(requestCustomerID, function (err, bankObject) {
+                if (err) {
+                    return res.send(err);
+                }
 
-            return res.render('customers/profiles', {
-                title: 'Customer Profile',
-                customerObject: customerObject,
-                bankObject: bankObject,
-                currentUser: req.session.passport.user.username,
-                error: req.flash('error'),
-                successMessage: req.flash('successMessage'),
-                failureMessage: req.flash('failureMessage'),
-                requestCustomerID: req.params.id
+                return res.render('customers/profiles', {
+                    title: 'Customer Profile',
+                    customerObject: customerObject,
+                    bankObject: bankObject,
+                    currentUser: req.session.passport.user.username,
+                    error: req.flash('error'),
+                    successMessage: req.flash('successMessage'),
+                    failureMessage: req.flash('failureMessage'),
+                    requestCustomerID: requestCustomerID
+                });
             });
         });
-    });
+    } else if (req.session.passport.user.accountType == "Worker") {
+        databaseFunction.getCustomerListLimited(req.session.passport.user.workerID, function (err, customerObject) {
+            if (err) {
+                return res.send(err);
+            }
+            var requestCustomerID = req.params.id ? req.params.id : (customerObject[0] ? customerObject[0].id : null);
+            databaseFunction.getBankList(requestCustomerID, function (err, bankObject) {
+                if (err) {
+                    return res.send(err);
+                }
+
+                return res.render('customers/profiles', {
+                    title: 'Customer Profile',
+                    customerObject: customerObject,
+                    bankObject: bankObject,
+                    currentUser: req.session.passport.user.username,
+                    error: req.flash('error'),
+                    successMessage: req.flash('successMessage'),
+                    failureMessage: req.flash('failureMessage'),
+                    requestCustomerID: requestCustomerID
+                });
+            });
+        });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
 });
 
 router.post('/profiles', function (req, res) {

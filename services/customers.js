@@ -1,18 +1,17 @@
 var Customer = require('../models/databaseModels').Customer;
 var Bank = require('../models/databaseModels').Bank;
+var Worker = require('../models/databaseModels').Worker;
 
 exports.getCustomerList = function (input, next) {
     Customer.find().deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
-        if (err) throw err;
         next(err, object);
     });
 };
 
 exports.getCustomerListLimited = function (input, next) {
-    Customer.find({_workerDetail : input}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
-        if (err) throw err;
-        next(err, object);
-    });
+        Customer.find({_workerDetail : input}).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+            next(err, object);
+        });
 };
 
 exports.addCustomer = function (input, next) {
@@ -55,8 +54,7 @@ exports.deleteCustomer = function (input, res, next) {
     });
 };
 exports.getBankList = function (input, next) {
-    Bank.find({}).populate('_customerDetail').exec(function (err, object) {
-        if (err) throw err;
+    Bank.find({_customerDetail: input}).populate('_customerDetail').exec(function (err, object) {
         next(err, object);
     });
 };
@@ -98,7 +96,12 @@ exports.editCustomerProfiles = function (input, next) {
             paymentCondition: input.paymentCondition
         }
     }, function (err, object) {
-        if (err) throw err;
         next(err, object);
+    });
+};
+
+exports.findCustomer = function (input, next) {
+    Customer.findOne({customerID: input}, function (err, user) {
+        next(err, user);
     });
 };

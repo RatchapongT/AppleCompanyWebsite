@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
 <head>
     <% include ../partials/page/head.ejs %>
 </head>
@@ -9,29 +9,24 @@
 
 <% include ../partials/page/jsdefaults.ejs %>
 
-<div class="container">
+<div class = "container">
     <h2>Customer's Profile</h2>
 
-    <div align="center">
-        <form name="search_customer" method="post" action="/customers/profiles"
-              id="search_customer">
+    <div align = "center">
+        <form name = "search_customer" method = "post"
+              action = "/customers/profiles" id = "search_customer">
 
-            <select name="request_customer_id"
-                    class="form-control select select-info"
-                    data-toggle="select" form="search_customer"
-                    onchange='this.form.submit()'>
+            <select name = "request_customer_id"
+                    class = "form-control select select-info"
+                    data-toggle = "select" form = "search_customer"
+                    onchange = 'this.form.submit()'>
                 <% for(var i = 0; i < customerObject.length; i++) { %>
-                <% if (requestCustomerID == undefined && i == 0) { %>
-                <% requestCustomerID = customerObject[0].id %>
-                <option value=<%= customerObject[0].id %> selected><%= customerObject[i].customerID %>
-                    (<%= customerObject[i].nickname %>)
-                </option>
-                <% } else if (requestCustomerID == customerObject[i].id){ %>
-                <option value=<%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
+                <% if (requestCustomerID == customerObject[i].id){ %>
+                <option value = <%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
                     (<%= customerObject[i].nickname %>)
                 </option>
                 <% } else { %>
-                <option value=<%= customerObject[i].id %>><%= customerObject[i].customerID %>
+                <option value =<%= customerObject[i].id %>><%= customerObject[i].customerID %>
                     (<%= customerObject[i].nickname %>)
                 </option>
                 <% } %>
@@ -46,68 +41,72 @@
     <% var searchCustomer = customerObject[i] %>
     <% } %>
     <% } %>
+    <% if (customerObject.length > 0) { %>
+    <form method = "post" action = "/customers/edit" id = "customer_form">
+        <div align = "center">
+            <input type = "hidden" value = "<%= requestCustomerID %>"
+                   name = "editCustomerID"/>
 
-    <form method="post" action="/customers/edit" id="customer_form">
-        <div align="center">
-            <input type="hidden" value="<%=requestCustomerID%>" name="editCustomerID"/>
+            <div class = "login-form" style = "width:350px; margin-top: 30px; ">
+                <div style = "text-align:left; margin-left: 100px;">
 
-            <div class="login-form" style="width:350px; margin-top: 30px; ">
-                <div style="text-align:left; margin-left: 100px;">
-
-                    <label class="checkbox" for="checkbox1">
-                        <input name="malay" type="checkbox" value=1
-                               id="checkbox1" data-toggle="checkbox">
+                    <label class = "checkbox" for = "checkbox1">
+                        <input name = "malay" type = "checkbox" value = 1
+                               id = "checkbox1" data-toggle = "checkbox">
                         Malay
                     </label>
-                    <label class="checkbox" for="checkbox2">
-                        <input name="thai" type="checkbox"
-                               value=1 id="checkbox2" data-toggle="checkbox">
+                    <label class = "checkbox" for = "checkbox2">
+                        <input name = "thai" type = "checkbox" value = 1
+                               id = "checkbox2" data-toggle = "checkbox">
                         Thai
                     </label>
 
+
                     <script>
+
                         document.getElementById("checkbox1").checked = <%=searchCustomer.malay%>;
                         document.getElementById("checkbox2").checked = <%=searchCustomer.thai%>;
                     </script>
+
                 </div>
-                <div class="form-group">
+                <div class = "form-group">
                     Nickname
-                    <input type="text" class="form-control login-field"
-                           placeholder="Nickname" name="nickname"
-                           value="<%= searchCustomer.nickname %>"/>
+                    <input type = "text" class = "form-control login-field"
+                           placeholder = "Nickname" name = "nickname"
+                           value = "<%= searchCustomer.nickname %>"/>
                 </div>
-                <div class="form-group">
+                <div class = "form-group">
                     Phone
-                    <input type="text" class="form-control login-field"
-                           placeholder="Phone" name="phone"
-                           value="<%= searchCustomer.phone %>"/>
+                    <input type = "text" class = "form-control login-field"
+                           placeholder = "Phone" name = "phone"
+                           value = "<%= searchCustomer.phone %>"/>
                 </div>
-                <div class="form-group">
+                <div class = "form-group">
                     Line ID
-                    <input type="text" class="form-control login-field"
-                           placeholder="Line ID" name="lineID"
-                           value="<%= searchCustomer.lineID %>"/>
+                    <input type = "text" class = "form-control login-field"
+                           placeholder = "Line ID" name = "lineID"
+                           value = "<%= searchCustomer.lineID %>"/>
                 </div>
 
-                <div class="form-group">
-                    Percent<input type="text" class="form-control login-field"
-                                  placeholder="Percent" name="percent"
-                                  value="<%= searchCustomer.percent %>"/>
+                <div class = "form-group">
+                    Percent<input type = "text"
+                                  class = "form-control login-field"
+                                  placeholder = "Percent" name = "percent"
+                                  value = "<%= searchCustomer.percent %>"/>
                 </div>
 
 
-                <div style="margin-bottom: 30px ">
+                <div style = "margin-bottom: 30px ">
                     Payment Condition
-                    <select name="paymentCondition"
-                            class="form-control select select-info"
-                            data-toggle="select" form="customer_form"
-                            id='selectType'
-                            >
-                        <option value="Type 1"> Type 1</option>
-                        <option value="Type 2"> Type 2</option>
-                        <option value="Type 3"> Type 3</option>
-                        <option value="Type 4"> Type 4</option>
-                        <option value="No Type" selected> No Type</option>
+                    <select name = "paymentCondition"
+                            class = "form-control select select-info"
+                            data-toggle = "select" form = "customer_form"
+                            id = 'selectType'>
+                        <option value = "Type 1"> Type 1</option>
+                        <option value = "Type 2"> Type 2</option>
+                        <option value = "Type 3"> Type 3</option>
+                        <option value = "Type 4"> Type 4</option>
+                        <option value = "No Type" selected> No Type</option>
 
 
                     </select>
@@ -116,28 +115,28 @@
                         element.value = "<%=searchCustomer.paymentCondition%>";
                     </script>
                 </div>
-                <input class="btn btn-primary btn-lg btn-block"
-                       type="submit" value="Save Edit"/>
+                <input class = "btn btn-primary btn-lg btn-block"
+                       type = "submit" value = "Save Edit"/>
             </div>
 
 
         </div>
     </form>
-
+    <% } %>
     <% if (typeof failureMessage != 'undefined' && failureMessage != '') { %>
-    <div class="form-group has-error">
-        <div align="center" style="margin:25px auto; width:200px;">
-            <input style="text-align:center" type="text" value=""
-                   placeholder="<%= failureMessage %>" class="form-control">
+    <div class = "form-group has-error">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= failureMessage %>" class = "form-control">
         </div>
     </div>
     <% } %>
 
     <% if (typeof successMessage != 'undefined' && successMessage != '') { %>
-    <div class="form-group has-success">
-        <div align="center" style="margin:25px auto; width:200px;">
-            <input style="text-align:center" type="text" value=""
-                   placeholder="<%= successMessage %>" class="form-control">
+    <div class = "form-group has-success">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= successMessage %>" class = "form-control">
         </div>
     </div>
     <% } %>

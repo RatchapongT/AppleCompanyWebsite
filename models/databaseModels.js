@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var databaseFunction = require('../services/users');
 var deepPopulate = require('mongoose-deep-populate');
 
 var userSchema = new Schema({
@@ -10,7 +9,7 @@ var userSchema = new Schema({
 });
 
 userSchema.path('username').validate(function (username, next) {
-    databaseFunction.findUser(username, function (err, user) {
+    User.findOne({username : username}, function (err, user) {
         if (err) {
             return next(false);
         }
@@ -92,9 +91,8 @@ var customerSchema = new Schema({
 });
 
 customerSchema.path('customerID').validate(function (customerID, next) {
-    databaseFunction.findCustomer(customerID, function (err, user) {
+    Customer.findOne({customerID: customerID}, function (err, user) {
         if (err) {
-            console.log(err);
             return next(false);
         }
 

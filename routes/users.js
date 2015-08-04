@@ -18,7 +18,7 @@ router.get('/manage', function (req, res) {
             return res.render('users/manage', {
                 title: 'User Management',
                 data: object,
-                currentSessionID: req.session.passport.user.id,
+                currentSessionID: req.session.passport.user.userDetailID,
                 successMessage: req.flash('successMessage'),
                 failureMessage: req.flash('failureMessage')
             });
@@ -57,7 +57,7 @@ router.post('/create', function (req, res) {
 
 router.get('/delete/:id', function (req, res) {
     if (req.session.passport.user.accountType == "Admin") {
-        if (req.params.id == req.session.passport.user.id) {
+        if (req.params.id == req.session.passport.user.userDetailID) {
             return res.render('warning',
                 {
                     title: 'Warning (delete)',
@@ -86,7 +86,7 @@ router.get('/delete/:id', function (req, res) {
 
 router.get('/profiles/:id?', function (req, res) {
     if (req.session.passport.user.accountType == "Admin") {
-        var requestUserID = req.params.id ? req.params.id : req.session.passport.user.id;
+        var requestUserID = req.params.id ? req.params.id : req.session.passport.user.userDetailID;
         databaseFunction.getUserDetailList(req, function (err, object) {
             if (err) {
                 return res.send(err);
@@ -99,7 +99,7 @@ router.get('/profiles/:id?', function (req, res) {
             });
         });
     } else {
-        var requestUserID = req.session.passport.user.id;
+        var requestUserID = req.session.passport.user.userDetailID;
         databaseFunction.findUserDetailById(requestUserID, function (err, object) {
             if (err) {
                 return res.send(err);
@@ -119,13 +119,13 @@ router.post('/profiles/:id?', function (req, res) {
     if (req.session.passport.user.accountType == "Admin") {
         return res.redirect('/users/profiles/' + req.body.select_user_id);
     } else {
-        return res.redirect('/users/profiles/' + req.session.passport.user.id);
+        return res.redirect('/users/profiles/' + req.session.passport.user.userDetailID);
     }
 });
 
 router.post('/edit', function (req, res) {
     if (req.session.passport.user.accountType != "Admin") {
-        req.body.editUserID = req.session.passport.user.id;
+        req.body.editUserID = req.session.passport.user.userDetailID;
     }
     databaseFunction.editUserProfiles(req.body, function (err, object) {
         if (err) {

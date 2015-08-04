@@ -36,13 +36,27 @@ module.exports = function () {
                     if (err) {
                         return next(err);
                     }
-                    var serializeObject = {
-                        username:  user.username,
-                        id: user.id,
-                        accountType: object.accountType
+                    console.log(object);
+                    databaseFunction.getWorkerID(object.id, function (err, workerIDObject) {
+                        if (err) {
+                            return next(err);
+                        }
+                        databaseFunction.getManagerID(object.id, function (err, managerIDObject) {
+                            if (err) {
+                                return next(err);
+                            }
+                            var serializeObject = {
+                                username:  user.username,
+                                userDetailID: user.id,
+                                workerID : workerIDObject,
+                                managerID : managerIDObject,
+                                accountType: object.accountType
 
-                    }
-                    next(null, serializeObject);
+                            }
+                            next(null, serializeObject);
+                        });
+                    });
+
                 });
 
             });
