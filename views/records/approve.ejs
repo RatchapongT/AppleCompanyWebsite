@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+    <% include ../partials/page/jsdefaults.ejs %>
+</header>
+
+
+<div class = "container">
+    <h2><%= title %></h2>
+
+    <div align = "center">
+        <div class = "login-form" style = "width:350px; margin-top: 30px; ">
+            <form method = "post" id = "date_form">
+                <div class = "input-group date" id = "datepicker"
+                     style = "width: 300px; margin-bottom: 30px">
+                    <input P = "text" class = "form-control"
+                           style = "text-align: center" value = "<%=requestDate%>"
+                           name = "date_input" onchange = 'submitParseDate()'
+                           id = "date_input">
+            <span class = "input-group-addon"><i
+                        class = "fui-list-small-thumbnails"></i></span>
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+    <script type = "text/javascript">
+        $(document).ready(function () {
+            $('#datepicker').datepicker({
+                format: "dd/mm/yyyy",
+                orientation: 'auto top',
+                autoclose: true,
+                todayHighlight: true
+            });
+            var date = new Date("<%=requestDate%>");
+
+            if ((date.getMonth() + 1) < 10) {
+                if (date.getDate() < 10) {
+                    var selectDate = '0' + date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                } else {
+                    var selectDate = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                }
+
+            } else {
+                if (date.getDate() < 10) {
+                    var selectDate = '0' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                } else {
+                    var selectDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                }
+            }
+            document.getElementById('date_input').value = selectDate;
+
+        });
+
+        function submitParseDate() {
+            var unformatted = document.getElementById('date_input').value;
+            var result = unformatted.split("/");
+            var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
+            document.getElementById("date_form").action = '';
+            document.getElementById("date_form").submit();
+        }
+
+    </script>

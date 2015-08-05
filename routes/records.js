@@ -135,6 +135,7 @@ router.get('/manage/:recordType/:date', function (req, res, next) {
                         customerType: requestRecordType
                     }
                 }
+
                 if (req.session.passport.user.accountType == "Manager") {
                     var entryInput = {
                         recordDate: req.params.date,
@@ -156,6 +157,7 @@ router.get('/manage/:recordType/:date', function (req, res, next) {
                                 requestRecordType: requestRecordType,
                                 redirectRecordType: req.params.recordType,
                                 requestDate: req.params.date,
+                                permission: req.session.passport.user.accountType,
                                 recordPageID: recordObject ? recordObject.id : null,
                                 pageLocked: recordObject ? recordObject.locked : null,
                                 totalSale: recordInfoObject ? recordInfoObject.totalSale : null,
@@ -199,7 +201,11 @@ router.post('/manage/:recordType/update-entry/', function (req, res, next) {
                 recordPageID: req.body.recordPageID
             }
             databaseFunction.findRecordByID(input.recordPageID, function (err, recordObject) {
-                if (recordObject.locked) {
+                if (err) {
+                    return res.send(err);
+                }
+                var locked = recordObject ? recordObject.locked : false;
+                if (locked) {
                     return res.render('warning',
                         {
                             title: 'Warning',
@@ -255,7 +261,7 @@ router.get('/payin/:recordType/:date/:customer_id?/:payment_id?', function (req,
                 var requestCustomer_id = req.params.customer_id ? req.params.customer_id : (customerObject[0] ? customerObject[0]._id : null);
 
                 if (req.session.passport.user.accountType == "Manager") {
-                    var filterdObject = underscore.filter(customerObject, function(obj) {
+                    var filterdObject = underscore.filter(customerObject, function (obj) {
                         return obj._workerDetail._managerDetail == req.session.passport.user.managerID;
                     });
                     customerObject = filterdObject;
@@ -273,22 +279,28 @@ router.get('/payin/:recordType/:date/:customer_id?/:payment_id?', function (req,
                     requestRecordType: requestRecordType
                 }
                 databaseFunction.getEntryPayIn(entryInput, function (err, entryObject) {
-                    if (err) {
-                        return res.send(err);
-                    }
-                    return res.render('records/payin', {
-                        title: 'Pay In (' + requestRecordType + ')',
-                        customerObject: customerObject,
-                        systemBankObject: systemBankObject ? systemBankObject : null,
-                        requestPaymentID: requestPayment_id,
-                        requestCustomerID: requestCustomer_id,
-                        requestDate: requestDate,
-                        redirectRecordType: req.params.recordType,
-                        entryObject: entryObject ? entryObject : null
+                    var recordInput = {
+                        date: requestDate,
+                        recordType: requestRecordType
+                    };
+                    databaseFunction.findRecord(recordInput, function (err, recordObject) {
+                        if (err) {
+                            return res.send(err);
+                        }
+                        return res.render('records/payin', {
+                            title: 'Pay In (' + requestRecordType + ')',
+                            customerObject: customerObject,
+                            systemBankObject: systemBankObject ? systemBankObject : null,
+                            requestPaymentID: requestPayment_id,
+                            requestCustomerID: requestCustomer_id,
+                            requestDate: requestDate,
+                            pageLocked: recordObject ? recordObject.locked : null,
+                            redirectRecordType: req.params.recordType,
+                            entryObject: entryObject ? entryObject : null
+                        });
                     });
+
                 });
-
-
             });
 
         });
@@ -325,7 +337,11 @@ router.post('/payin/:recordType', function (req, res) {
         };
 
         databaseFunction.findRecord(recordInput, function (err, recordObject) {
-            if (recordObject.locked) {
+            if (err) {
+                return res.send(err);
+            }
+            var locked = recordObject ? recordObject.locked : false;
+            if (locked) {
                 return res.render('warning',
                     {
                         title: 'Warning',
@@ -338,6 +354,7 @@ router.post('/payin/:recordType', function (req, res) {
                     requestCustomerID: req.body.requestCustomerID,
                     customerType: requestRecordType,
                     requestBankID: req.body.requestPaymentID,
+                    workerUsername: req.session.passport.user.username,
                     payIn: req.body.payIn
                 };
                 databaseFunction.updatePayIn(updateInput, function (err) {
@@ -360,12 +377,36 @@ router.post('/payin/:recordType', function (req, res) {
 });
 
 router.get('/payin/:recordType/delete/:date/:customer_id/:payment_id/:entry_id/:delete_id', function (req, res, next) {
-    databaseFunction.deletePayIn(req.params, function (err) {
+    var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
+    var recordInput = {
+        date: req.body.requestDate,
+        recordType: requestRecordType
+    };
+
+    databaseFunction.findRecord(recordInput, function (err, recordObject) {
         if (err) {
             return res.send(err);
         }
-        return res.redirect('/records/payin/' + req.params.recordType + '/' + req.params.date + '/' + req.params.customer_id + '/' + req.params.payment_id);
+
+        var locked = recordObject ? recordObject.locked : false;
+        if (locked) {
+            return res.render('warning',
+                {
+                    title: 'Warning',
+                    warningText: "Document Locked!"
+                });
+        } else {
+            databaseFunction.deletePayIn(req.params, function (err) {
+                if (err) {
+                    return res.send(err);
+                }
+                return res.redirect('/records/payin/' + req.params.recordType + '/' + req.params.date + '/' + req.params.customer_id + '/' + req.params.payment_id);
+            });
+
+        }
+
     });
+
 });
 
 
@@ -392,7 +433,7 @@ router.get('/payout/:recordType/:date/:customer_id?/', function (req, res) {
             }
 
             if (req.session.passport.user.accountType == "Manager") {
-                var filterdObject = underscore.filter(customerObject, function(obj) {
+                var filterdObject = underscore.filter(customerObject, function (obj) {
                     return obj._workerDetail._managerDetail == req.session.passport.user.managerID;
                 });
                 customerObject = filterdObject;
@@ -415,16 +456,26 @@ router.get('/payout/:recordType/:date/:customer_id?/', function (req, res) {
                 if (err) {
                     return res.send(err);
                 }
+                var recordInput = {
+                    date: requestDate,
+                    recordType: requestRecordType
+                };
+                databaseFunction.findRecord(recordInput, function (err, recordObject) {
+                    if (err) {
+                        return res.send(err);
+                    }
+                    console.log(req.body);
+                    return res.render('records/payout', {
+                        title: 'Pay Out (' + requestRecordType + ')',
+                        customerObject: customerObject ? customerObject : null,
+                        requestCustomerID: requestCustomer_id,
+                        requestDate: requestDate,
+                        pageLocked: recordObject ? recordObject.locked : null,
+                        redirectRecordType: req.params.recordType,
+                        entryObject: entryObject ? entryObject : null,
+                    });
 
-                return res.render('records/payout', {
-                    title: 'Pay Out (' + requestRecordType + ')',
-                    customerObject: customerObject ? customerObject : null,
-                    requestCustomerID: requestCustomer_id,
-                    requestDate: requestDate,
-                    redirectRecordType: req.params.recordType,
-                    entryObject: entryObject ? entryObject : null,
                 });
-
             });
         });
     }
@@ -462,7 +513,11 @@ router.post('/payout/:recordType', function (req, res) {
         };
 
         databaseFunction.findRecord(recordInput, function (err, recordObject) {
-            if (recordObject.locked) {
+            if (err) {
+                return res.send(err);
+            }
+            var locked = recordObject ? recordObject.locked : false;
+            if (locked) {
                 return res.render('warning',
                     {
                         title: 'Warning',
@@ -474,6 +529,7 @@ router.post('/payout/:recordType', function (req, res) {
                     requestDate: req.body.requestDate,
                     requestCustomerID: req.body.requestCustomerID,
                     customerType: requestRecordType,
+                    workerUsername:req.session.passport.user.username,
                     payOut: req.body.payOut
 
                 };
@@ -497,29 +553,60 @@ router.post('/payout/:recordType', function (req, res) {
 });
 
 router.get('/payout/:recordType/delete/:date/:customer_id/:entry_id/:delete_id', function (req, res, next) {
-    databaseFunction.deletePayOut(req.params, function (err) {
+    var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
+    var recordInput = {
+        date: req.body.requestDate,
+        recordType: requestRecordType
+    };
+
+    databaseFunction.findRecord(recordInput, function (err, recordObject) {
         if (err) {
             return res.send(err);
         }
-        return res.redirect('/records/payout/' + req.params.recordType + '/' + req.params.date + '/' + req.params.customer_id);
+        var locked = recordObject ? recordObject.locked : false;
+        if (locked) {
+            return res.render('warning',
+                {
+                    title: 'Warning',
+                    warningText: "Document Locked!"
+                }
+            );
+        } else {
+            databaseFunction.deletePayOut(req.params, function (err) {
+                if (err) {
+                    return res.send(err);
+                }
+                return res.redirect('/records/payout/' + req.params.recordType + '/' + req.params.date + '/' + req.params.customer_id);
+            });
+        }
     });
+
 });
 
 
 router.post('/lock-page/:recordType', function (req, res, next) {
-    if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
-        databaseFunction.lockPage(req.body, function (err, object) {
-            if (err) {
-                return res.send(err);
-            }
+    if (req.session.passport.user.accountType == "Admin") {
+        if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
+            databaseFunction.lockPage(req.body, function (err, object) {
+                if (err) {
+                    return res.send(err);
+                }
 
-            return res.redirect('/records/manage/' + req.params.recordType + '/' + req.body.date);
-        });
+                return res.redirect('/records/manage/' + req.params.recordType + '/' + req.body.date);
+            });
+        } else {
+            return res.render('warning',
+                {
+                    title: 'Warning',
+                    warningText: "Malay or Thai Only"
+                }
+            );
+        }
     } else {
         return res.render('warning',
             {
                 title: 'Warning',
-                warningText: "Malay or Thai Only"
+                warningText: "No Permission to Change Lock"
             }
         );
     }
@@ -528,14 +615,35 @@ router.post('/lock-page/:recordType', function (req, res, next) {
 router.get('/centralsheet/:recordType/:id?', function (req, res) {
     if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
         var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
-        var reqInput = {
-            malay: req.params.recordType == 'malay',
-            thai: req.params.recordType == 'thai'
+        if (req.params.recordType == 'thai') {
+            var query = {
+                thai: true
+            }
         }
-        databaseFunction.getCustomerTypeList(reqInput, function (err, customerObject) {
+        if (req.params.recordType == 'malay') {
+            var query = {
+                malay: true
+            }
+        }
+        databaseFunction.getCustomerTypeList(query, function (err, customerObject) {
             if (err) {
                 return res.send(err);
             }
+
+            if (req.session.passport.user.accountType == "Manager") {
+                var filterdObject = underscore.filter(customerObject, function (obj) {
+                    return obj._workerDetail._managerDetail == req.session.passport.user.managerID;
+                });
+                customerObject = filterdObject;
+            }
+
+            if (req.session.passport.user.accountType == "Worker") {
+                var filterdObject = underscore.filter(customerObject, function (obj) {
+                    return obj._workerDetail._id == req.session.passport.user.workerID;
+                });
+                customerObject = filterdObject;
+            }
+
             var requestCustomer_id = req.params.id ? req.params.id : (customerObject[0] ? customerObject[0]._id : null);
             var input = {
                 requestCustomer_id: requestCustomer_id,
@@ -579,6 +687,13 @@ router.post('/centralsheet/:recordType', function (req, res) {
             }
         );
     }
+});
+
+router.get('/beta', function (req, res) {
+   return res.render('records/approve', {
+       title: "Approve",
+       requestDate: new Date()
+   });
 });
 module.exports = router;
 

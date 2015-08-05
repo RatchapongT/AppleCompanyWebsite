@@ -96,6 +96,7 @@ app.use(function(err, req, res, next) {
       {
         title: 'Warning',
         warningText: "This is embarassing. What are you trying to do? "  + "(" + err + ")"
+
       }
   );
 });

@@ -27,6 +27,7 @@
                 </div>
 
             </form>
+
             <form method = "post" id = "customer_form">
                 <select name = "request_customer_id" id="request_customer_id"
                         class = "form-control select select-info"
@@ -47,6 +48,7 @@
                     <% } %>
                 </select>
             </form>
+
             <% var submitString = '/records/payin/' + redirectRecordType%>
             <form method = "post" id = "payment_form" action = '<%=submitString%>'>
 
@@ -69,6 +71,7 @@
                 <div class = "form-group">
                     Customer Transfer To:
                     <select name = "requestBankID"
+                            id ="request_bank_id"
                             class = "form-control select select-info"
                             data-toggle = "select" form = "payment_form" style="margin-bottom: 30px;">
                         <% for(var i = 0; i < systemBankObject.length; i++) { %>
@@ -101,6 +104,7 @@
 
             </tr>
             </thead>
+            <% var lockedSymbol = pageLocked? "fui-lock" : "fui-cross"%>
             <% for(var i = 0; i < entryObject.length; i++) { %>
             <% for (var j = 0; j < entryObject[i].payInDetails.length; j++) {%>
             <tr>
@@ -109,11 +113,16 @@
                 <td align="center"><%= entryObject[i].payInDetails[j].paymentMethodBankName %> (<%= entryObject[i].payInDetails[j].paymentMethodBankType %>)</td>
                 <% var time = new Date(entryObject[i].payInDetails[j].created).toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3") %>
                 <td align="center"><%= time %></td>
+                <% if (pageLocked) {%>
+                <td align="center"><span class = "fui-lock"
+                                         style = "color:#34495E"></span></td>
+                <% } else {%>
                 <td align="center"><a
                             href="/records/payin/<%= redirectRecordType %>/delete/<%= requestDate %>/<%= requestCustomerID %>/<%=requestPaymentID%>/<%= entryObject[i].id %>/<%= entryObject[i].payInDetails[j].id %>"
                             class="button"><span class="fui-cross"
                                                  style="color:#f93c3c"></span></a>
                 </td>
+                <% } %>
             </tr>
             <% } %>
             <% } %>
@@ -121,11 +130,20 @@
     </div>
     <% if (systemBankObject.length == 0 || customerObject.length == 0) { %>
     <script>
-
         document.getElementById('update_button').disabled = true;
     </script>
     <% } %>
 
+    <% if (pageLocked) { %>
+    <script>
+        payIn
+        document.getElementById('payIn').disabled = true;
+        document.getElementById('update_button').disabled = true;
+        document.getElementById('request_customer_id').disabled = true;
+        document.getElementById('request_bank_id').disabled = true;
+
+    </script>
+    <% } %>
     <script type = "text/javascript">
         $(document).ready(function () {
             $('#datepicker').datepicker({

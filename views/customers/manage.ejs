@@ -109,7 +109,6 @@
             <th style="text-align:center" class="sort-default">Customer ID</th>
             <th style="text-align:center" class="sort-default">Condition</th>
             <th style="text-align:center" class="sort-default">Created On</th>
-            <th style="text-align:center" class="sort-default">Percent</th>
             <th style="text-align:center" class="sort-default">Malay</th>
             <th style="text-align:center" class="sort-default">Thai</th>
             <th style="text-align:center" class="no-sort">Delete Customer</th>
@@ -122,7 +121,6 @@
             <% date = new Date(customerObject[i].created) %>
             <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
                 /<%= date.getFullYear() %></td>
-            <td align="center"><%= customerObject[i].percent %> %</td>
             <td align="center"><%= customerObject[i].malay %></td>
             <td align="center"><%= customerObject[i].thai %></td>
             <td align="center"><a href="/customers/delete/<%= customerObject[i].id %>"

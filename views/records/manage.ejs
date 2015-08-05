@@ -127,12 +127,25 @@
                  style="display:inline-block ; width: 150px; text-align: right; margin-right: 30px">
                 <%= totalSale %>
             </div>
-            <strong style="color:#E74C3C">Total Strike :</strong>
 
+            <strong style="color:#E74C3C">Total Strike :</strong>
             <div class="form-control"
-                 style="display:inline-block ; width: 150px; text-align: right;">
+                 style="display:inline-block ; width: 150px; text-align: right ;margin-right: 30px">
                 <%= totalStrike %>
             </div>
+
+            <strong>Balance :</strong>
+            <% if ((totalSale - totalStrike) < 0) {%>
+            <div class="form-control"
+                 style="display:inline-block ; width: 150px; text-align: right; color:#E74C3C" >
+                <strong> <%= totalSale - totalStrike %></strong>
+            </div>
+            <% } else {%>
+            <div class="form-control"
+                 style="display:inline-block ; width: 150px; text-align: right; color:#2ECC71">
+                <strong> <%= totalSale - totalStrike %></strong>
+            </div>
+            <% } %>
         </div>
         <div align="center">
         <%if (pageLocked)  {%>

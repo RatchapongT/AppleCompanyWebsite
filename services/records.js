@@ -249,7 +249,7 @@ exports.findEntry = function (input, next) {
 
 
         RecordPage.update({
-            recordDate: input.date,
+            recordDate: input.recordDate,
             recordType: input.customerType
         }, {
             $set: {

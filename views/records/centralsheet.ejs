@@ -88,7 +88,7 @@
             <td align = "center"><%= financeObject[i].strike %></td>
             <td align = "center"><%= financeObject[i].payIn %></td>
             <td align = "center"><%= financeObject[i].payOut %></td>
-<% totalDebt = totalDebt + financeObject[i].sale - financeObject[i].strike +  financeObject[i].payIn - financeObject[i].payOut%>
+<% totalDebt = totalDebt + financeObject[i].sale - financeObject[i].strike -  financeObject[i].payIn + financeObject[i].payOut%>
             <td align = "center"><%=totalDebt%></td>
         </tr>
         <% } %>

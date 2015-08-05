@@ -47,7 +47,7 @@
             <input type = "hidden" value = "<%= requestCustomerID %>"
                    name = "editCustomerID"/>
 
-            <div class = "login-form" style = "width:600px; margin-top: 30px; ">
+            <div class = "login-form" style = "width:970px; margin-top: 30px; ">
                 <div style = "text-align:left; margin-left: 250px;">
 
                     <label class = "checkbox" for = "checkbox1">
@@ -116,6 +116,462 @@
                         element.value = "<%=searchCustomer.paymentCondition%>";
                     </script>
                 </div>
+                <% if (searchCustomer.thai) {%>
+                <div class = "login-form"
+                     style = "width:500px; margin-top: 30px; background-color: #FFFFFF; ">
+                    <h4>Thai Percent</h4>
+                    <table id = "sort" class = "table" border = "1"
+                           style = "border-color:#BDC3C7">
+                        <thead>
+                        <tr>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default" >Type
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default">Discount
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default">Pay
+                            </th>
+                        </tr>
+
+                        </thead>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">3B</td>
+                            <td align = "center">
+                            <input style="text-align: center" type = "number"
+                                   class = "form-control login-field"
+                                   placeholder = "" name = ""
+                                   value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">3T</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">3L</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">3BL</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">1B</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">1L</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">1BL123</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">4T</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">5T</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">2T</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <% } %>
+                <% if (searchCustomer.malay) {%>
+                <div class = "login-form"
+                     style = "width:900px; margin-top: 30px; background-color: #FFFFFF; ">
+                    <h4>Malay Percent</h4>
+                    <table id = "sort" class = "table" border = "1"
+                           style = "border-color:#BDC3C7">
+                        <thead>
+                        <tr>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default" rowspan="2" >Type
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default" rowspan="2">Discount
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle""
+                            class = "sort-default" colspan="5">Pay
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default">1st
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default">2nd
+                            </th>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default">3rd
+                            </th>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default">4th
+                            </th>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default">5th
+                            </th>
+
+                        </tr>
+
+                        </thead>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">B</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">S</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">ABC1</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">3ABC</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">3N</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">2ABC</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">2N</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">S</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">Float</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">Digit</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = ""
+                                       value = ""/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <% } %>
 
                 <div class = "login-form"
                      style = "width:500px; margin-top: 30px; background-color: #FFFFFF; ">
