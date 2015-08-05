@@ -185,7 +185,7 @@ var customerSchema = new Schema({
     nickname: String,
     lineID: String,
     phone: String,
-    percentThai: {
+    percentMalay: {
         type_B_Discount: {type: Number, Default: 0},
         type_B_Discount_Pay1: {type: Number, Default: 0},
         type_B_Discount_Pay2: {type: Number, Default: 0},
@@ -219,7 +219,7 @@ var customerSchema = new Schema({
         type_DIGIT_Discount: {type: Number, Default: 0},
         type_DIGIT_Discount_Pay: {type: Number, Default: 0}
     },
-    percentMalay: {
+    percentThai: {
         type_3B_Discount: {type: Number, Default: 0},
         type_3B_Discount_Pay: {type: Number, Default: 0},
 
@@ -229,8 +229,8 @@ var customerSchema = new Schema({
         type_3L_Discount: {type: Number, Default: 0},
         type_3L_Discount_Pay: {type: Number, Default: 0},
 
-        type_3BL_Discount: {type: Number, Default: 0},
-        type_3BL_Discount_Pay: {type: Number, Default: 0},
+        type_2BL_Discount: {type: Number, Default: 0},
+        type_2BL_Discount_Pay: {type: Number, Default: 0},
 
         type_1B_Discount: {type: Number, Default: 0},
         type_1B_Discount_Pay: {type: Number, Default: 0},
