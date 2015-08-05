@@ -88,70 +88,70 @@ var partnerSchema = new Schema({
     nickname: String,
     lineID: String,
     phone: String,
-    percentThai: {
-        type_B_Discount: {type: Number, Default: 0},
-        type_B_Discount_Pay1: {type: Number, Default: 0},
-        type_B_Discount_Pay2: {type: Number, Default: 0},
-        type_B_Discount_Pay3: {type: Number, Default: 0},
-        type_B_Discount_Pay4: {type: Number, Default: 0},
-        type_B_Discount_Pay5: {type: Number, Default: 0},
-
-        type_S_Discount: {type: Number, Default: 0},
-        type_S_Discount_Pay1: {type: Number, Default: 0},
-        type_S_Discount_Pay2: {type: Number, Default: 0},
-        type_S_Discount_Pay3: {type: Number, Default: 0},
-
-        type_ABC1_Discount: {type: Number, Default: 0},
-        type_ABC1_Discount_Pay: {type: Number, Default: 0},
-
-        type_3ABC_Discount: {type: Number, Default: 0},
-        type_3ABC_Discount_Pay: {type: Number, Default: 0},
-
-        type_3N_Discount: {type: Number, Default: 0},
-        type_3N_Discount_Pay: {type: Number, Default: 0},
-
-        type_2ABC_Discount: {type: Number, Default: 0},
-        type_2ABC_Discount_Pay: {type: Number, Default: 0},
-
-        type_2N_Discount: {type: Number, Default: 0},
-        type_2N_Discount_Pay: {type: Number, Default: 0},
-
-        type_FLOAT_Discount: {type: Number, Default: 0},
-        type_FLOAT_Discount_Pay: {type: Number, Default: 0},
-
-        type_DIGIT_Discount: {type: Number, Default: 0},
-        type_DIGIT_Discount_Pay: {type: Number, Default: 0}
-    },
     percentMalay: {
-        type_3B_Discount: {type: Number, Default: 0},
-        type_3B_Discount_Pay: {type: Number, Default: 0},
+        type_B_Discount: Number,
+        type_B_Discount_Pay1: Number,
+        type_B_Discount_Pay2: Number,
+        type_B_Discount_Pay3: Number,
+        type_B_Discount_Pay4: Number,
+        type_B_Discount_Pay5: Number,
 
-        type_3T_Discount: {type: Number, Default: 0},
-        type_3T_Discount_Pay: {type: Number, Default: 0},
+        type_S_Discount: Number,
+        type_S_Discount_Pay1: Number,
+        type_S_Discount_Pay2: Number,
+        type_S_Discount_Pay3: Number,
 
-        type_3L_Discount: {type: Number, Default: 0},
-        type_3L_Discount_Pay: {type: Number, Default: 0},
+        type_ABC1_Discount: Number,
+        type_ABC1_Discount_Pay: Number,
 
-        type_3BL_Discount: {type: Number, Default: 0},
-        type_3BL_Discount_Pay: {type: Number, Default: 0},
+        type_3ABC_Discount: Number,
+        type_3ABC_Discount_Pay: Number,
 
-        type_1B_Discount: {type: Number, Default: 0},
-        type_1B_Discount_Pay: {type: Number, Default: 0},
+        type_3N_Discount: Number,
+        type_3N_Discount_Pay: Number,
 
-        type_1L_Discount: {type: Number, Default: 0},
-        type_1L_Discount_Pay: {type: Number, Default: 0},
+        type_2ABC_Discount: Number,
+        type_2ABC_Discount_Pay: Number,
 
-        type_1BL123_Discount: {type: Number, Default: 0},
-        type_1BL123_Discount_Pay: {type: Number, Default: 0},
+        type_2N_Discount: Number,
+        type_2N_Discount_Pay: Number,
 
-        type_4T_Discount: {type: Number, Default: 0},
-        type_4T_Discount_Pay: {type: Number, Default: 0},
+        type_FLOAT_Discount: Number,
+        type_FLOAT_Discount_Pay: Number,
 
-        type_5T_Discount: {type: Number, Default: 0},
-        type_5T_Discount_Pay: {type: Number, Default: 0},
+        type_DIGIT_Discount: Number,
+        type_DIGIT_Discount_Pay: Number
+    },
+    percentThai: {
+        type_3B_Discount: Number,
+        type_3B_Discount_Pay: Number,
 
-        type_2T_Discount: {type: Number, Default: 0},
-        type_2T_Discount_Pay: {type: Number, Default: 0}
+        type_3T_Discount: Number,
+        type_3T_Discount_Pay: Number,
+
+        type_3L_Discount: Number,
+        type_3L_Discount_Pay: Number,
+
+        type_2BL_Discount: Number,
+        type_2BL_Discount_Pay: Number,
+
+        type_1B_Discount: Number,
+        type_1B_Discount_Pay: Number,
+
+        type_1L_Discount: Number,
+        type_1L_Discount_Pay: Number,
+
+        type_1BL123_Discount: Number,
+        type_1BL123_Discount_Pay: Number,
+
+        type_4T_Discount: Number,
+        type_4T_Discount_Pay: Number,
+
+        type_5T_Discount: Number,
+        type_5T_Discount_Pay: Number,
+
+        type_2T_Discount: Number,
+        type_2T_Discount_Pay: Number
     },
     paymentCondition: String,
     malay: {type: Boolean, default: false},
@@ -160,7 +160,7 @@ var partnerSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
-partnerSchema.path('partnerID').validate(function (customerID, next) {
+partnerSchema.path('partnerID').validate(function (partnerID, next) {
     Partner.findOne({partnerID: partnerID}, function (err, user) {
         if (err) {
             return next(false);
@@ -186,75 +186,79 @@ var customerSchema = new Schema({
     lineID: String,
     phone: String,
     percentMalay: {
-        type_B_Discount: {type: Number, Default: 0},
-        type_B_Discount_Pay1: {type: Number, Default: 0},
-        type_B_Discount_Pay2: {type: Number, Default: 0},
-        type_B_Discount_Pay3: {type: Number, Default: 0},
-        type_B_Discount_Pay4: {type: Number, Default: 0},
-        type_B_Discount_Pay5: {type: Number, Default: 0},
+        type_B_Discount: Number,
+        type_B_Discount_Pay1: Number,
+        type_B_Discount_Pay2: Number,
+        type_B_Discount_Pay3: Number,
+        type_B_Discount_Pay4: Number,
+        type_B_Discount_Pay5: Number,
 
-        type_S_Discount: {type: Number, Default: 0},
-        type_S_Discount_Pay1: {type: Number, Default: 0},
-        type_S_Discount_Pay2: {type: Number, Default: 0},
-        type_S_Discount_Pay3: {type: Number, Default: 0},
+        type_S_Discount: Number,
+        type_S_Discount_Pay1: Number,
+        type_S_Discount_Pay2: Number,
+        type_S_Discount_Pay3: Number,
 
-        type_ABC1_Discount: {type: Number, Default: 0},
-        type_ABC1_Discount_Pay: {type: Number, Default: 0},
+        type_ABC1_Discount: Number,
+        type_ABC1_Discount_Pay: Number,
 
-        type_3ABC_Discount: {type: Number, Default: 0},
-        type_3ABC_Discount_Pay: {type: Number, Default: 0},
+        type_3ABC_Discount: Number,
+        type_3ABC_Discount_Pay: Number,
 
-        type_3N_Discount: {type: Number, Default: 0},
-        type_3N_Discount_Pay: {type: Number, Default: 0},
+        type_3N_Discount: Number,
+        type_3N_Discount_Pay: Number,
 
-        type_2ABC_Discount: {type: Number, Default: 0},
-        type_2ABC_Discount_Pay: {type: Number, Default: 0},
+        type_2ABC_Discount: Number,
+        type_2ABC_Discount_Pay: Number,
 
-        type_2N_Discount: {type: Number, Default: 0},
-        type_2N_Discount_Pay: {type: Number, Default: 0},
+        type_2N_Discount: Number,
+        type_2N_Discount_Pay: Number,
 
-        type_FLOAT_Discount: {type: Number, Default: 0},
-        type_FLOAT_Discount_Pay: {type: Number, Default: 0},
+        type_FLOAT_Discount: Number,
+        type_FLOAT_Discount_Pay: Number,
 
-        type_DIGIT_Discount: {type: Number, Default: 0},
-        type_DIGIT_Discount_Pay: {type: Number, Default: 0}
+        type_DIGIT_Discount: Number,
+        type_DIGIT_Discount_Pay: Number
     },
     percentThai: {
-        type_3B_Discount: {type: Number, Default: 0},
-        type_3B_Discount_Pay: {type: Number, Default: 0},
+        type_3B_Discount: Number,
+        type_3B_Discount_Pay: Number,
 
-        type_3T_Discount: {type: Number, Default: 0},
-        type_3T_Discount_Pay: {type: Number, Default: 0},
+        type_3T_Discount: Number,
+        type_3T_Discount_Pay: Number,
 
-        type_3L_Discount: {type: Number, Default: 0},
-        type_3L_Discount_Pay: {type: Number, Default: 0},
+        type_3L_Discount: Number,
+        type_3L_Discount_Pay: Number,
 
-        type_2BL_Discount: {type: Number, Default: 0},
-        type_2BL_Discount_Pay: {type: Number, Default: 0},
+        type_2BL_Discount: Number,
+        type_2BL_Discount_Pay: Number,
 
-        type_1B_Discount: {type: Number, Default: 0},
-        type_1B_Discount_Pay: {type: Number, Default: 0},
+        type_1B_Discount: Number,
+        type_1B_Discount_Pay: Number,
 
-        type_1L_Discount: {type: Number, Default: 0},
-        type_1L_Discount_Pay: {type: Number, Default: 0},
+        type_1L_Discount: Number,
+        type_1L_Discount_Pay: Number,
 
-        type_1BL123_Discount: {type: Number, Default: 0},
-        type_1BL123_Discount_Pay: {type: Number, Default: 0},
+        type_1BL123_Discount: Number,
+        type_1BL123_Discount_Pay: Number,
 
-        type_4T_Discount: {type: Number, Default: 0},
-        type_4T_Discount_Pay: {type: Number, Default: 0},
+        type_4T_Discount: Number,
+        type_4T_Discount_Pay: Number,
 
-        type_5T_Discount: {type: Number, Default: 0},
-        type_5T_Discount_Pay: {type: Number, Default: 0},
+        type_5T_Discount: Number,
+        type_5T_Discount_Pay: Number,
 
-        type_2T_Discount: {type: Number, Default: 0},
-        type_2T_Discount_Pay: {type: Number, Default: 0}
+        type_2T_Discount: Number,
+        type_2T_Discount_Pay: Number
     },
     paymentCondition: String,
     malay: {type: Boolean, default: false},
     thai: {type: Boolean, default: false},
     _workerDetail: {type: Schema.Types.ObjectId, ref: 'Worker'},
     created: {type: Date, default: Date.now}
+});
+
+customerSchema.post('save', function (next) {
+    Customer.update()
 });
 
 customerSchema.path('customerID').validate(function (customerID, next) {

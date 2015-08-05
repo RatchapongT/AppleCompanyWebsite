@@ -117,6 +117,7 @@
                     </script>
                 </div>
                 <% if (searchCustomer.thai) {%>
+                <input type="hidden" name = "thaiForm" value = true />
                 <div class = "login-form"
                      style = "width:500px; margin-top: 30px; background-color: #FFFFFF; ">
                     <h4>Thai Percent</h4>
@@ -142,13 +143,13 @@
                             <input style="text-align: center" type = "number"
                                    class = "form-control login-field"
                                    placeholder = "" name = "type_3B_Discount"
-                                   value = ""/>
+                                   value = "<%=searchCustomer.percentThai.type_3B_Discount%>" />
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3B_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_3B_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -157,13 +158,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3T_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_3T_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3T_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_3T_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -172,13 +173,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3L_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_3L_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3L_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_3L_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -187,13 +188,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_2BL_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_2BL_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_2BL_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_2BL_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -202,13 +203,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_1B_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_1B_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_1B_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_1B_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -217,13 +218,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_1L_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_1L_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_1L_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_1L_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -232,13 +233,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_1BL123_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_1BL123_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_1BL123_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_1BL123_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -247,13 +248,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_4T_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_4T_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_4T_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_4T_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -262,13 +263,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_5T_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_5T_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_5T_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_5T_Discount_Pay%>"/>
                             </td>
                         </tr>
                         <tr>
@@ -277,19 +278,20 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_2T_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_2T_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_2T_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentThai.type_2T_Discount_Pay%>"/>
                             </td>
                         </tr>
                     </table>
                 </div>
                 <% } %>
                 <% if (searchCustomer.malay) {%>
+                <input type="hidden" name = "malayForm" value = true />
                 <div class = "login-form"
                      style = "width:900px; margin-top: 30px; background-color: #FFFFFF; ">
                     <h4>Malay Percent</h4>
@@ -303,7 +305,7 @@
                             <th style = "text-align:center ; vertical-align: middle"
                                 class = "sort-default" rowspan="2">Discount
                             </th>
-                            <th style = "text-align:center ; vertical-align: middle""
+                            <th style = "text-align:center ; vertical-align: middle"
                             class = "sort-default" colspan="5">Pay
                             </th>
 
@@ -334,37 +336,37 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_B_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_B_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_B_Discount_Pay1"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_B_Discount_Pay1%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_B_Discount_Pay2"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_B_Discount_Pay2%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_B_Discount_Pay3"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_B_Discount_Pay3%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_B_Discount_Pay4"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_B_Discount_Pay4%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_B_Discount_Pay5"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_B_Discount_Pay5%>"/>
                             </td>
 
                         </tr>
@@ -374,25 +376,25 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_S_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_S_Discount%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_S_Discount_Pay1"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_S_Discount_Pay1%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_S_Discount_Pay2"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_S_Discount_Pay2%>"/>
                             </td>
                             <td align = "center">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_S_Discount_Pay3"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_S_Discount_Pay3%>"/>
                             </td>
                             <td align = "center" bgcolor="#BDC3C7">
 
@@ -407,13 +409,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_ABC1_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_ABC1_Discount%>"/>
                             </td>
                             <td align = "center" colspan="3">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_ABC1_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_ABC1_Discount_Pay%>"/>
                             </td>
                             <td align = "center" bgcolor="#BDC3C7">
 
@@ -428,13 +430,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3ABC_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_3ABC_Discount%>"/>
                             </td>
                             <td align = "center" colspan="3">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3ABC_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_3ABC_Discount_Pay%>"/>
                             </td>
                             <td align = "center" bgcolor="#BDC3C7">
 
@@ -449,13 +451,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3N_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_3N_Discount%>"/>
                             </td>
                             <td align = "center" colspan="3">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_3N_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_3N_Discount_Pay%>"/>
                             </td>
                             <td align = "center" bgcolor="#BDC3C7">
 
@@ -470,13 +472,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_2ABC_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_2ABC_Discount%>"/>
                             </td>
                             <td align = "center" colspan="3">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_2ABC_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_2ABC_Discount_Pay%>"/>
                             </td>
                             <td align = "center" bgcolor="#BDC3C7">
 
@@ -491,34 +493,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_2N_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_2N_Discount%>"/>
                             </td>
                             <td align = "center" colspan="3">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_2N_Discount_Pay"
-                                       value = ""/>
-                            </td>
-                            <td align = "center" bgcolor="#BDC3C7">
-
-                            </td>
-                            <td align = "center" bgcolor="#BDC3C7">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align = "center" style="vertical-align: middle">S</td>
-                            <td align = "center">
-                                <input style="text-align: center" type = "number"
-                                       class = "form-control login-field"
-                                       placeholder = "" name = "type_FLOAT_Discount"
-                                       value = ""/>
-                            </td>
-                            <td align = "center" colspan="3">
-                                <input style="text-align: center" type = "number"
-                                       class = "form-control login-field"
-                                       placeholder = "" name = "type_FLOAT_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_2N_Discount_Pay%>"/>
                             </td>
                             <td align = "center" bgcolor="#BDC3C7">
 
@@ -533,13 +514,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_FLOAT_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_FLOAT_Discount%>"/>
                             </td>
                             <td align = "center" colspan="3">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_FLOAT_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_FLOAT_Discount_Pay%>"/>
                             </td>
                             <td align = "center" bgcolor="#BDC3C7">
 
@@ -554,13 +535,13 @@
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_DIGIT_Discount"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_DIGIT_Discount%>"/>
                             </td>
                             <td align = "center" colspan="3">
                                 <input style="text-align: center" type = "number"
                                        class = "form-control login-field"
                                        placeholder = "" name = "type_DIGIT_Discount_Pay"
-                                       value = ""/>
+                                       value = "<%=searchCustomer.percentMalay.type_DIGIT_Discount_Pay%>"/>
                             </td>
                             <td align = "center" bgcolor="#BDC3C7">
 
@@ -575,7 +556,8 @@
 
                 <div class = "login-form"
                      style = "width:500px; margin-top: 30px; background-color: #FFFFFF; ">
-                    <table id = "sort" class = "table">
+                    <h4>Customer Bank</h4>
+                    <table id = "sort" class = "table" border = "1">
                         <thead>
                         <tr>
                             <th style = "text-align:center"

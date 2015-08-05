@@ -82,6 +82,7 @@ router.get('/bank/:id?', function (req, res) {
                 if (err) {
                     return res.send(err);
                 }
+                console.log(requestCustomerID);
                 return res.render('customers/bank', {
                     title: 'Bank Management',
                     bankObject: bankObject,
@@ -104,6 +105,7 @@ router.get('/bank/:id?', function (req, res) {
                 if (err) {
                     return res.send(err);
                 }
+
                 return res.render('customers/bank', {
                     title: 'Bank Management',
                     bankObject: bankObject,

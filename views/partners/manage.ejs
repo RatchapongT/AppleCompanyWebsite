@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+
+<div class="container">
+    <h2>Partner Management</h2>
+
+    <form method="post" action="/partners/create" id="partner_form">
+        <div align="center">
+            <div class="login-form" style="width:350px; margin-top: 30px; ">
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Partner ID" name="partnerID"
+                           required/>
+                    <label class="login-field-icon fui-user"></label>
+                </div>
+
+
+                <div style="text-align:left; margin-left: 100px;">
+
+                    <label class="checkbox" for="checkbox1">
+                        <input name="malay" type="checkbox" value=1
+                               id="checkbox1"
+                               data-toggle="checkbox">
+                        Malay
+                    </label>
+                    <label class="checkbox" for="checkbox2">
+                        <input name="thai" type="checkbox"
+                               value=1 id="checkbox2" data-toggle="checkbox">
+                        Thai
+                    </label>
+                </div>
+                <strong>Optional</strong>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Nickname" name="nickname"/>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Phone" name="phone"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control login-field"
+                           placeholder="Line ID" name="lineID"/>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value=""
+                           placeholder="Percent" name="percent"/>
+
+                </div>
+
+                <div style="margin-bottom: 30px ">
+                    Payment Condition
+                    <select name="paymentCondition"
+                            class="form-control select select-info"
+                            data-toggle="select" form="partner_form"
+                            >
+                        <option value="Type 1"> Type 1</option>
+                        <option value="Type 2"> Type 2</option>
+                        <option value="Type 3"> Type 3</option>
+                        <option value="Type 4"> Type 4</option>
+                        <option value="No Type" selected> No Type</option>
+
+
+                    </select>
+                </div>
+
+                <input class="btn btn-primary btn-lg btn-block"
+                       type="submit" value="Add User"/>
+            </div>
+
+        </div>
+    </form>
+
+    <% if (typeof failureMessage != 'undefined' && failureMessage != '') { %>
+    <div class="form-group has-error">
+        <div align="center" style="margin:25px auto; width:200px;">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= failureMessage %>" class="form-control">
+        </div>
+    </div>
+    <% } %>
+
+    <% if (typeof successMessage != 'undefined' && successMessage != '') { %>
+    <div class="form-group has-success">
+        <div align="center" style="margin:25px auto; width:200px;">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= successMessage %>" class="form-control">
+        </div>
+    </div>
+    <% } %>
+
+    <br></br>
+
+    <table id="sort" class="table">
+        <thead>
+        <tr>
+            <th style="text-align:center" class="sort-default">Partner ID</th>
+            <th style="text-align:center" class="sort-default">Condition</th>
+            <th style="text-align:center" class="sort-default">Created On</th>
+            <th style="text-align:center" class="sort-default">Malay</th>
+            <th style="text-align:center" class="sort-default">Thai</th>
+            <th style="text-align:center" class="no-sort">Delete Partner</th>
+        </tr>
+        </thead>
+        <% for(var i = 0; i < partnerObject.length; i++) { %>
+        <tr>
+            <td align="center"><%= partnerObject[i].partnerID %></td>
+            <td align="center"><%= partnerObject[i].paymentCondition %></td>
+            <% date = new Date(partnerObject[i].created) %>
+            <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
+                /<%= date.getFullYear() %></td>
+            <td align="center"><%= partnerObject[i].malay %></td>
+            <td align="center"><%= partnerObject[i].thai %></td>
+            <td align="center"><a href="/partners/delete/<%= partnerObject[i].id %>"
+                                  class="button"><span class="fui-cross"
+                                                       style="color:#f93c3c"></span></a>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+
+
+</div>
+
+<% include ../partials/page/jsdefaults.ejs %>
+<script>
+    new Tablesort(document.getElementById('sort'));
+</script>
+
+<footer>
+    <% include ../partials/page/footer.ejs %>
+</footer>
+</html>

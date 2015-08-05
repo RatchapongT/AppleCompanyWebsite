@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+<% include ../partials/page/jsdefaults.ejs %>
+
+<script type = "text/javascript">
+    function GetSelectedTextValue() {
+        var selectedValue = document.getElementById('default_field').value;
+        if (selectedValue === "Other") {
+
+            document.getElementById('other_field').type = 'text';
+        } else {
+            document.getElementById('other_field').type = 'hidden';
+        }
+
+    }
+
+    function SubmitForm() {
+        var selectedValue = document.getElementById('default_field').value;
+
+        if (selectedValue === "Other") {
+            var element = document.getElementById('default_field');
+            element.parentNode.removeChild(element);
+        } else {
+            var element = document.getElementById('other_field');
+            element.parentNode.removeChild(element);
+        }
+
+        document.getElementById('bank_form').submit();
+    }
+
+</script>
+
+<div class = "container">
+    <h2>Partner's Bank</h2>
+
+    <div align = "center">
+        <form name = "search_partner" method = "post"
+              action = "/partners/bank" id = "search_partner">
+
+
+            <select name = "request_partner_id"
+                    class = "form-control select select-info"
+                    data-toggle = "select" form = "search_partner"
+                    onchange = 'this.form.submit()' id = "request_partner_id">
+                <% for(var i = 0; i < partnerObject.length; i++) { %>
+                <% if (requestPartnerID == partnerObject[i].id){ %>
+                <option value = <%= partnerObject[i].id %> selected><%= partnerObject[i].partnerID %>
+                    (<%= partnerObject[i].nickname %>)
+                </option>
+                <% } else { %>
+                <option value =<%= partnerObject[i].id %>><%= partnerObject[i].partnerID %>
+                    (<%= partnerObject[i].nickname %>)
+                </option>
+                <% } %>
+                <% } %>
+
+            </select>
+
+        </form>
+    </div>
+
+    <form method = "post" action = "/partners/bank/add" id = "bank_form">
+        <div align = "center">
+            <div class = "login-form" style = "width:350px; margin-top: 30px; ">
+
+                <input type = "hidden" value = "<%= requestPartnerID %>"
+                       name = "partnerID">
+
+
+                <div class = "form-group">
+                    <input type = "number" class = "form-control login-field"
+                           value = "" placeholder = "Bank Number"
+                           name = "bankNumber" required>
+                </div>
+
+                <div class = "form-group">
+                    <input type = "text" class = "form-control login-field"
+                           value = "" placeholder = "Bank Name"
+                           name = "bankName" required>
+
+                </div>
+
+
+                <div style = "margin-bottom: 30px ">
+                    Bank Type
+                    <select name = "bankType"
+                            class = "form-control select select-info"
+                            data-toggle = "select" form = "bank_form"
+                            onchange = 'GetSelectedTextValue()'
+                            id = 'default_field'>
+                        <option value = "BBL"> BBL</option>
+                        <option value = "TFB"> TFB</option>
+                        <option value = "SCB"> SCB</option>
+                        <option value = "Other"> Other</option>
+                    </select>
+                </div>
+
+                <div class = "form-group">
+                    <input type = "hidden" class = "form-control login-field"
+                           value = "" placeholder = "Other" name = "bankType"
+                           id = "other_field">
+                </div>
+
+
+                <input class = "btn btn-primary btn-lg btn-block"
+                       type = "submit" value = "Add Bank"
+                       onclick = 'SubmitForm()' id = "submit_button">
+
+            </div>
+
+        </div>
+    </form>
+
+    <% if (typeof failureMessage != 'undefined' && failureMessage != '') { %>
+    <div class = "form-group has-error">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= failureMessage %>" class = "form-control">
+        </div>
+    </div>
+    <% } %>
+
+    <% if (typeof successMessage != 'undefined' && successMessage != '') { %>
+    <div class = "form-group has-success">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= successMessage %>" class = "form-control">
+        </div>
+    </div>
+    <% } %>
+
+    <table id = "sort" class = "table" style = "margin-top: 50px">
+        <thead>
+        <tr>
+            <th style = "text-align:center" class = "sort-default">Bank Number
+            </th>
+            <th style = "text-align:center" class = "sort-default">Bank Name
+            </th>
+            <th style = "text-align:center" class = "sort-default">Bank Type
+            </th>
+            <th style = "text-align:center" class = "no-sort">Delete Bank</th>
+        </tr>
+        </thead>
+        <% for(var i = 0; i < bankObject.length; i++) { %>
+        <tr>
+            <td align = "center"><%= bankObject[i].bankNumber %></td>
+            <td align = "center"><%= bankObject[i].bankName %></td>
+            <td align = "center"><%= bankObject[i].bankType %></td>
+
+            <td align = "center"><a
+                        href = "/partners/bank/delete/<%= bankObject[i].id %>/<%= requestPartnerID %>"
+                        class = "button"><span class = "fui-cross"
+                                               style = "color:#f93c3c"></span></a>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+
+</div>
+
+<% include ../partials/page/jsdefaults.ejs %>
+<script>
+    new Tablesort(document.getElementById('sort'));
+
+    if (<%=partnerObject.length%> ===0)
+    {
+        document.getElementById('submit_button').disabled = true;
+    }
+
+</script>
+<footer>
+    <% include ../partials/page/footer.ejs %>
+</footer>

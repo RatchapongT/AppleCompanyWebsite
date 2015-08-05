@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+<% include ../partials/page/jsdefaults.ejs %>
+
+<div class = "container">
+    <h2>Partner's Profile</h2>
+
+    <div align = "center">
+        <form name = "search_partner" method = "post"
+              action = "/partners/profiles" id = "search_partner">
+
+            <select name = "request_partner_id"
+                    class = "form-control select select-info"
+                    data-toggle = "select" form = "search_partner"
+                    onchange = 'this.form.submit()'>
+                <% for(var i = 0; i < partnerObject.length; i++) { %>
+                <% if (requestPartnerID == partnerObject[i].id){ %>
+                <option value = <%= partnerObject[i].id %> selected><%= partnerObject[i].partnerID %>
+                    (<%= partnerObject[i].nickname %>)
+                </option>
+                <% } else { %>
+                <option value =<%= partnerObject[i].id %>><%= partnerObject[i].partnerID %>
+                    (<%= partnerObject[i].nickname %>)
+                </option>
+                <% } %>
+                <% } %>
+
+            </select>
+        </form>
+    </div>
+
+    <% for (var i = 0;  i < partnerObject.length; i++) { %>
+    <% if (partnerObject[i].id == requestPartnerID) { %>
+    <% var searchPartner = partnerObject[i] %>
+    <% } %>
+    <% } %>
+    <% if (partnerObject.length > 0) { %>
+    <form method = "post" action = "/partners/edit" id = "partner_form">
+        <div align = "center">
+            <input type = "hidden" value = "<%= requestPartnerID %>"
+                   name = "editPartnerID"/>
+
+            <div class = "login-form" style = "width:970px; margin-top: 30px; ">
+                <div style = "text-align:left; margin-left: 250px;">
+
+                    <label class = "checkbox" for = "checkbox1">
+                        <input name = "malay" type = "checkbox" value = 1
+                               id = "checkbox1" data-toggle = "checkbox">
+                        Malay
+                    </label>
+                    <label class = "checkbox" for = "checkbox2">
+                        <input name = "thai" type = "checkbox" value = 1
+                               id = "checkbox2" data-toggle = "checkbox">
+                        Thai
+                    </label>
+
+
+                    <script>
+
+                        document.getElementById("checkbox1").checked = <%=searchPartner.malay%>;
+                        document.getElementById("checkbox2").checked = <%=searchPartner.thai%>;
+                    </script>
+
+                </div>
+                <div class = "form-group" style="width:200px;">
+                    Nickname
+                    <input style="text-align: center" type = "text" class = "form-control login-field"
+                           placeholder = "Nickname" name = "nickname"
+                           value = "<%= searchPartner.nickname %>"/>
+                </div>
+                <div class = "form-group" style="width:200px;">
+                    Phone
+                    <input style="text-align: center" type = "text" class = "form-control login-field"
+                           placeholder = "Phone" name = "phone"
+                           value = "<%= searchPartner.phone %>"/>
+                </div>
+                <div class = "form-group" style="width:200px;">
+                    Line ID
+                    <input style="text-align: center" type = "text" class = "form-control login-field"
+                           placeholder = "Line ID" name = "lineID"
+                           value = "<%= searchPartner.lineID %>"/>
+                </div>
+
+                <div class = "form-group" style="width:200px;">
+                    Percent
+                    <input style="text-align: center" type = "text"
+                           class = "form-control login-field"
+                           placeholder = "Percent" name = "percent"
+                           value = "<%= searchPartner.percent %>"/>
+                </div>
+
+
+                Payment Condition
+                <div style = "margin-bottom: 30px ">
+                    <select name = "paymentCondition"
+                            class = "form-control select select-info"
+                            data-toggle = "select" form = "partner_form"
+                            id = 'selectType'>
+                        <option value = "Type 1"> Type 1</option>
+                        <option value = "Type 2"> Type 2</option>
+                        <option value = "Type 3"> Type 3</option>
+                        <option value = "Type 4"> Type 4</option>
+                        <option value = "No Type" selected> No Type</option>
+
+
+                    </select>
+                    <script>
+                        var element = document.getElementById('selectType');
+                        element.value = "<%=searchPartner.paymentCondition%>";
+                    </script>
+                </div>
+                <% if (searchPartner.thai) {%>
+                <input type="hidden" name = "thaiForm" value = true />
+                <div class = "login-form"
+                     style = "width:500px; margin-top: 30px; background-color: #FFFFFF; ">
+                    <h4>Thai Percent</h4>
+                    <table id = "sort" class = "table" border = "1"
+                           style = "border-color:#BDC3C7">
+                        <thead>
+                        <tr>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default" >Type
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default">Discount
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default">Pay
+                            </th>
+                        </tr>
+
+                        </thead>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">3B</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3B_Discount"
+                                       value = "<%=searchPartner.percentThai.type_3B_Discount%>" />
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3B_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_3B_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">3T</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3T_Discount"
+                                       value = "<%=searchPartner.percentThai.type_3T_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3T_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_3T_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">3L</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3L_Discount"
+                                       value = "<%=searchPartner.percentThai.type_3L_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3L_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_3L_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">2BL</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_2BL_Discount"
+                                       value = "<%=searchPartner.percentThai.type_2BL_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_2BL_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_2BL_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">1B</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_1B_Discount"
+                                       value = "<%=searchPartner.percentThai.type_1B_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_1B_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_1B_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">1L</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_1L_Discount"
+                                       value = "<%=searchPartner.percentThai.type_1L_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_1L_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_1L_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">1BL123</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_1BL123_Discount"
+                                       value = "<%=searchPartner.percentThai.type_1BL123_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_1BL123_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_1BL123_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">4T</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_4T_Discount"
+                                       value = "<%=searchPartner.percentThai.type_4T_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_4T_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_4T_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">5T</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_5T_Discount"
+                                       value = "<%=searchPartner.percentThai.type_5T_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_5T_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_5T_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">2T</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_2T_Discount"
+                                       value = "<%=searchPartner.percentThai.type_2T_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_2T_Discount_Pay"
+                                       value = "<%=searchPartner.percentThai.type_2T_Discount_Pay%>"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <% } %>
+                <% if (searchPartner.malay) {%>
+                <input type="hidden" name = "malayForm" value = true />
+                <div class = "login-form"
+                     style = "width:900px; margin-top: 30px; background-color: #FFFFFF; ">
+                    <h4>Malay Percent</h4>
+                    <table id = "sort" class = "table" border = "1"
+                           style = "border-color:#BDC3C7">
+                        <thead>
+                        <tr>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default" rowspan="2" >Type
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default" rowspan="2">Discount
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default" colspan="5">Pay
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default">1st
+                            </th>
+                            <th style = "text-align:center ; vertical-align: middle"
+                                class = "sort-default">2nd
+                            </th>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default">3rd
+                            </th>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default">4th
+                            </th>
+                            <th style = "text-align:center; vertical-align: middle"
+                                class = "sort-default">5th
+                            </th>
+
+                        </tr>
+
+                        </thead>
+                        <tr>
+                            <td align = "center"; style="vertical-align: middle">B</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_B_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_B_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_B_Discount_Pay1"
+                                       value = "<%=searchPartner.percentMalay.type_B_Discount_Pay1%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_B_Discount_Pay2"
+                                       value = "<%=searchPartner.percentMalay.type_B_Discount_Pay2%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_B_Discount_Pay3"
+                                       value = "<%=searchPartner.percentMalay.type_B_Discount_Pay3%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_B_Discount_Pay4"
+                                       value = "<%=searchPartner.percentMalay.type_B_Discount_Pay4%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_B_Discount_Pay5"
+                                       value = "<%=searchPartner.percentMalay.type_B_Discount_Pay5%>"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">S</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_S_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_S_Discount%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_S_Discount_Pay1"
+                                       value = "<%=searchPartner.percentMalay.type_S_Discount_Pay1%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_S_Discount_Pay2"
+                                       value = "<%=searchPartner.percentMalay.type_S_Discount_Pay2%>"/>
+                            </td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_S_Discount_Pay3"
+                                       value = "<%=searchPartner.percentMalay.type_S_Discount_Pay3%>"/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">ABC1</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_ABC1_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_ABC1_Discount%>"/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_ABC1_Discount_Pay"
+                                       value = "<%=searchPartner.percentMalay.type_ABC1_Discount_Pay%>"/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">3ABC</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3ABC_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_3ABC_Discount%>"/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3ABC_Discount_Pay"
+                                       value = "<%=searchPartner.percentMalay.type_3ABC_Discount_Pay%>"/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">3N</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3N_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_3N_Discount%>"/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_3N_Discount_Pay"
+                                       value = "<%=searchPartner.percentMalay.type_3N_Discount_Pay%>"/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">2ABC</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_2ABC_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_2ABC_Discount%>"/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_2ABC_Discount_Pay"
+                                       value = "<%=searchPartner.percentMalay.type_2ABC_Discount_Pay%>"/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">2N</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_2N_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_2N_Discount%>"/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_2N_Discount_Pay"
+                                       value = "<%=searchPartner.percentMalay.type_2N_Discount_Pay%>"/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">Float</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_FLOAT_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_FLOAT_Discount%>"/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_FLOAT_Discount_Pay"
+                                       value = "<%=searchPartner.percentMalay.type_FLOAT_Discount_Pay%>"/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align = "center" style="vertical-align: middle">Digit</td>
+                            <td align = "center">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_DIGIT_Discount"
+                                       value = "<%=searchPartner.percentMalay.type_DIGIT_Discount%>"/>
+                            </td>
+                            <td align = "center" colspan="3">
+                                <input style="text-align: center" type = "number"
+                                       class = "form-control login-field"
+                                       placeholder = "" name = "type_DIGIT_Discount_Pay"
+                                       value = "<%=searchPartner.percentMalay.type_DIGIT_Discount_Pay%>"/>
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                            <td align = "center" bgcolor="#BDC3C7">
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <% } %>
+
+                <div class = "login-form"
+                     style = "width:500px; margin-top: 30px; background-color: #FFFFFF; ">
+                    <h4>Partner Bank</h4>
+                    <table id = "sort" class = "table" border="1">
+
+                        <thead>
+                        <tr>
+                            <th style = "text-align:center"
+                                class = "sort-default">Bank Number
+                            </th>
+                            <th style = "text-align:center"
+                                class = "sort-default">Bank Name
+                            </th>
+                            <th style = "text-align:center"
+                                class = "sort-default">Bank Type
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <% for(var i = 0; i < partnerBankObject.length; i++) { %>
+                        <tr>
+                            <td align = "center"><%= partnerBankObject[i].bankNumber %></td>
+                            <td align = "center"><%= partnerBankObject[i].bankName %></td>
+                            <td align = "center"><%= partnerBankObject[i].bankType %></td>
+                        </tr>
+                        <% } %>
+                    </table>
+                </div>
+
+
+                <input style = "width:200px; margin-top: 50px" class = "btn btn-primary btn-lg btn-block"
+                       type = "submit" value = "Save Edit"/>
+            </div>
+        </div>
+    </form>
+
+    <% } %>
+    <% if (typeof failureMessage != 'undefined' && failureMessage != '') { %>
+    <div class = "form-group has-error">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= failureMessage %>" class = "form-control">
+        </div>
+    </div>
+    <% } %>
+
+    <% if (typeof successMessage != 'undefined' && successMessage != '') { %>
+    <div class = "form-group has-success">
+        <div align = "center" style = "margin:25px auto; width:200px;">
+            <input style = "text-align:center" type = "text" value = ""
+                   placeholder = "<%= successMessage %>" class = "form-control">
+        </div>
+    </div>
+    <% } %>
+</div>
