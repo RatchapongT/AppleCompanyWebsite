@@ -315,11 +315,9 @@ var workerPartnerSchema = new Schema({
 });
 
 var payInSchema = new Schema({
-    reportedUserID: String,
     reportedUsername: String,
     reportedUserNickname: String,
     payIn: {type: Number, Default: 0},
-    paymentMethod_id: String,
     paymentMethodBankName: String,
     paymentMethodBankNumber: Number,
     paymentMethodBankType: String,
@@ -327,11 +325,9 @@ var payInSchema = new Schema({
 });
 
 var payOutSchema = new Schema({
-    reportedUserID: String,
     reportedUsername: String,
     reportedUserNickname: String,
     payOut: {type: Number, Default: 0},
-    paymentMethod_id: String,
     paymentMethodBankName: String,
     paymentMethodBankNumber: Number,
     paymentMethodBankType: String,
@@ -340,36 +336,27 @@ var payOutSchema = new Schema({
 });
 
 var buySchema = new Schema({
-    strike: {type: Number, Default: 0},
-    sale: {type: Number, Default: 0},
-    manager_id: String,
-    managerUsername: String,
-    managerNickname: String,
-    customer_id: String,
-    customerID: String,
-    customerNickname: String,
-    worker_id: String,
-    workerUsername: String,
-    workerNickname: String
-});
-
-var sellSchema = new Schema({
-    strike: {type: Number, Default: 0},
-    sale: {type: Number, Default: 0},
-    manager_id: String,
-    managerUsername: String,
-    managerNickname: String,
     partner_id: String,
     partnerID: String,
     partnerNickname: String,
-    worker_id: String,
-    workerUsername: String,
-    workerNickname: String
+    strike: {type: Number, Default: 0},
+    sale: {type: Number, Default: 0},
+    balance: {type: Number, Default: 0}
+});
+
+var sellSchema = new Schema({
+    partner_id: String,
+    customerID: String,
+    customerNickname: String,
+    strike: {type: Number, Default: 0},
+    sale: {type: Number, Default: 0},
+    balance: {type: Number, Default: 0}
 });
 
 var recordPageSchema = new Schema({
     recordDate: Date,
     recordType: String,
+    hierarchy: Object,
     payInPage: {
         locked: {type: Boolean, default: false},
         payInDetails: [payInSchema]
@@ -378,18 +365,17 @@ var recordPageSchema = new Schema({
         locked: {type: Boolean, default: false},
         payInDetails: [payOutSchema]
     },
-    sellPage: {
+
+    profitLossPage: {
         locked: {type: Boolean, default: false},
+        buyDetails: [buySchema],
         sellDetails: [sellSchema]
-    },
-    buyPage: {
-        locked: {type: Boolean, default: false},
-        buyDetails: [buySchema]
     },
     totalSellSale: {type: Number, default: 0},
     totalSellStrike: {type: Number, default: 0},
     totalBuySale: {type: Number, default: 0},
     totalBuyStrike: {type: Number, default: 0},
+    totalBalance: {type: Number, default: 0},
     created: {type: Date, default: Date.now}
 });
 
@@ -449,6 +435,7 @@ module.exports = {
     Partner: Partner,
     ManagerWorker: ManagerWorker,
     WorkerCustomer: WorkerCustomer,
+    WorkerPartner: WorkerPartner,
     RecordPage: RecordPage,
     Entry: Entry,
     SystemBank: SystemBank

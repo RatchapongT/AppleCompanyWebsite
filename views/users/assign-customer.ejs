@@ -19,7 +19,7 @@
              style="width:350px; margin-top: 30px; margin-bottom: 30px">
             <strong>Worker</strong>
 
-            <form method="post" action="/users/assign" id="assign_form">
+            <form method="post" action="/users/assign/customer" id="assign_form">
                 <div class="form-group">
 
                     <select class="form-control select select-info"
@@ -114,7 +114,7 @@
                 /<%= date.getFullYear() %></td>
             </td>
             <td align="center"><a
-                        href="/users/delete_relationship/<%=workerCustomerObject[i]._customerDetail.id%>/<%=requestWorkerID%>"
+                        href="/users/delete_relationship/customer/<%=workerCustomerObject[i]._customerDetail.id%>/<%=requestWorkerID%>"
                         class="button"><span class="fui-cross"
                                              style="color:#f93c3c"></span></a>
             </td>

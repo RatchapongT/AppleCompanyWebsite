@@ -20,7 +20,11 @@ var users = require('./routes/users');
 var customers = require('./routes/customers');
 var partners = require('./routes/partners');
 var managers = require('./routes/managers');
-var records = require('./routes/records');
+var profitLoss = require('./routes/records/profitloss');
+var forward = require('./routes/records/forward');
+var payin = require('./routes/records/payin');
+var payout = require('./routes/records/payout');
+var records = require('./routes/records/records');
 var restrict = require('./auth/restrict');
 
 var MongoStore = connectMongo(expressSession);
@@ -65,6 +69,10 @@ app.use('/users', users);
 app.use('/managers', managers);
 app.use('/customers', customers);
 app.use('/partners', partners);
+app.use('/profitLoss', profitLoss);
+app.use('/forward', forward);
+app.use('/payin', payin);
+app.use('/payout', payout);
 app.use('/records', records);
 
 // catch 404 and forward to error handler

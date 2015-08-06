@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+
+<div class="container">
+    <h2>Assign Partner</h2>
+
+    <div align="center">
+        <div class="login-form"
+             style="width:350px; margin-top: 30px; margin-bottom: 30px">
+            <strong>Worker</strong>
+
+            <form method="post" action="/users/assign/partner" id="assign_form">
+                <div class="form-group">
+
+                    <select class="form-control select select-info"
+                            data-toggle="select" form="assign_form"
+                            name="requestWorkerID" id="requestWorkerID">
+                        <% for(var i = 0; i < workerObject.length; i++) { %>
+                        <% if (requestWorkerID == undefined && i == 0) { %>
+                        <% requestWorkerID = workerObject[0].id %>
+                        <option value=<%= workerObject[0].id %> selected><%= workerObject[0]._profileDetail._userDetail.username %>
+                            (<%= workerObject[0]._profileDetail.nickname %>)
+                        </option>
+                        <% } else if (requestWorkerID == workerObject[i].id){ %>
+                        <option value=<%= workerObject[i].id %> selected><%= workerObject[i]._profileDetail._userDetail.username %>
+                            (<%= workerObject[i]._profileDetail.nickname %>)
+                        </option>
+                        <% } else { %>
+                        <option value=<%= workerObject[i].id %>><%= workerObject[i]._profileDetail._userDetail.username %>
+                            (<%= workerObject[i]._profileDetail.nickname %>)
+                        </option>
+                        <% } %>
+                        <% } %>
+                    </select>
+
+                </div>
+                <div class="form-group">
+                    <strong>Partner</strong>
+                    <select class="form-control select select-info"
+                            data-toggle="select" form="assign_form"
+                            name="partnerID" id="partnerID">
+                        <% for(var i = 0; i < unownedPartnerObject.length; i++) { %>
+                        <% if(i == 0) { %>
+                        <option selected
+                                value="<%= unownedPartnerObject[i].id %>">
+                            <%= unownedPartnerObject[i].partnerID %>
+                            (<%= unownedPartnerObject[i].nickname %>)
+                        </option>
+                        <% } else { %>
+                        <option value="<%= unownedPartnerObject[i].id %>">
+                            <%= unownedPartnerObject[i].partnerID %>
+                            (<%= unownedPartnerObject[i].nickname %>)
+                        </option>
+                        <% } %>
+                        <% } %>
+                    </select>
+                </div>
+
+                <input style="width:200px"
+                       class="btn btn-primary btn-lg btn-block"
+                       type="submit" value="Assign" id="submit_button"/>
+            </form>
+            <script>
+                if (<%=unownedPartnerObject.length%> ===0) {
+                    document.getElementById('partnerID').disabled = true;
+                }
+                if (<%=workerObject.length%> ===0){
+                    document.getElementById('requestWorkerID').disabled = true;
+                }
+                if (<%=workerObject.length%> ===0 || <%=unownedPartnerObject.length%> == 0){
+                    document.getElementById('submit_button').disabled = true;}
+            </script>
+        </div>
+
+
+    </div>
+    <div align="center" style="margin:25px auto; width:280px;">
+        <% if (typeof error != 'undefined' & error != "") { %>
+        <div class="form-group has-success">
+            <input style="text-align:center" type="text" value=""
+                   placeholder="<%= error %>" class="form-control"/>
+        </div>
+        <% } %>
+    </div>
+
+
+    <table id="sort" class="table">
+        <thead>
+        <tr>
+            <th style="text-align:center" class="sort-default">Worker ID</th>
+            <th style="text-align:center" class="sort-default">Partner ID</th>
+            <th style="text-align:center" class="sort-default">Created On</th>
+            <th style="text-align:center" class="no-sort">Delete</th>
+        </tr>
+        </thead>
+
+
+        <% for(var i = 0; i < workerPartnerObject.length; i++) { %>
+        <tr>
+            <td align="center"><%= workerPartnerObject[i]._workerDetail._profileDetail._userDetail.username %> (<%= workerPartnerObject[i]._workerDetail._profileDetail.nickname %>)</td>
+            <td align="center"><%= workerPartnerObject[i]._partnerDetail.partnerID %> (<%= workerPartnerObject[i]._partnerDetail.nickname %>)</td>
+            <% date = new Date(workerPartnerObject[i].created) %>
+            <td align="center"><%= date.getDate() %>/<%= date.getMonth() %>
+                /<%= date.getFullYear() %></td>
+            </td>
+            <td align="center"><a
+                        href="/users/delete_relationship/partner/<%=workerPartnerObject[i]._partnerDetail.id%>/<%=requestWorkerID%>"
+                        class="button"><span class="fui-cross"
+                                             style="color:#f93c3c"></span></a>
+            </td>
+        </tr>
+        <% } %>
+
+    </table>
+</div>
+
+
+<% include ../partials/page/jsdefaults.ejs %>
+<script>
+    new Tablesort(document.getElementById('sort'));
+</script>
+
+<footer>
+    <% include ../partials/page/footer.ejs %>
+</footer>
+</body>
+</html>

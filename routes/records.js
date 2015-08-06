@@ -28,7 +28,7 @@ router.get('/', function (req, res, next) {
     });
 });
 
-
+router.get('/')
 router.get('/initialize/:recordType/:page/:date?/:customer_id?/:payment_id?', function (req, res, next) {
     if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
         var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
@@ -116,8 +116,6 @@ router.get('/manage/:recordType/:date', function (req, res, next) {
             }
         );
     } else {
-
-
         if (req.params.recordType == 'malay' || req.params.recordType == 'thai') {
             var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
 

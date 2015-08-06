@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
 <head>
     <% include partials/page/head.ejs %>
 </head>
@@ -12,49 +12,93 @@
     <br>
 
     <h4> USER </h4>
-    <a href="/users/manage" class="button"><strong style="color:red">Add User/ Delete User (ADMIN)</strong></a>
+    <a href = "/users/manage" class = "button"><strong style = "color:red">Add
+            User/ Delete User (ADMIN)</strong></a>
     <br>
-   <a href="/users/profiles" class="button"><strong style="color:red">Edit User Profiles (ADMIN + LIMITED-W-M)</strong></a>
+    <a href = "/users/profiles" class = "button"><strong style = "color:red">Edit
+            User Profiles (ADMIN + LIMITED-W-M)</strong></a>
     <h4> CUSTOMER </h4>
 
-    <a href="/customers/manage" class="button"><strong style="color:red">Add Customer/ Delete Customer(ADMIN)</strong></a>
+    <a href = "/customers/manage" class = "button"><strong style = "color:red">Add
+            Customer/ Delete Customer(ADMIN)</strong></a>
     <br>
-    <a href="/customers/profiles" class="button"><strong style="color:red">Edit Customer Profiles (ADMIN + LIMITED-WORKER)</strong></a>
+    <a href = "/customers/profiles" class = "button"><strong
+                style = "color:red">Edit Customer Profiles (ADMIN +
+            LIMITED-WORKER)</strong></a>
     <br>
-    <a href="/customers/bank" class="button"><strong style="color:red">Add Bank(ADMIN + LIMITED-WORKER)</strong></a>
+    <a href = "/customers/bank" class = "button"><strong style = "color:red">Add
+            Bank(ADMIN + LIMITED-WORKER)</strong></a>
 
     <h4> PARTNER </h4>
 
-    <a href="/partners/manage" class="button"><strong style="color:red">Add Partner/ Delete Partner(ADMIN)</strong></a>
+    <a href = "/partners/manage" class = "button"><strong style = "color:red">Add
+            Partner/ Delete Partner(ADMIN)</strong></a>
     <br>
-    <a href="/partners/profiles" class="button"><strong style="color:red">Edit Partner Profiles (ADMIN + LIMITED-WORKER)</strong></a>
+    <a href = "/partners/profiles" class = "button"><strong style = "color:red">Edit
+            Partner Profiles (ADMIN + LIMITED-WORKER)</strong></a>
     <br>
-    <a href="/partners/bank" class="button"><strong style="color:red">Add Bank(ADMIN + LIMITED-WORKER)</strong></a>
+    <a href = "/partners/bank" class = "button"><strong style = "color:red">Add
+            Bank(ADMIN + LIMITED-WORKER)</strong></a>
 
     <h4> WORKER </h4>
-    <a href="/users/assign" class="button"><strong style="color:red">Assign Customer (ADMIN)</strong></a>
+    <a href = "/users/assign/customer" class = "button"><strong
+                style = "color:red">Assign Customer (ADMIN)</strong></a>
     <br>
-    <a href="/records/initialize/malay/manage" class="button">PL Management (Malay-TEST)</a>
+    <a href = "/users/assign/partner" class = "button"><strong
+                style = "color:red">Assign Partner (ADMIN)</strong></a>
     <br>
-    <a href="/records/initialize/thai/manage" class="button">PL Management (Thai-TEST)</a>
-    <br>
+
     <h4> OUR PAYMENT </h4>
-    <a href="/users/payment" class="button"><strong style="color:red">Our payment(ADMIN)</strong></a>
+    <a href = "/users/payment" class = "button"><strong style = "color:red">Our
+            payment(ADMIN)</strong></a>
 
     <h4> MANAGER </h4>
-    <a href="/managers/assign" class="button"><strong style="color:red">Assign Manager</strong></a>
+    <a href = "/managers/assign" class = "button"><strong style = "color:red">Assign
+            Manager</strong></a>
 
-    <h4> CENTRAL SHEET </h4>
-    <a href="/records/centralsheet/malay" class="button">Central Sheet (Malay)</a>
-    <br>
-    <a href="/records/centralsheet/thai" class="button">Central Sheet (Thai)</a>
 
-    <h4> TRANSACTION </h4>
-    <a href="/records/initialize/malay/payout" class="button">Pay Out (Malay)</a>
+
+    <h4> MALAY </h4>
+
+    <a href = "/records/create/malay" class = "button">Create Malay
+        (Malay-TEST)</a>
     <br>
-    <a href="/records/initialize/thai/payout" class="button">Pay Out (Thai)</a>
+
+    <a href = "/profitloss/initialize/malay" class = "button">PL Management
+        (Malay-TEST)</a>
     <br>
-    <a href="/records/initialize/malay/payin" class="button">Pay In (Malay)</a>
+    <a href = "/centralsheet/initialize/malay" class = "button">Central Sheet
+        (Malay)</a>
     <br>
-    <a href="/records/initialize/thai/payin" class="button">Pay In (Thai)</a>
+
+    <a href = "/payout/initialize/malay" class = "button">Pay Out
+        (Malay)</a>
+    <br>
+    <a href = "/payin/initialize/malay" class = "button">Pay In
+        (Malay)</a>
+    <br>
+
+    <h4> THAI </h4>
+    <a href = "/records/create/thai" class = "button">Create Thai
+        (Thai-TEST)</a>
+    <br>
+
+    <a href = "/profitloss/initialize/thai" class = "button">PL Management
+        (Thai-TEST)</a>
+    <br>
+    <a href = "/centralsheet/initialize/thai" class = "button">Central Sheet
+        (Thai)</a>
+    <br>
+
+    <a href = "/payout/initialize/thai" class = "button">Pay Out
+        (Thai)</a>
+    <br>
+    <a href = "/payin/initialize/thai" class = "button">Pay In
+        (Thai)</a>
+    <br>
+
+
+
+
+
 </center>

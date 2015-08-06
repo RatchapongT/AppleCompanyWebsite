@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+    <% include ../partials/page/jsdefaults.ejs %>
+</header>
+
+
+<div class = "container">
+    <h2><%= title %></h2>
+    <form method = "post" id = "date_form">
+        <div align = "center" style = "margin-bottom: 50px">
+            <div class = "input-group date" id = "datepicker"
+                 style = "width: 300px">
+                <input type = "text" class = "form-control"
+                       style = "text-align: center" value = ""
+                       name = "date_input" onchange = 'submitParseDate()'
+                       id = "date_input">
+            <span class = "input-group-addon"><i
+                        class = "fui-list-small-thumbnails"></i></span>
+            </div>
+        </div>
+    </form>
+    <div align = "center">
+        <div class = "login-form" style = "width:150px; margin-top: 30px; ">
+            <% var submitLockString = "/records/lock-page/" + redirectRecordType; %>
+            <form method = "post" onchange = "this.submit()"
+                  action = '<%= submitLockString %>' id = "locked_form">
+                <input type = hidden name = "date" value = "<%= requestDate %>">
+
+                <label class = "radio">
+                    <input type = "radio" name = "locked" id = "optionsRadios1"
+                           value = true data-toggle = "radio">
+                    Lock
+                </label>
+                <label class = "radio">
+                    <input type = "radio" name = "locked" id = "optionsRadios2"
+                           value = false data-toggle = "radio">
+                    Unlock
+                </label>
+            </form>
+        </div>
+    </div>
+
+    <% var submitFormString = "/records/manage/" + redirectRecordType + "/update-entry"; %>
+    <form method = "post" id = "record_form" action = '<%= submitFormString %>'>
+
+        <input type = hidden name = "date" value = "<%= requestDate %>">
+
+        <h3> Profit Loss </h3>
+        <% for (var i = 0; i < hierarchy.length; i++) { %>
+        <table id = "sort" class = "table" border = "1"
+               style = "border-color:#BDC3C7;margin-top: 50px">
+            <th bgcolor="#2C3E50" style = "color:#FFFFFF; text-align: center" colspan="3"><%= hierarchy[i].managerProfiles.managerUsername %>
+                (<%= hierarchy[i].managerProfiles.managerNickname %>
+                )</th>
+
+            <% for (var j = 0; j < hierarchy[i].workers.length; j++) { %>
+            <tr>
+                <th style = "color:#3498DB; font-size:20px; text-align: center" colspan="3"><%= hierarchy[i].workers[j].workerProfiles.workerUsername %>
+                    (<%= hierarchy[i].workers[j].workerProfiles.workerNickname %>
+                    )</th>
+            </tr>
+
+            <tr>
+                <th style = "text-align:center">Customer</th>
+                <th style = "text-align:center">Sale</th>
+                <th style = "text-align:center">Strike</th>
+            </tr>
+
+            <% for (var k = 0; k < hierarchy[i].workers[j].customers.length; k++) { %>
+
+            <tr>
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle;">
+                    <%= hierarchy[i].workers[j].customers[k].customerProfiles.customerID %>
+                    (<%= hierarchy[i].workers[j].customers[k].customerProfiles.customerNickname %>
+                    )
+                </td>
+
+                <% for (var m = 0; m < sellDetails.length; m++) { %>
+                <% if (sellDetails[m].customerID == hierarchy[i].workers[j].customers[k].customerProfiles.customerID) { %>
+                <td align = "center">
+                    <input type = "hidden"
+                           value = "<%= sellDetails[m]._id %>"
+                           name = "sellDetails_id">
+                    <input type = "number" class = "form-control-white"
+                           style = "width: 150px; text-align: right;"
+                           name = "sale" id ="sale_<%=m%>"
+                           value = "<%= sellDetails[m].sale %>" onclick="clearText(this)">
+                </td>
+                <td align = "center">
+                    <input type = "number" class = "form-control-white"
+                           style = "width: 150px; text-align: right; "
+                           name = "strike" id ="strike_<%=m%>"
+                           value = "<%= sellDetails[m].strike %>" onclick="clearText(this)">
+                </td>
+                <% } %>
+                <% } %>
+            </tr>
+
+            <% } %>
+            <% } %>
+        </table>
+        <% } %>
+
+        <h3 style="margin-top: 100px;"> Forward </h3>
+        <% for (var i = 0; i < hierarchy.length; i++) { %>
+        <table id = "sort" class = "table" border = "1"
+               style = "border-color:#BDC3C7;margin-top: 50px">
+            <th bgcolor="#2C3E50" style = "color:#FFFFFF; text-align: center" colspan="3"><%= hierarchy[i].managerProfiles.managerUsername %>
+                (<%= hierarchy[i].managerProfiles.managerNickname %>
+                )</th>
+
+            <% for (var j = 0; j < hierarchy[i].workers.length; j++) { %>
+            <tr>
+                <th style = "color:#3498DB; font-size:20px; text-align: center" colspan="3"><%= hierarchy[i].workers[j].workerProfiles.workerUsername %>
+                    (<%= hierarchy[i].workers[j].workerProfiles.workerNickname %>
+                    )</th>
+            </tr>
+
+            <tr>
+                <th style = "text-align:center">Partner</th>
+                <th style = "text-align:center; color: #E74C3C">Buy</th>
+                <th style = "text-align:center; color: #2ECC71">Win</th>
+            </tr>
+
+            <% for (var k = 0; k < hierarchy[i].workers[j].partners.length; k++) { %>
+
+            <tr>
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle;">
+                    <%= hierarchy[i].workers[j].partners[k].partnerProfiles.partnerID %>
+                    (<%= hierarchy[i].workers[j].partners[k].partnerProfiles.partnerNickname %>
+                    )
+                </td>
+
+                <% for (var m = 0; m < buyDetails.length; m++) { %>
+                <% if (buyDetails[m].partnerID == hierarchy[i].workers[j].partners[k].partnerProfiles.partnerID) { %>
+                <td align = "center">
+                    <input type = "hidden"
+                           value = "<%= buyDetails[m]._id %>"
+                           name = "buyDetails_id">
+                    <input type = "number" class = "form-control-white"
+                           style = "width: 150px; text-align: right;"
+                           name = "sale" id ="sale_<%=m%>"
+                           value = "<%= buyDetails[m].sale %>" onclick="clearText(this)">
+                </td>
+                <td align = "center">
+                    <input type = "number" class = "form-control-white"
+                           style = "width: 150px; text-align: right; "
+                           name = "strike" id ="strike_<%=m%>"
+                           value = "<%= buyDetails[m].strike %>" onclick="clearText(this)">
+                </td>
+                <% } %>
+                <% } %>
+            </tr>
+
+            <% } %>
+            <% } %>
+        </table>
+        <% } %>
+
+
+
+
+
+
+
+        <div align = "center" style = "margin-top: 50px">
+            <strong style = "color:#2ECC71">Total Sale :</strong>
+
+            <div class = "form-control"
+                 style = "display:inline-block ; width: 150px; text-align: right; margin-right: 30px">
+                <%= totalSale %>
+            </div>
+
+            <strong style = "color:#E74C3C">Total Strike :</strong>
+
+            <div class = "form-control"
+                 style = "display:inline-block ; width: 150px; text-align: right ;margin-right: 30px">
+                <%= totalStrike %>
+            </div>
+
+            <strong>Balance :</strong>
+            <% if ((totalSale - totalStrike) < 0) { %>
+            <div class = "form-control"
+                 style = "display:inline-block ; width: 150px; text-align: right; color:#E74C3C">
+                <strong> <%= totalSale - totalStrike %></strong>
+            </div>
+            <% } else { %>
+            <div class = "form-control"
+                 style = "display:inline-block ; width: 150px; text-align: right; color:#2ECC71">
+                <strong> <%= totalSale - totalStrike %></strong>
+            </div>
+            <% } %>
+        </div>
+        <div align = "center">
+            <input style = "width: 300px; margin-bottom: 50px; margin-top: 60px"
+                   class = "btn btn-primary btn-lg btn-block" type = "submit"
+                   value = "Save Record"></div>
+
+    </form>
+
+</div>
+</div>
+
+
+<script type = "text/javascript">
+    $(document).ready(function () {
+        $('#datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            orientation: 'auto top',
+            autoclose: true,
+            todayHighlight: true
+        });
+        var date = new Date("<%=requestDate%>");
+
+
+        if ((date.getMonth() + 1) < 10) {
+            if (date.getDate() < 10) {
+                var selectDate = '0' + date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            } else {
+                var selectDate = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            }
+
+        } else {
+            if (date.getDate() < 10) {
+                var selectDate = '0' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            } else {
+                var selectDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            }
+        }
+        document.getElementById('date_input').value = selectDate;
+
+
+        if (<%=pageLocked%>) {
+            document.getElementById("optionsRadios1").checked = true;
+        } else {
+            document.getElementById("optionsRadios2").checked = true;
+        }
+
+
+    });
+
+    function clearText(input)
+    {
+        input.focus();
+        input.select();
+        var disMouse = document.getElementById(input.id);
+        disMouse.addEventListener("mousewheel", function(evt){ evt.preventDefault(); });
+    }
+
+    function submitParseDate() {
+        var unformatted = document.getElementById('date_input').value;
+        var result = unformatted.split("/");
+        var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
+        document.getElementById("date_form").action = "/records/initialize/" + '<%=redirectRecordType%>' + "/manage/" + select;
+        document.getElementById("date_form").submit();
+    }
+
+
+</script>
+
+
+<footer>
+
+</footer>

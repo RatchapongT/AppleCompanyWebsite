@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+    <% include ../partials/page/jsdefaults.ejs %>
+</header>
+
+
+<div class = "container">
+    <h2><%= title %></h2>
+
+    <div align = "center">
+        <div class = "login-form" style = "width:350px; margin-top: 30px; ">
+            <strong><input disabled type = "text" class = "form-control"
+                           style = "text-align: center; color:black" value = ""
+                           name = "date_input" onchange = ''
+                           id = "date_input"></strong>
+
+            <form method = "post" id = "date_form" action="/records/create/<%=requestRecordType%>">
+
+                <input type="hidden" name="returnString" value="<%=returnString%>">
+                <input type="hidden" name="requestDate" value="<%=requestDate%>">
+                <input style="width: 150px; margin-top: 30px"
+                       class="btn btn-info btn-lg btn-block"
+                       type="submit" value="Create Record">
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+
+    <script type = "text/javascript">
+        $(document).ready(function () {
+            $('#datepicker').datepicker({
+                format: "dd/mm/yyyy",
+                orientation: 'auto top',
+                autoclose: true,
+                todayHighlight: true
+            });
+            var date = new Date("<%=requestDate%>");
+
+            if ((date.getMonth() + 1) < 10) {
+                if (date.getDate() < 10) {
+                    var selectDate = '0' + date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                } else {
+                    var selectDate = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                }
+
+            } else {
+                if (date.getDate() < 10) {
+                    var selectDate = '0' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                } else {
+                    var selectDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                }
+            }
+            document.getElementById('date_input').value = selectDate;
+        });
+    </script>

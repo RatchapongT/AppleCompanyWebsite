@@ -137,7 +137,7 @@ router.post('/edit', function (req, res) {
 
 });
 
-router.get('/assign/:id?', function (req, res) {
+router.get('/assign/customer/:id?', function (req, res) {
 
     if (req.session.passport.user.accountType == "Admin") {
         databaseFunction.getUnownedCustomerList(req, function (err, unownedCustomerObject) {
@@ -152,7 +152,7 @@ router.get('/assign/:id?', function (req, res) {
                     if (err) {
                         return res.send(err);
                     }
-                    return res.render('users/assign', {
+                    return res.render('users/assign-customer', {
                         title: 'Assign Customer',
                         workerObject: workerObject,
                         workerCustomerObject: workerCustomerObject,
@@ -175,13 +175,13 @@ router.get('/assign/:id?', function (req, res) {
 
 });
 
-router.post('/assign', function (req, res) {
+router.post('/assign/customer', function (req, res) {
     if (req.session.passport.user.accountType == "Admin") {
         databaseFunction.assignCustomer(req.body, function (err, customerObject) {
             if (err) {
                 return res.send(err);
             }
-            return res.redirect('/users/assign/' + req.body.requestWorkerID);
+            return res.redirect('/users/assign/customer/' + req.body.requestWorkerID);
         });
     } else {
         return res.render('warning',
@@ -193,14 +193,89 @@ router.post('/assign', function (req, res) {
     }
 });
 
-router.get('/delete_relationship/:customerID/:requestWorkerID', function (req, res, next) {
+router.get('/delete_relationship/customer/:customerID/:requestWorkerID', function (req, res, next) {
     if (req.session.passport.user.accountType == "Admin") {
         databaseFunction.deleteWorkerCustomerRelationship(req.params, function (err) {
             if (err) {
                 return res.send(err);
             }
 
-            return res.redirect('/users/assign/' + req.params.requestWorkerID);
+            return res.redirect('/users/assign/customer/' + req.params.requestWorkerID);
+        });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
+});
+
+router.get('/assign/partner/:id?', function (req, res) {
+
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.getUnownedPartnerList(req, function (err, unownedPartnerObject) {
+            if (err) {
+                return res.send(err);
+            }
+            databaseFunction.getWorkerList(req, function (err, workerObject) {
+                if (err) {
+                    return res.send(err);
+                }
+                databaseFunction.getWorkerPartnerRelationship(req, function (err, workerPartnerObject) {
+                    if (err) {
+                        return res.send(err);
+                    }
+                    return res.render('users/assign-partner', {
+                        title: 'Assign Partner',
+                        workerObject: workerObject,
+                        workerPartnerObject: workerPartnerObject,
+                        unownedPartnerObject: unownedPartnerObject,
+                        requestWorkerID: req.params.id,
+                        error: req.flash('error')
+
+                    });
+                });
+            });
+        });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
+
+});
+
+router.post('/assign/partner', function (req, res) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.assignPartner(req.body, function (err, partnerObject) {
+            if (err) {
+                return res.send(err);
+            }
+            return res.redirect('/users/assign/partner/' + req.body.requestWorkerID);
+        });
+    } else {
+        return res.render('warning',
+            {
+                title: 'Warning',
+                warningText: "No Permission"
+            }
+        );
+    }
+});
+
+router.get('/delete_relationship/partner/:partnerID/:requestWorkerID', function (req, res, next) {
+    if (req.session.passport.user.accountType == "Admin") {
+        databaseFunction.deleteWorkerPartnerRelationship(req.params, function (err) {
+            if (err) {
+                return res.send(err);
+            }
+
+            return res.redirect('/users/assign/partner/' + req.params.requestWorkerID);
         });
     } else {
         return res.render('warning',
@@ -273,5 +348,7 @@ router.get('/payment/delete/:id', function (req, res) {
         );
     }
 });
+
+
 
 module.exports = router;

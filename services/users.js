@@ -2,7 +2,9 @@ var User = require('../models/databaseModels').User;
 var UserDetail = require('../models/databaseModels').UserDetail;
 var SystemBank = require('../models/databaseModels').SystemBank;
 var Customer = require('../models/databaseModels').Customer;
+var Partner = require('../models/databaseModels').Partner;
 var WorkerCustomer = require('../models/databaseModels').WorkerCustomer;
+var WorkerPartner = require('../models/databaseModels').WorkerPartner;
 var Worker = require('../models/databaseModels').Worker;
 var Manager = require('../models/databaseModels').Manager;
 
@@ -233,5 +235,53 @@ exports.getManagerID = function (input, next) {
             next(err, null);
         }
 
+    });
+};
+
+exports.getUnownedPartnerList = function (input, next) {
+    Partner.find({_workerDetail: null}, function (err, object) {
+        next(err, object);
+    });
+};
+
+exports.getWorkerPartnerRelationship = function (input, next) {
+    WorkerPartner.find().deepPopulate(['_partnerDetail',
+        '_partnerDetail._workerDetail',
+        '_partnerDetail._workerDetail._profileDetail',
+        '_partnerDetail._workerDetail._profileDetail._userDetail',
+        '_workerDetail',
+        '_workerDetail._profileDetail',
+        '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
+        next(err, object);
+    });
+};
+exports.assignPartner = function (input, next) {
+    Partner.findByIdAndUpdate(input.partnerID, {
+        $set: {
+            _workerDetail: input.requestWorkerID,
+        }
+    }, function (err, object) {
+        var newWorkerPartner = new WorkerPartner({
+            _workerDetail: input.requestWorkerID,
+            _partnerDetail: input.partnerID
+        });
+
+        newWorkerPartner.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+            next(err, object);
+        });
+    });
+};
+
+exports.deleteWorkerPartnerRelationship = function (input, next) {
+    Partner.findByIdAndUpdate(input.partnerID, {
+        $unset: {
+            _workerDetail: 1,
+        }
+    }, function (err, object) {
+        WorkerPartner.remove({_partnerDetail: input.partnerID}).exec();
+        next(err, object);
     });
 };

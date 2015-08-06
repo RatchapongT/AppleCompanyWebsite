@@ -29,3 +29,72 @@ form input[type='number']::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
   }
+
+.form-control-white::-moz-placeholder,
+.select2-search input[type="text"]::-moz-placeholder {
+    color: #b2bcc5;
+    opacity: 1;
+}
+
+.-white:-ms-input-placeholder,
+.select2-search input[type="text"]:-ms-input-placeholder {
+    color: #b2bcc5;
+}
+
+.form-control-white::-webkit-input-placeholder,
+.select2-search input[type="text"]::-webkit-input-placeholder {
+    color: #b2bcc5;
+}
+
+.form-control-white,
+.select2-search input[type="text"] {
+    height: 42px;
+    padding: 8px 12px;
+    font-family: "Lato", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.467;
+    color: #34495e;
+    border: 2px solid #FFFFFF;
+    border-radius: 6px;
+    box-shadow: none;
+    -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+    transition: border .25s linear, color .25s linear, background-color .25s linear;
+}
+
+.form-group.focus .form-control-white,
+.form-control-white:focus,
+.form-group.focus .select2-search input[type="text"],
+.select2-search input[type="text"]:focus {
+    border-color: #1abc9c;
+    outline: 0;
+    box-shadow: none;
+}
+
+.form-control-white[disabled],
+.form-control-white[readonly],
+fieldset[disabled] .form-control-white,
+.select2-search input[type="text"][disabled],
+.select2-search input[type="text"][readonly],
+fieldset[disabled] .select2-search input[type="text"] {
+    color: #d5dbdb;
+    cursor: default;
+    background-color: #f4f6f6;
+    filter: alpha(opacity=70);
+    border-color: #d5dbdb;
+    opacity: .7;
+}
+
+.form-control-white.flat,
+.select2-search input[type="text"].flat {
+    border-color: transparent;
+}
+
+.form-control-white.flat:hover,
+.select2-search input[type="text"].flat:hover {
+    border-color: #bdc3c7;
+}
+
+.form-control-white.flat:focus,
+.select2-search input[type="text"].flat:focus {
+    border-color: #1abc9c;
+}
