@@ -317,6 +317,9 @@ var workerPartnerSchema = new Schema({
 var payInSchema = new Schema({
     reportedUsername: String,
     reportedUserNickname: String,
+    user_id: String,
+    userID: String,
+    userNickname: String,
     payIn: {type: Number, Default: 0},
     paymentMethodBankName: String,
     paymentMethodBankNumber: Number,
@@ -327,6 +330,9 @@ var payInSchema = new Schema({
 var payOutSchema = new Schema({
     reportedUsername: String,
     reportedUserNickname: String,
+    user_id: String,
+    userID: String,
+    userNickname: String,
     payOut: {type: Number, Default: 0},
     paymentMethodBankName: String,
     paymentMethodBankNumber: Number,
@@ -339,13 +345,13 @@ var buySchema = new Schema({
     partner_id: String,
     partnerID: String,
     partnerNickname: String,
-    strike: {type: Number, Default: 0},
-    sale: {type: Number, Default: 0},
+    win: {type: Number, Default: 0},
+    buy: {type: Number, Default: 0},
     balance: {type: Number, Default: 0}
 });
 
 var sellSchema = new Schema({
-    partner_id: String,
+    customer_id: String,
     customerID: String,
     customerNickname: String,
     strike: {type: Number, Default: 0},
@@ -363,7 +369,7 @@ var recordPageSchema = new Schema({
     },
     payOutPage: {
         locked: {type: Boolean, default: false},
-        payInDetails: [payOutSchema]
+        payOutDetails: [payOutSchema]
     },
 
     profitLossPage: {
@@ -371,10 +377,10 @@ var recordPageSchema = new Schema({
         buyDetails: [buySchema],
         sellDetails: [sellSchema]
     },
-    totalSellSale: {type: Number, default: 0},
-    totalSellStrike: {type: Number, default: 0},
-    totalBuySale: {type: Number, default: 0},
-    totalBuyStrike: {type: Number, default: 0},
+    totalWin: {type: Number, default: 0},
+    totalBuy: {type: Number, default: 0},
+    totalSale: {type: Number, default: 0},
+    totalStrike: {type: Number, default: 0},
     totalBalance: {type: Number, default: 0},
     created: {type: Date, default: Date.now}
 });

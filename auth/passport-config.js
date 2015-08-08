@@ -46,6 +46,7 @@ module.exports = function () {
                             }
                             var serializeObject = {
                                 username:  user.username,
+                                nickname: object.nickname,
                                 userDetailID: user.id,
                                 workerID : workerIDObject,
                                 managerID : managerIDObject,

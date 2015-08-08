@@ -14,7 +14,7 @@
 
     <div align = "center">
         <div class = "login-form" style = "width:350px; margin-top: 30px; ">
-            <form method = "post" id = "date_form">
+            <form method = "post" action="/payout/submit" id="submit_form">
 
                 <div class = "input-group date" id = "datepicker"
                      style = "width: 300px; margin-bottom: 30px">
@@ -26,38 +26,27 @@
                         class = "fui-list-small-thumbnails"></i></span>
                 </div>
 
-            </form>
-            <form method = "post" id = "customer_form">
-                <select name = "request_customer_id" id = "request_customer_id"
-                        class = "form-control select select-info"
-                        data-toggle = "select" form = "customer_form"
-                        onchange = 'submitCustomerForm()'
-                        style = "margin-bottom: 30px;">
-                    <% for(var i = 0; i < customerObject.length; i++) { %>
 
-                    <% if (requestCustomerID == customerObject[i].id){ %>
-                    <option value = <%= customerObject[i].id %> selected><%= customerObject[i].customerID %>
-                        (<%= customerObject[i].nickname %>)
+                <input type="hidden" name="redirectRecordType" value="<%=redirectRecordType%>">
+                <input type="hidden" name="requestDate" value="<%=requestDate%>">
+
+                <select name = "json_object" id = "json_object"
+                        class = "form-control select select-info"
+                        data-toggle = "select" form = "submit_form"
+                        style = "margin-bottom: 30px;" onchange="updateInput()">
+                    <% for(var i = 0; i < userArray.length; i++) { %>
+                    <% if (requestUserID == userArray[i].id){ %>
+                    <option value = '{"id":"<%= userArray[i].id %>","username":"<%= userArray[i].userID %>","nickname":"<%= userArray[i].userNickname %>"}' selected><%= userArray[i].userID %>
+                        (<%= userArray[i].userNickname %>)
                     </option>
                     <% } else { %>
-                    <option value =<%= customerObject[i].id %>><%= customerObject[i].customerID %>
-                        (<%= customerObject[i].nickname %>)
+                    <option value = '{"id":"<%= userArray[i].id %>","username":"<%= userArray[i].userID %>","nickname":"<%= userArray[i].userNickname %>"}' ><%= userArray[i].userID %>
+                        (<%= userArray[i].userNickname %>)
                     </option>
                     <% } %>
                     <% } %>
                 </select>
-            </form>
-            <% var submitString = '/records/payout/' + redirectRecordType %>
-            <form method = "post" id = "payment_form"
-                  action = '<%= submitString %>'>
 
-                <input type = "hidden" name = "requestDate" id = "requestDate"
-                       value = '<%= requestDate %>'>
-
-
-                <input type = "hidden" name = "requestCustomerID"
-                       id = "requestCustomerID"
-                       value = '<%= requestCustomerID %>'>
 
 
                 <div class = "form-group">
@@ -74,46 +63,36 @@
 
         </div>
 
-        <table id = "sort" class = "table" style = "margin-top:50px;">
+        <table id = "sort" class = "table" border = "1"
+               style = "border-color:#BDC3C7;margin-top: 50px">
             <thead>
-            <tr>
-                <th style = "text-align:center" class = "sort-default">
-                    Customer
-                </th>
-                <th style = "text-align:center" class = "sort-default">Pay Out
-                </th>
-                <th style = "text-align:center" class = "sort-default">Time</th>
-                <th style = "text-align:center" class = "sort-default">Delete
-                </th>
-
-            </tr>
+            <th>
+                Pay Out To
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                Time
+            </th>
             </thead>
-            <% for(var i = 0; i < entryObject.length; i++) { %>
-            <% for (var j = 0; j < entryObject[i].payOutDetails.length; j++) { %>
-            <tr>
-                <td align = "center"><%= entryObject[i].customerID %>
-                    (<%= entryObject[i].customerNickname %>)
-                </td>
-                <td align = "center"><%= entryObject[i].payOutDetails[j].payOut %></td>
-                <% var time = new Date(entryObject[i].payOutDetails[j].created).toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3") %>
-                <td align = "center"><%= time %></td>
-                <% if (pageLocked) {%>
-                <td align="center"><span class = "fui-lock"
-                                         style = "color:#34495E"></span></td>
-                <% } else {%>
+            <%for (var i = 0; i < payOutDetails.length; i++ ) {%>
+<tr>
+    <td>
+        <%=payOutDetails[i].userID%> (<%=payOutDetails[i].userNickname%> )
+    </td>
+    <td>
+        <%=payOutDetails[i].payOut%>
+    </td>
+    <td>
+        <%=payOutDetails[i].created%>
+    </td>
+</tr>
 
-                <td align = "center"><a
-                            href = "/records/payout/<%= redirectRecordType %>/delete/<%= requestDate %>/<%= requestCustomerID %>/<%= entryObject[i].id %>/<%= entryObject[i].payOutDetails[j].id %>"
-                            class = "button"><span class = "fui-cross"
-                                                   style = "color:#f93c3c"></span></a>
-                </td>
-                <% } %>
-            </tr>
-            <% } %>
             <% } %>
         </table>
     </div>
-    <% if (customerObject.length == 0) { %>
+    <% if (userArray.length == 0) { %>
     <script>
         document.getElementById('update_button').disabled = true;
     </script>
@@ -160,14 +139,9 @@
             var unformatted = document.getElementById('date_input').value;
             var result = unformatted.split("/");
             var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
-            document.getElementById("date_form").action = '/records/payout/' + '<%=redirectRecordType%>' + '/' + select + '/' + '<%=requestCustomerID%>';
-            document.getElementById("date_form").submit();
+            document.getElementById("submit_form").action = '/payout/change/' + select;
+            document.getElementById("submit_form").submit();
         }
 
-        function submitCustomerForm() {
 
-            var select = document.getElementById('request_customer_id').value;
-            document.getElementById("customer_form").action = '/records/payout/' + '<%=redirectRecordType%>' + '/' + '<%=requestDate%>' + '/' + select;
-            document.getElementById("customer_form").submit();
-        }
     </script>
