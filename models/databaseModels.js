@@ -285,7 +285,7 @@ var bankSchema = new Schema({
     bankNumber: String,
     bankName: String,
     bankType: String,
-    _ownerDetail: {type: Schema.Types.ObjectId, ref: 'Customer'},
+    _ownerDetail: {type: Schema.Types.ObjectId},
     created: {type: Date, default: Date.now}
 });
 
@@ -331,9 +331,16 @@ var payOutSchema = new Schema({
     reportedUsername: String,
     reportedUserNickname: String,
     user_id: String,
+    bank:[bankSchema],
+    otherBank: {
+        bankNumber: Number,
+        bankName: String,
+        bankType: String
+    },
     userID: String,
     userNickname: String,
     payOut: {type: Number, Default: 0},
+    paymentMethodBankID: String,
     paymentMethodBankName: String,
     paymentMethodBankNumber: Number,
     paymentMethodBankType: String,

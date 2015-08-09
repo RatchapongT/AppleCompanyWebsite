@@ -13,8 +13,38 @@
     <h2><%= title %></h2>
 
     <div align = "center">
+
+        <div align = "center">
+            <div class = "login-form" style = "width:150px; margin-top: 30px; ">
+                <form method = "post" onchange = "this.submit()"
+                      action = '/payout/lock' id = "locked_form">
+                    <input type = hidden name = "requestDate"
+                           value = "<%= requestDate %>">
+                    <input type = hidden name = "requestUserID"
+                           value = "<%= requestUserID %>">
+                    <input type = hidden name = "redirectRecordType"
+                           value = "<%= redirectRecordType %>">
+                    <label class = "radio">
+                        <input type = "radio" name = "locked"
+                               id = "optionsRadios1" value = true
+                               data-toggle = "radio">
+                        Lock
+                    </label>
+                    <label class = "radio">
+                        <input type = "radio" name = "locked"
+                               id = "optionsRadios2" value = false
+                               data-toggle = "radio">
+                        Unlock
+                    </label>
+                </form>
+            </div>
+        </div>
+
         <div class = "login-form" style = "width:350px; margin-top: 30px; ">
-            <form method = "post" action="/payout/submit" id="submit_form">
+
+
+            <form method = "post" action = "/payout/submit" id = "submit_form">
+
 
                 <div class = "input-group date" id = "datepicker"
                      style = "width: 300px; margin-bottom: 30px">
@@ -27,20 +57,27 @@
                 </div>
 
 
-                <input type="hidden" name="redirectRecordType" value="<%=redirectRecordType%>">
-                <input type="hidden" name="requestDate" value="<%=requestDate%>">
+                <input type = "hidden" name = "redirectRecordType"
+                       value = "<%= redirectRecordType %>">
+                <input type = "hidden" name = "requestDate"
+                       value = "<%= requestDate %>">
+
+                <input type = "hidden" name = "requestUserID"
+                       value = "<%= requestUserID %>">
 
                 <select name = "json_object" id = "json_object"
                         class = "form-control select select-info"
                         data-toggle = "select" form = "submit_form"
-                        style = "margin-bottom: 30px;" onchange="updateInput()">
+                        style = "margin-bottom: 30px;"
+                        onchange = "updateInput()">
                     <% for(var i = 0; i < userArray.length; i++) { %>
                     <% if (requestUserID == userArray[i].id){ %>
-                    <option value = '{"id":"<%= userArray[i].id %>","username":"<%= userArray[i].userID %>","nickname":"<%= userArray[i].userNickname %>"}' selected><%= userArray[i].userID %>
+                    <option value = '{"id":"<%= userArray[i].id %>","username":"<%= userArray[i].userID %>","nickname":"<%= userArray[i].userNickname %>"}'
+                            selected><%= userArray[i].userID %>
                         (<%= userArray[i].userNickname %>)
                     </option>
                     <% } else { %>
-                    <option value = '{"id":"<%= userArray[i].id %>","username":"<%= userArray[i].userID %>","nickname":"<%= userArray[i].userNickname %>"}' ><%= userArray[i].userID %>
+                    <option value = '{"id":"<%= userArray[i].id %>","username":"<%= userArray[i].userID %>","nickname":"<%= userArray[i].userNickname %>"}'><%= userArray[i].userID %>
                         (<%= userArray[i].userNickname %>)
                     </option>
                     <% } %>
@@ -48,17 +85,41 @@
                 </select>
 
 
-
                 <div class = "form-group">
                     Pay Out
                     <input type = "number" class = "form-control login-field"
                            placeholder = "Pay Out" name = "payOut" id = "payOut"
-                           value = '' style = "width: 300px;">
+                           value = '' style = "width: 300px;" required>
                 </div>
+
+                <div class = "form-group">
+                    Optional Bank
+
+                    <input type = "number" class = "form-control login-field"
+                           placeholder = "Bank Number" name = "bankNumber"
+                           id = "bankNumber" value = '' style = "width: 300px;">
+                    <input type = "text" class = "form-control login-field"
+                           placeholder = "Bank Name" name = "bankName"
+                           id = "bankName" value = ''
+                           style = "width: 300px; margin-top: 10px">
+                    <input type = "text" class = "form-control login-field"
+                           placeholder = "Bank Type" name = "bankType"
+                           id = "bankType" value = ''
+                           style = "width: 300px;  margin-top: 10px">
+                </div>
+
+                <% if (pageLocked) { %>
+
+                <div align = "center">
+                    <label class = "fui-lock" style = "font-size: 50px"></label>
+                </div>
+                <% } else { %>
 
                 <input class = "btn btn-primary btn-lg btn-block"
                        type = "submit" value = "Update Pay Out"
-                       style = "width: 300px; margin-top: 50px" id="update_button">
+                       style = "width: 300px; margin-top: 50px"
+                       id = "update_button">
+                <% } %>
             </form>
 
         </div>
@@ -66,28 +127,99 @@
         <table id = "sort" class = "table" border = "1"
                style = "border-color:#BDC3C7;margin-top: 50px">
             <thead>
-            <th>
-                Pay Out To
+            <% var spancol = 4 + uniqueBank.length %>
+            <th style = "vertical-align: middle; text-align:center" colspan = "<%= spancol %>">
+                <input disabled type = "text" class = "form-control-white"
+                       style = "text-align: center" value = ""
+                       name = "date_header" id = "date_header">
             </th>
-            <th>
-                Amount
-            </th>
-            <th>
-                Time
-            </th>
+            <thead>
+            <tr>
+                <th style = "vertical-align: middle; text-align:center">
+                    Pay Out To
+                </th>
+                <% for(var i = 0; i < uniqueBank.length; i++) { %>
+                <th bgcolor = #ECF0F1 style = "vertical-align: middle; text-align:center;">
+                    <%= uniqueBank[i] %>
+                </th>
+                <% } %>
+                <th bgcolor = #ECF0F1 style = "vertical-align: middle; text-align:center">
+                    Special <br> Bank
+                </th>
+                <th style = "vertical-align: middle; text-align:center">
+                    Amount
+                </th>
+
+                <th style = "vertical-align: middle; text-align:center">
+                    Delete
+                </th>
+            </tr>
             </thead>
-            <%for (var i = 0; i < payOutDetails.length; i++ ) {%>
-<tr>
-    <td>
-        <%=payOutDetails[i].userID%> (<%=payOutDetails[i].userNickname%> )
-    </td>
-    <td>
-        <%=payOutDetails[i].payOut%>
-    </td>
-    <td>
-        <%=payOutDetails[i].created%>
-    </td>
-</tr>
+            <% for (var i = 0; i < payOutDetails.length; i++ ) { %>
+            <tr>
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle; white-space: nowrap">
+                    <div class = "form-control-white"
+                         style = " text-align: center">
+                        <%= payOutDetails[i].userID %>
+                        (<%= payOutDetails[i].userNickname %> )
+                    </div>
+
+                </td>
+                <% for(var k = 0; k < uniqueBank.length; k++) { %>
+                <td align = "center"
+                    style = "text-align: left; vertical-align: top; font-size: 15px; white-space: nowrap">
+
+                    <% for (var j = 0; j < payOutDetails[i].bank.length; j++ ) { %>
+                    <% if (uniqueBank[k] == payOutDetails[i].bank[j].bankType) { %>
+
+                    <%= payOutDetails[i].bank[j].bankNumber %>
+                    <br><%= payOutDetails[i].bank[j].bankName %><br>
+
+                    <% if (j < payOutDetails[i].bank.length - 1) { %>
+                    <br>
+                    <% } %>
+                    <% } %>
+                    <% } %>
+                </td>
+                <% } %>
+
+                <td align = "center"
+                    style = "text-align: left; vertical-align: top; font-size: 15px; white-space: nowrap">
+                    <%= payOutDetails[i].otherBank.bankNumber %>
+                    <br><%= payOutDetails[i].otherBank.bankName %>
+                    <br><%= payOutDetails[i].otherBank.bankType %>
+
+                </td>
+
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle; white-space: nowrap">
+                    <div class = "form-control-white"
+                         style = " text-align: center">
+                        <%= payOutDetails[i].payOut %>
+                    </div>
+
+                </td>
+
+<% if (!pageLocked) {%>
+                <% if (!payOutDetails[i].approved) {%>
+                <td align = "center" style = "vertical-align: middle"><a
+                            href = "/payout/delete/<%= payOutDetails[i].id %>/<%= redirectRecordType %>/<%= requestDate %>/<%= requestUserID %>"
+                            class = "button"><span class = "fui-cross"
+                                                   style = "color:#f93c3c"></span></a>
+                </td>
+                <% } else { %>
+
+                <td align = "center" style = "vertical-align: middle"><span class = "fui-check-circle"
+                                                                            style = "font-size: 20px; color: #1ABC9C"></span>
+                </td>
+                <% } %>
+                <% } else { %>
+                <td align = "center" style = "vertical-align: middle">
+                    <span class = "fui-lock" ></span>
+                </td>
+                <% } %>
+            </tr>
 
             <% } %>
         </table>
@@ -95,16 +227,21 @@
     <% if (userArray.length == 0) { %>
     <script>
         document.getElementById('update_button').disabled = true;
+
     </script>
     <% } %>
 
     <% if (pageLocked) { %>
+
     <script>
         document.getElementById('payOut').disabled = true;
-        document.getElementById('update_button').disabled = true;
-        document.getElementById('request_customer_id').disabled = true;
 
+        document.getElementById('json_object').disabled = true;
+        document.getElementById('bankNumber').disabled = true;
+        document.getElementById('bankName').disabled = true;
+        document.getElementById('bankType').disabled = true;
     </script>
+
     <% } %>
 
     <script type = "text/javascript">
@@ -132,6 +269,13 @@
                 }
             }
             document.getElementById('date_input').value = selectDate;
+            document.getElementById('date_header').value = selectDate;
+
+            if (<%=pageLocked%>) {
+                document.getElementById("optionsRadios1").checked = true;
+            } else {
+                document.getElementById("optionsRadios2").checked = true;
+            }
 
         });
 

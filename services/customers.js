@@ -227,8 +227,6 @@ exports.editCustomerProfiles = function (input, next) {
         }
     }
 
-
-    console.log(option);
     Customer.findByIdAndUpdate(input.editCustomerID, option, function (err, object) {
         if (err) throw err;
         next(err, object);

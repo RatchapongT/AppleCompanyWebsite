@@ -44,7 +44,7 @@ exports.createRecord = function (input, next) {
         });
     });
     var newRecordPage = new RecordPage({
-        hierarchy:input.hierarchy,
+        hierarchy: input.hierarchy,
         recordType: input.recordType,
         recordDate: input.recordDate,
         payInPage: {
@@ -53,7 +53,7 @@ exports.createRecord = function (input, next) {
         },
         payOutPage: {
             locked: false,
-            payInDetails: []
+            payOutDetails: []
         },
         profitLossPage: {
             locked: false,
@@ -67,7 +67,7 @@ exports.createRecord = function (input, next) {
         totalBalance: 0
 
     });
-        newRecordPage.save(function (err) {
+    newRecordPage.save(function (err) {
         if (err) {
             return next(err);
         }
@@ -75,10 +75,10 @@ exports.createRecord = function (input, next) {
     });
 };
 
-exports.getHierarchy = function (input , next) {
+exports.getHierarchy = function (input, next) {
 
-    formCustomerHierarchy(input, function(err, relationshipModelCustomer) {
-        formPartnerHierarchy(input, function(err, relationshipModelPartner) {
+    formCustomerHierarchy(input, function (err, relationshipModelCustomer) {
+        formPartnerHierarchy(input, function (err, relationshipModelPartner) {
             var partnerArray = [];
             var workerArray = [];
             var managerArray = [];
@@ -90,7 +90,6 @@ exports.getHierarchy = function (input , next) {
             var workerGroup = underscore.groupBy(relationshipModelPartner, 'workerUsername');
             var partnerGroup = underscore.groupBy(relationshipModelPartner, 'partnerID');
             var customerGroup = underscore.groupBy(relationshipModelCustomer, 'customerID');
-
 
 
             async.each(partnerGroup, function (partnerGroupData, callback) {
@@ -148,7 +147,6 @@ exports.getHierarchy = function (input , next) {
             var groupWorker = underscore.groupBy(customerArray, 'responsibleWorker');
 
 
-
             async.each(workerArray, function (workerArrayData, callback) {
                 async.each(groupWorker, function (groupWorkerData, callback) {
 
@@ -179,7 +177,11 @@ exports.getHierarchy = function (input , next) {
 
                 });
             });
-            next(err, {hierarchy: managerArray, customerArray : customerArray, partnerArray : partnerArray});
+            next(err, {
+                hierarchy: managerArray,
+                customerArray: customerArray,
+                partnerArray: partnerArray
+            });
 
         });
     });
@@ -388,13 +390,13 @@ exports.updateRecord = function (input, next) {
             recordDate: input.recordDate,
             recordType: input.recordType,
             'profitLossPage.sellDetails._id': input.sellDetails_id[index]
-        } , {
+        }, {
             $set: {
                 'profitLossPage.sellDetails.$.strike': input.strike[index],
                 'profitLossPage.sellDetails.$.sale': input.sale[index],
-                'profitLossPage.sellDetails.$.balance': input.sale[index] -input.strike[index]
+                'profitLossPage.sellDetails.$.balance': input.sale[index] - input.strike[index]
             }
-        },function(err, result) {
+        }, function (err, result) {
             if (err) {
                 next(err);
             }
@@ -407,13 +409,13 @@ exports.updateRecord = function (input, next) {
             recordDate: input.recordDate,
             recordType: input.recordType,
             'profitLossPage.buyDetails._id': input.buyDetails_id[index]
-        } , {
+        }, {
             $set: {
                 'profitLossPage.buyDetails.$.win': input.win[index],
                 'profitLossPage.buyDetails.$.buy': input.buy[index],
                 'profitLossPage.buyDetails.$.balance': input.win[index] - input.buy[index]
             }
-        },function(err, result) {
+        }, function (err, result) {
             if (err) {
                 next(err);
             }
@@ -423,15 +425,15 @@ exports.updateRecord = function (input, next) {
     RecordPage.update({
         recordDate: input.recordDate,
         recordType: input.recordType,
-    } , {
+    }, {
         $set: {
-            totalStrike :totalStrike,
-            totalSale :totalSale,
-            totalWin : totalWin,
+            totalStrike: totalStrike,
+            totalSale: totalSale,
+            totalWin: totalWin,
             totalBuy: totalBuy,
             totalBalance: totalSale + totalWin - totalBuy - totalStrike
         }
-    },function(err, result) {
+    }, function (err, result) {
         if (err) {
             next(err);
         }
@@ -445,11 +447,11 @@ exports.lockProfitLossPage = function (input, next) {
     RecordPage.update({
         recordDate: input.requestDate,
         recordType: input.requestRecordType,
-    } , {
+    }, {
         $set: {
             'profitLossPage.locked': input.locked
         }
-    },function(err, result) {
+    }, function (err, result) {
         if (err) {
             next(err);
         }
@@ -457,32 +459,225 @@ exports.lockProfitLossPage = function (input, next) {
     });
 }
 
-exports.updatePayout = function (input, next) {
+exports.lockPayOutPage = function (input, next) {
     RecordPage.update({
         recordDate: input.requestDate,
         recordType: input.requestRecordType,
-    } , {
-        $push: {
-            'payOutPage.payOutDetails': {
-                reportedUsername: input.reportedUsername,
-                reportedUserNickname: input.reportedUserNickname,
-                user_id: input.user_id,
-                userID: input.userID,
-                userNickname: input.userNickname,
-                payOut: input.payOut,
-                paymentMethodBankName: "",
-                paymentMethodBankNumber: "",
-                paymentMethodBankType: "",
-                approved: false,
-            }
+    }, {
+        $set: {
+            'payOutPage.locked': input.locked
         }
-    },function(err, result) {
+    }, function (err, result) {
         if (err) {
             next(err);
         }
         next(null);
     });
 }
+exports.getUniqueSystemBank = function (input, next) {
+    SystemBank.find().distinct('bankType', function(err, object) {
+        if (err) {
+            next(err);
+        }
+        next(err, object);
+    });
+}
+exports.getUniqueBank = function (input, next) {
+    Bank.find().distinct('bankType', function(err, object) {
+        if (err) {
+            next(err);
+        }
+        next(err, object);
+    });
+}
+exports.updatePayOut = function (input, next) {
+
+    Bank.find({_ownerDetail: input.user_id}, function (err, bankObject) {
+        if (err) {
+            next(err);
+        }
+        RecordPage.update({
+            recordDate: input.requestDate,
+            recordType: input.requestRecordType,
+        }, {
+            $push: {
+                'payOutPage.payOutDetails': {
+                    reportedUsername: input.reportedUsername,
+                    reportedUserNickname: input.reportedUserNickname,
+                    user_id: input.user_id,
+                    bank: bankObject,
+                    otherBank: {
+                        bankNumber: input.bankNumber,
+                        bankName: input.bankName,
+                        bankType: input.bankType
+                    },
+                    userID: input.userID,
+                    userNickname: input.userNickname,
+                    payOut: input.payOut,
+                    paymentMethodBankID:"",
+                    paymentMethodBankName: "",
+                    paymentMethodBankNumber: "",
+                    paymentMethodBankType: "",
+                    approved: false,
+                }
+            }
+        }, function (err, result) {
+            if (err) {
+                next(err);
+            }
+            next(null);
+        });
+    });
+}
+
+exports.updatePayIn = function (input, next) {
+
+    RecordPage.update({
+        recordDate: input.requestDate,
+        recordType: input.requestRecordType,
+    }, {
+        $push: {
+            'payInPage.payInDetails': {
+                reportedUsername: input.reportedUsername,
+                reportedUserNickname: input.reportedUserNickname,
+                user_id: input.user_id,
+                userID: input.userID,
+                userNickname: input.userNickname,
+                payIn: input.payIn,
+                paymentMethodBankName: input.paymentMethodBankName,
+                paymentMethodBankNumber: input.paymentMethodBankNumber,
+                paymentMethodBankType: input.paymentMethodBankType
+            }
+        }
+    }, function (err, result) {
+        if (err) {
+            next(err);
+        }
+        next(null);
+    });
+}
+
+exports.deletePayOut = function (input, next) {
+    RecordPage.update({
+        recordDate: input.requestDate,
+        recordType: input.requestRecordType
+    }, {
+        $pull: {
+            'payOutPage.payOutDetails': {
+                _id: input.payOutID
+            }
+        }
+    }, function (err, result) {
+        if (err) {
+            next(err);
+        }
+        next(null);
+    });
+}
+
+exports.deletePayIn = function (input, next) {
+    RecordPage.update({
+        recordDate: input.requestDate,
+        recordType: input.requestRecordType
+    }, {
+        $pull: {
+            'payInPage.payInDetails': {
+                _id: input.payInID
+            }
+        }
+    }, function (err, result) {
+        if (err) {
+            next(err);
+        }
+        next(null);
+    });
+}
+
+exports.lockPayInPage = function (input, next) {
+    RecordPage.update({
+        recordDate: input.requestDate,
+        recordType: input.requestRecordType,
+    }, {
+        $set: {
+            'payInPage.locked': input.locked
+        }
+    }, function (err, result) {
+        if (err) {
+            next(err);
+        }
+        next(null);
+    });
+}
+exports.getSystemBankList = function (input, next) {
+    SystemBank.find({}, function (err, object) {
+        next(err, object);
+    });
+};
+
+exports.approvePayOut = function (input, next) {
+
+if (typeof (input.json_bank) == 'string') {
+    input.json_bank = [input.json_bank];
+    input.payOutDetailsID = [input.payOutDetailsID];
+}
+    async.each(input.payOutDetailsID, function (payOutDetailsID, callback) {
+
+        var index = input.payOutDetailsID.indexOf(payOutDetailsID);
+        if (JSON.parse(input.json_bank[index]).id != 'unapproved') {
+            RecordPage.update({
+                recordDate: input.requestDate,
+                recordType: input.requestRecordType,
+                'payOutPage.payOutDetails._id': input.payOutDetailsID[index]
+            }, {
+                $set: {
+                    'payOutPage.payOutDetails.$.paymentMethodBankID': JSON.parse(input.json_bank[index]).id,
+                    'payOutPage.payOutDetails.$.paymentMethodBankName': JSON.parse(input.json_bank[index]).bankName,
+                    'payOutPage.payOutDetails.$.paymentMethodBankNumber':JSON.parse(input.json_bank[index]).bankNumber,
+                    'payOutPage.payOutDetails.$.paymentMethodBankType': JSON.parse(input.json_bank[index]).bankType,
+                    'payOutPage.payOutDetails.$.approved': true
+                }
+            }, function (err, result) {
+                if (err) {
+                    next(err);
+                }
+            });
+        }
+
+    });
+    next(null);
+};
+
+exports.unapprovePayOut = function (input, next) {
+    var requestRecordType = (input.recordType).charAt(0).toUpperCase() + (input.recordType).substring(1).toLowerCase();
+    RecordPage.update({
+        recordDate: input.date,
+        recordType: requestRecordType,
+        'payOutPage.payOutDetails._id': input.payOutID
+    }, {
+        $set: {
+            'payOutPage.payOutDetails.$.approved': false
+        }
+    }, function (err, result) {
+        if (err) {
+            next(err);
+        }
+    });
+    next(null);
+};
+
+//exports.findApprove = function (input, next) {
+//    console.log(input.payOutID)
+//    RecordPage.findOne({
+//        recordDate: input.recordDate,
+//        recordType: input.recordType,
+//        'payOutPage.payOutDetails._id': input.payOutID
+//    }, function (err, object) {
+//        if (err) {
+//            next(err);
+//        }
+//        console.log(object);
+//    });
+//}
 //exports.initializeRecord = function (input, next) {
 //
 //    var newRecordPage = new RecordPage({
@@ -497,9 +692,6 @@ exports.updatePayout = function (input, next) {
 //        next(null);
 //    });
 //};
-
-
-
 
 
 //

@@ -76,12 +76,10 @@ fieldset[disabled] .form-control-white,
 .select2-search input[type="text"][disabled],
 .select2-search input[type="text"][readonly],
 fieldset[disabled] .select2-search input[type="text"] {
-    color: #d5dbdb;
+    color: #34495e;
     cursor: default;
-    background-color: #f4f6f6;
-    filter: alpha(opacity=70);
-    border-color: #d5dbdb;
-    opacity: .7;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
 }
 
 .form-control-white.flat,

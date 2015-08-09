@@ -79,9 +79,9 @@
             </tr>
 
             <tr>
-                <th style = "text-align:center">Customer</th>
-                <th style = "text-align:center; color: #2ECC71">Sale</th>
-                <th style = "text-align:center; color: #E74C3C">Strike</th>
+                <th style = "text-align:center; width: 200px">Customer</th>
+                <th style = "text-align:center; width: 200px; color: #2ECC71">Sale</th>
+                <th style = "text-align:center; width: 200px; color: #E74C3C">Strike</th>
 
             </tr>
 
@@ -99,12 +99,12 @@
                 <% if (sellDetails[m].customerID == hierarchy[i].workers[j].customers[k].customerProfiles.customerID) { %>
                 <% if (pageLocked) { %>
                 <td align = "center">
-                    <div class="form-control-white" style="width: 150px; text-align: right">
+                    <div class="form-control-white" style = "width: 100%; text-align: right;  padding-right: 45%">
                         <%= sellDetails[m].sale %>
                     </div>
                 </td>
                 <td align = "center">
-                    <div class="form-control-white" style="width: 150px; text-align: right">
+                    <div class="form-control-white" style = "width: 100%; text-align: right;  padding-right: 45%">
                         <%= sellDetails[m].strike %>
                     </div>
                 </td>
@@ -113,14 +113,14 @@
                     <input type = "hidden" value = "<%= sellDetails[m]._id %>"
                            name = "sellDetails_id">
                     <input type = "number" class = "form-control-white"
-                           style = "width: 150px; text-align: right;"
+                           style = "width: 100%; text-align: right; padding-right:45%"
                            name = "sale" id = "sale_<%= m %>"
                            value = '<%= sellDetails[m].sale %>'
                            onclick = "clearText(this)">
                 </td>
                 <td align = "center">
                     <input type = "number" class = "form-control-white"
-                           style = "width: 150px; text-align: right; "
+                           style = "width: 100%; text-align: right; padding-right:45%"
                            name = "strike" id = "strike_<%= m %>"
                            value = '<%= sellDetails[m].strike %>'
                            onclick = "clearText(this)">
@@ -141,12 +141,12 @@
                     <strong>Total</strong>
                 </td>
                 <td align = "center" bgcolor = #ECF0F1>
-                    <div class = "form-control">
+                    <div class = "form-control" style="width: 100%; text-align: right;  padding-right: 45%;background-color: #ECF0F1; border-color:#ECF0F1">
                         <%= saleTotalLocal %>
                     </div>
                 </td>
                 <td align = "center" bgcolor = #ECF0F1>
-                    <div class = "form-control">
+                    <div class = "form-control" style="width: 100%; text-align: right;  padding-right: 45%;background-color: #ECF0F1; border-color:#ECF0F1">
                         <%= strikeTotalLocal %>
                     </div>
                 </td>
@@ -155,12 +155,13 @@
         <% } %>
 
         <h3 style = "margin-top: 100px;"> Forward </h3>
+
         <% for (var i = 0; i < hierarchy.length; i++) { %>
         <% var winTotalLocal = 0 %>
         <% var buyTotalLocal = 0 %>
         <table id = "sort" class = "table" border = "1"
                style = "border-color:#BDC3C7;margin-top: 50px">
-            <th bgcolor = "#2C3E50" style = "color:#FFFFFF; text-align: center"
+            <th bgcolor = "#16A085" style = "color:#FFFFFF; text-align: center"
                 colspan = "3"><%= hierarchy[i].managerProfiles.managerUsername %>
                 (<%= hierarchy[i].managerProfiles.managerNickname %>)
             </th>
@@ -176,9 +177,9 @@
             </tr>
 
             <tr>
-                <th style = "text-align:center">Partner</th>
-                <th style = "text-align:center; color: #E74C3C">Buy</th>
-                <th style = "text-align:center; color: #2ECC71">Win</th>
+                <th style = "text-align:center; width: 200px;">Partner</th>
+                <th style = "text-align:center;width: 200px; color: #E74C3C">Buy</th>
+                <th style = "text-align:center;width: 200px; color: #2ECC71">Win</th>
             </tr>
 
             <% for (var k = 0; k < hierarchy[i].workers[j].partners.length; k++) { %>
@@ -195,12 +196,12 @@
                 <% if (buyDetails[m].partnerID == hierarchy[i].workers[j].partners[k].partnerProfiles.partnerID) { %>
                 <% if (pageLocked) { %>
                 <td align = "center">
-                    <div class="form-control-white" style="width: 150px; text-align: right">
+                    <div class="form-control-white" style = "width: 100%; text-align: right;  padding-right: 45%">
                         <%= buyDetails[m].buy %>
                     </div>
                 </td>
                 <td align = "center">
-                    <div class="form-control-white" style="width: 150px; text-align: right">
+                    <div class="form-control-white" style = "width: 100%; text-align: right;  padding-right: 45%">
                         <%= buyDetails[m].win %>
                     </div>
                 </td>
@@ -210,14 +211,14 @@
                     <input type = "hidden" value = "<%= buyDetails[m]._id %>"
                            name = "buyDetails_id">
                     <input type = "number" class = "form-control-white"
-                           style = "width: 150px; text-align: right;"
+                           style = "width: 100%; text-align: right; padding-right:45%"
                            name = "buy" id = "buy_<%= m %>"
                            value = "<%= buyDetails[m].buy %>"
                            onclick = "clearText(this)">
                 </td>
                 <td align = "center">
                     <input type = "number" class = "form-control-white"
-                           style = "width: 150px; text-align: right; "
+                           style = "width: 100%; text-align: right;  padding-right: 45%"
                            name = "win" id = "win_<%= m %>"
                            value = "<%= buyDetails[m].win %>"
                            onclick = "clearText(this)">
@@ -238,18 +239,20 @@
                     <strong>Total</strong>
                 </td>
                 <td align = "center" bgcolor = #ECF0F1>
-                    <div class = "form-control">
+                    <div class = "form-control" style="width: 100%; text-align: right;  padding-right: 45%;background-color: #ECF0F1; border-color:#ECF0F1">
                         <%= buyTotalLocal %>
                     </div>
                 </td>
+
                 <td align = "center" bgcolor = #ECF0F1>
-                    <div class = "form-control">
+                    <div class = "form-control" style="width: 100%; text-align: right;  padding-right: 45%;background-color: #ECF0F1; border-color:#ECF0F1 ">
                         <%= winTotalLocal %>
                     </div>
                 </td>
             </tr>
         </table>
         <% } %>
+
 
         <table id = "sort" class = "table" border = "1"
                style = "border-color:#BDC3C7;margin-top: 50px">
@@ -310,7 +313,7 @@
         <% } else { %>
         <div align = "center">
             <input style = "width: 300px; margin-bottom: 50px; margin-top: 60px"
-                   class = "btn btn-primary btn-lg btn-block" type = "submit"
+                   class = "btn btn-info btn-lg btn-block" type = "submit"
                    value = "Save Record">
         </div>
 

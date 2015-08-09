@@ -9,63 +9,251 @@
 </header>
 
 
-<div class = "container">
+<div class = "container" style = "width: 100%">
     <h2><%= title %></h2>
 
     <div align = "center">
+
+        <div align = "center">
+            <div class = "login-form" style = "width:150px; margin-top: 30px; ">
+                <form method = "post" onchange = "this.submit()"
+                      action = '/approve/lock' id = "locked_form">
+                    <input type = hidden name = "requestDate"
+                           value = "<%=requestDate%>">
+                    <input type = hidden name = "redirectRecordType"
+                           value = "<%=redirectRecordType%>">
+                    <label class = "radio">
+                        <input type = "radio" name = "locked"
+                               id = "optionsRadios1" value = true
+                               data-toggle = "radio">
+                        Lock
+                    </label>
+                    <label class = "radio">
+                        <input type = "radio" name = "locked"
+                               id = "optionsRadios2" value = false
+                               data-toggle = "radio">
+                        Unlock
+                    </label>
+                </form>
+            </div>
+        </div>
+
+
+        <form method = "post" action = "/approve/submit" id = "submit_form">
+
+
         <div class = "login-form" style = "width:350px; margin-top: 30px; ">
-            <form method = "post" id = "date_form">
+
+
+
                 <div class = "input-group date" id = "datepicker"
-                     style = "width: 300px; margin-bottom: 30px">
-                    <input P = "text" class = "form-control"
-                           style = "text-align: center" value = "<%=requestDate%>"
+                     style = "width: 300px;">
+                    <input type = "text" class = "form-control"
+                           style = "text-align: center" value = ""
                            name = "date_input" onchange = 'submitParseDate()'
                            id = "date_input">
             <span class = "input-group-addon"><i
                         class = "fui-list-small-thumbnails"></i></span>
                 </div>
 
-            </form>
+
+                <input type = "hidden" name = "requestRecordType" value = "<%= requestRecordType %>">
+            <input type = "hidden" name = "redirectRecordType" value = "<%= redirectRecordType %>">
+                <input type = "hidden" name = "requestDate" value = "<%= requestDate %>">
+
+
+
 
         </div>
+            <a href = "/approve/<%= redirectRecordType %>/all/<%= requestDate %>"
+               class = "button">View All</a> |
+            <a href = "/approve/<%= redirectRecordType %>/<%= requestDate %>"
+               class = "button">View Date</a>
+        <table id = "sort" class = "table" border = "1"
+               style = "border-color:#BDC3C7;margin-top: 50px">
+            <thead>
+            <% var spancol = 5 + uniqueBank.length %>
+            <th style = "vertical-align: middle; text-align:center"
+                colspan = "<%= spancol %>">
+                <input disabled type = "text" class = "form-control-white"
+                       style = "text-align: center" value = ""
+                       name = "date_header" id = "date_header">
+            </th>
+            <thead>
+            <tr>
+                <th style = "vertical-align: middle; text-align:center">
+                    Pay Out To
+                </th>
+                <% for(var i = 0; i < uniqueBank.length; i++) { %>
+                <th bgcolor = #ECF0F1
+                    style = "vertical-align: middle; text-align:center;">
+                    <%= uniqueBank[i] %>
+                </th>
+                <% } %>
+                <th bgcolor = #ECF0F1
+                    style = "vertical-align: middle; text-align:center">
+                    Special <br> Bank
+                </th>
+                <th style = "vertical-align: middle; text-align:center">
+                    Amount
+                </th>
 
+                <th style = "vertical-align: middle; text-align:center">
+                    Use System Bank
+                </th>
 
+                <th style = "vertical-align: middle; text-align:center">
+                    Approve Status
+                </th>
+            </tr>
+            </thead>
+            <% for (var i = 0; i < payOutDetails.length; i++ ) { %>
+
+            <tr>
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle; white-space: nowrap">
+                    <div class = "form-control-white"
+                         style = " text-align: center">
+                        <%= payOutDetails[i].userID %>
+                        (<%= payOutDetails[i].userNickname %> )
+                    </div>
+
+                </td>
+                <% for(var k = 0; k < uniqueBank.length; k++) { %>
+                <td align = "center"
+                    style = "text-align: left; vertical-align: top; font-size: 15px; white-space: nowrap">
+
+                    <% for (var j = 0; j < payOutDetails[i].bank.length; j++ ) { %>
+                    <% if (uniqueBank[k] == payOutDetails[i].bank[j].bankType) { %>
+
+                    <%= payOutDetails[i].bank[j].bankNumber %>
+                    <br><%= payOutDetails[i].bank[j].bankName %><br>
+
+                    <% if (j < payOutDetails[i].bank.length - 1) { %>
+                    <br>
+                    <% } %>
+                    <% } %>
+                    <% } %>
+                </td>
+                <% } %>
+
+                <td align = "center"
+                    style = "text-align: left; vertical-align: top; font-size: 15px; white-space: nowrap">
+                    <%= payOutDetails[i].otherBank.bankNumber %>
+                    <br><%= payOutDetails[i].otherBank.bankName %>
+                    <br><%= payOutDetails[i].otherBank.bankType %>
+
+                </td>
+
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle; white-space: nowrap">
+                    <div class = "form-control-white"
+                         style = " text-align: center">
+                        <%= payOutDetails[i].payOut %>
+                    </div>
+
+                </td>
+
+                <% if (payOutDetails[i].approved) { %>
+
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle; white-space: nowrap">
+                    <%=payOutDetails[i].paymentMethodBankNumber%> <br>
+                    <%=payOutDetails[i].paymentMethodBankName%><br>
+                    <%=payOutDetails[i].paymentMethodBankType%><br>
+                </td>
+                <% } else { %>
+                <input type = "hidden" name = "payOutDetailsID" value = "<%=payOutDetails[i].id%>">
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle; white-space: nowrap">
+                    <select name = "json_bank" id = "request_bank_id"
+                            class = "form-control select select-info"
+                            data-toggle = "select" form = "submit_form">
+                        <option value = '{"id":"unapproved","bankType":"","bankName":"","bankNumber":""}'>
+                            -
+                        </option>
+                        <% for(var m = 0; m < systemBankObject.length; m++) { %>
+
+                        <option value = '{"id":"<%= systemBankObject[m].id %>","bankType":"<%= systemBankObject[m].bankType %>","bankName":"<%= systemBankObject[m].bankName %>","bankNumber":"<%= systemBankObject[m].bankNumber %>"}'><%= systemBankObject[m].bankName %>
+                            (<%= systemBankObject[m].bankType %>)
+                        </option>
+                        <% } %>
+                    </select>
+                </td>
+                <% } %>
+                <td align = "center"
+                    style = "text-align: center;vertical-align: middle; white-space: nowrap">
+                    <div class = "form-control-white"
+                         style = " text-align: center">
+                        <% if (payOutDetails[i].approved) { %>
+                        <a href = "/approve/unapprove/<%= payOutDetails[i].id %>/<%= redirectRecordType %>/<%= requestDate %>"
+                                class = "button"><span class = "fui-check-circle"
+                                                       style = "font-size: 20px; color: #1ABC9C"></span></a>
+
+                        <% } else { %>
+                        <span class = "fui-alert-circle"
+                              style = "font-size: 20px; color: #E74C3C"></span>
+                        <% } %>
+                    </div>
+
+                </td>
+
+            </tr>
+
+            <% } %>
+        </table>
+
+        <input class = "btn btn-primary btn-lg btn-block" type = "submit"
+               value = "Update Pay Out" style = "width: 300px; margin-top: 50px"
+               id = "update_button">
+
+        </form>
     </div>
 
-    <script type = "text/javascript">
-        $(document).ready(function () {
-            $('#datepicker').datepicker({
-                format: "dd/mm/yyyy",
-                orientation: 'auto top',
-                autoclose: true,
-                todayHighlight: true
-            });
-            var date = new Date("<%=requestDate%>");
+</div>
 
-            if ((date.getMonth() + 1) < 10) {
-                if (date.getDate() < 10) {
-                    var selectDate = '0' + date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
-                } else {
-                    var selectDate = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
-                }
-
-            } else {
-                if (date.getDate() < 10) {
-                    var selectDate = '0' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-                } else {
-                    var selectDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-                }
-            }
-            document.getElementById('date_input').value = selectDate;
-
+<script type = "text/javascript">
+    $(document).ready(function () {
+        $('#datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            orientation: 'auto top',
+            autoclose: true,
+            todayHighlight: true
         });
+        var date = new Date("<%=requestDate%>");
 
-        function submitParseDate() {
-            var unformatted = document.getElementById('date_input').value;
-            var result = unformatted.split("/");
-            var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
-            document.getElementById("date_form").action = '';
-            document.getElementById("date_form").submit();
+        if ((date.getMonth() + 1) < 10) {
+            if (date.getDate() < 10) {
+                var selectDate = '0' + date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            } else {
+                var selectDate = date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            }
+
+        } else {
+            if (date.getDate() < 10) {
+                var selectDate = '0' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            } else {
+                var selectDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            }
+        }
+        document.getElementById('date_input').value = selectDate;
+        document.getElementById('date_header').value = selectDate;
+
+        if (<%=pageLocked%>) {
+            document.getElementById("optionsRadios1").checked = true;
+        } else {
+            document.getElementById("optionsRadios2").checked = true;
         }
 
-    </script>
+    });
+
+    function submitParseDate() {
+        var unformatted = document.getElementById('date_input').value;
+        var result = unformatted.split("/");
+        var select = new Date(result[2] + '-' + result[1] + '-' + result[0]);
+        document.getElementById("submit_form").action = '/payout/change/' + select;
+        document.getElementById("submit_form").submit();
+    }
+
+
+</script>

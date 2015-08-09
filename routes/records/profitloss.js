@@ -2,12 +2,6 @@ var express = require('express');
 var router = express.Router();
 var databaseFunction = require('../../services/records');
 
-var ManagerWorker = require('../../models/databaseModels').ManagerWorker;
-var WorkerCustomer = require('../../models/databaseModels').WorkerCustomer;
-var WorkerPartner = require('../../models/databaseModels').WorkerPartner;
-var Customer = require('../../models/databaseModels').Customer;
-var Worker = require('../../models/databaseModels').Worker;
-var Manager = require('../../models/databaseModels').Manager;
 
 function ParseToday() {
     var today = new Date();
@@ -123,6 +117,7 @@ router.post('/change/:redirectRecordType/:date', function (req, res) {
 
 
 router.post('/lock', function (req, res) {
+    console.log(req.body);
     databaseFunction.lockProfitLossPage(req.body, function (err) {
         if (err) {
             return res.send(err);

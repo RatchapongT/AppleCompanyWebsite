@@ -36,79 +36,160 @@ router.get('/initialize/:recordType/:date?/:requestUserID?', function (req, res)
         recordDate: requestDate,
         recordType: requestRecordType
     }
-    databaseFunction.findRecord(recordInput, function (err, recordObject) {
-        if (recordObject == null) {
-            var returnString = '&payout&initialize&' + req.params.recordType + '&' + recordInput.recordDate;
-            return res.redirect('/records/create/' + req.params.recordType + '/' + recordInput.recordDate + '/' + returnString);
-        } else {
+    databaseFunction.getUniqueBank(req, function (err, uniqueBank) {
 
-            var userArray = []
-            var workerList = underscore.pluck(recordObject.hierarchy, 'workers');
-            for (var i = 0; i < workerList.length; i++) {
-                var partnerList = underscore.pluck(workerList[i], 'partners');
-                for (var j = 0; j < partnerList.length; j++) {
-                    for (var k = 0; k < partnerList[j].length; k++) {
-                        userArray.push({
-                            id: partnerList[j][k].partnerProfiles.partner_id,
-                            userID: partnerList[j][k].partnerProfiles.partnerID,
-                            userNickname: partnerList[j][k].partnerProfiles.partnerNickname
-                        })
+        databaseFunction.findRecord(recordInput, function (err, recordObject) {
+
+            if (recordObject == null) {
+                var returnString = '&payout&initialize&' + req.params.recordType + '&' + recordInput.recordDate;
+                return res.redirect('/records/create/' + req.params.recordType + '/' + recordInput.recordDate + '/' + returnString);
+            } else {
+                var locked = recordObject.payOutPage.locked ? recordObject.payOutPage.locked : false;
+                var userArray = []
+                var workerList = underscore.pluck(recordObject.hierarchy, 'workers');
+                for (var i = 0; i < workerList.length; i++) {
+                    var partnerList = underscore.pluck(workerList[i], 'partners');
+                    for (var j = 0; j < partnerList.length; j++) {
+                        for (var k = 0; k < partnerList[j].length; k++) {
+                            userArray.push({
+                                id: partnerList[j][k].partnerProfiles.partner_id,
+                                userID: partnerList[j][k].partnerProfiles.partnerID,
+                                userNickname: partnerList[j][k].partnerProfiles.partnerNickname
+                            })
+                        }
                     }
                 }
-            }
 
-            for (var i = 0; i < workerList.length; i++) {
-                var customerList = underscore.pluck(workerList[i], 'customers');
-                for (var j = 0; j < customerList.length; j++) {
-                    for (var k = 0; k < customerList[j].length; k++) {
-                        userArray.push({
-                            id: customerList[j][k].customerProfiles.customer_id,
-                            userID: customerList[j][k].customerProfiles.customerID,
-                            userNickname: customerList[j][k].customerProfiles.customerNickname
-                        })
+                for (var i = 0; i < workerList.length; i++) {
+                    var customerList = underscore.pluck(workerList[i], 'customers');
+                    for (var j = 0; j < customerList.length; j++) {
+                        for (var k = 0; k < customerList[j].length; k++) {
+                            userArray.push({
+                                id: customerList[j][k].customerProfiles.customer_id,
+                                userID: customerList[j][k].customerProfiles.customerID,
+                                userNickname: customerList[j][k].customerProfiles.customerNickname
+                            })
+                        }
                     }
                 }
+                var requestUserID = req.params.requestUserID ? req.params.requestUserID : (userArray[0] ? userArray[0].id : null);
+                return res.render('records/payout', {
+                    title: 'Pay Out (' + requestRecordType + ')',
+                    userArray: userArray,
+                    pageLocked: locked,
+                    requestDate: requestDate,
+                    requestUserID: requestUserID,
+                    redirectRecordType: req.params.recordType,
+                    payOutDetails: recordObject.payOutPage.payOutDetails,
+                    uniqueBank: uniqueBank
+                })
             }
-            var requestUserID = req.params.requestUserID ? req.params.requestUserID : (userArray[0] ?  userArray[0].id : null);
-            return res.render('records/payout', {
-                title: 'Pay Out (' + requestRecordType + ')',
-                userArray: userArray,
-                pageLocked: false,
-                requestDate: requestDate,
-                requestUserID: requestUserID,
-                redirectRecordType: req.params.recordType,
-                payOutDetails:recordObject.payOutPage.payOutDetails
-            })
-        }
-
-
+        });
     });
 });
 
 router.post('/submit', function (req, res) {
     var requestRecordType = (req.body.redirectRecordType).charAt(0).toUpperCase() + (req.body.redirectRecordType).substring(1).toLowerCase();
     var userObject = JSON.parse(req.body.json_object);
-    var updateInput = {
-        requestRecordType: requestRecordType,
-        requestDate : req.body.requestDate,
-        reportedUsername: req.session.passport.user.username,
-        reportedUserNickname: req.session.passport.user.nickname,
-        user_id: userObject.id,
-        userID: userObject.username,
-        userNickname: userObject.nickname,
-        payOut: req.body.payOut
+    var recordInput = {
+        recordDate: req.body.requestDate,
+        recordType: requestRecordType
     }
-    console.log(req.body);
-    databaseFunction.updatePayout(updateInput, function(err) {
-        if (err) {
-            return res.send(err);
+
+    databaseFunction.findRecord(recordInput, function (err, recordObject) {
+        var locked = recordObject.payOutPage.locked ? recordObject.payOutPage.locked : false;
+
+        if (!locked) {
+            var updateInput = {
+                requestRecordType: requestRecordType,
+                requestDate: req.body.requestDate,
+                reportedUsername: req.session.passport.user.username,
+                reportedUserNickname: req.session.passport.user.nickname,
+                user_id: userObject.id,
+                userID: userObject.username,
+                userNickname: userObject.nickname,
+                payOut: req.body.payOut,
+                bankNumber: req.body.bankNumber,
+                bankName: req.body.bankName,
+                bankType: req.body.bankType,
+            }
+            databaseFunction.updatePayOut(updateInput, function (err) {
+                if (err) {
+                    throw err;
+                    return res.send(err)
+                }
+                return res.redirect('/payout/initialize/' + req.body.redirectRecordType + '/' + req.body.requestDate + '/' + userObject.id);
+
+            });
+        } else {
+            return res.render('warning',
+                {
+                    title: 'Warning',
+                    warningText: "Document Locked!"
+                }
+            );
         }
-        return res.redirect('/payout/initialize/'+ req.body.redirectRecordType + '/' + req.body.requestDate + '/' + userObject.id);
+
     });
 });
 
 router.post('/change/:date', function (req, res) {
-    return res.redirect('/payout/initialize/'+ req.body.redirectRecordType + '/' + req.params.date + '/' + req.body.request_user_id);
+    return res.redirect('/payout/initialize/' + req.body.redirectRecordType + '/' + req.params.date + '/' + req.body.requestUserID);
+});
+
+router.post('/lock', function (req, res) {
+    console.log(req.body);
+    var requestRecordType = (req.body.redirectRecordType).charAt(0).toUpperCase() + (req.body.redirectRecordType).substring(1).toLowerCase();
+    var lockInput = {
+        requestDate: req.body.requestDate,
+        requestRecordType: requestRecordType,
+        locked: req.body.locked
+    }
+    databaseFunction.lockPayOutPage(lockInput, function (err) {
+        if (err) {
+            return res.send(err);
+        }
+        return res.redirect('/payout/initialize/' + req.body.redirectRecordType + '/' + req.body.requestDate + '/' + req.body.requestUserID);
+    });
+
+});
+
+
+router.get('/delete/:payOutID/:recordType/:date/:userID', function (req, res) {
+    var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
+
+    var recordInput = {
+        recordDate: req.params.date,
+        recordType: requestRecordType,
+        payOutID: req.params.payOutID
+    }
+    databaseFunction.findRecord(recordInput, function (err, recordObject) {
+        var approveObject = underscore.findWhere(recordObject.payOutPage.payOutDetails, {id: req.params.payOutID});
+
+            var locked = recordObject.payOutPage.locked ? recordObject.payOutPage.locked : false;
+            var approved = approveObject ? approveObject.approved : false;
+            if (!locked && !approved) {
+                var deleteInput = {
+                    requestRecordType: requestRecordType,
+                    requestDate: req.params.date,
+                    payOutID: req.params.payOutID
+                }
+                databaseFunction.deletePayOut(deleteInput, function (err) {
+                    if (err) {
+                        return res.send(err);
+                    }
+                    return res.redirect('/payout/initialize/' + req.params.recordType + '/' + req.params.date + '/' + req.params.userID);
+                });
+            } else {
+                return res.render('warning',
+                    {
+                        title: 'Warning',
+                        warningText: "Document Locked!"
+                    }
+                );
+            }
+
+    });
 });
 
 module.exports = router;
