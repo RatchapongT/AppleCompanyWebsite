@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+</header>
+
+<% include ../partials/page/jsdefaults.ejs %>
+
+<div class = "container">
+    <h2>Customer's Central Sheet</h2>
+    <div align = "center">
+
+        <form name = "search_customer" method = "post"
+              action = '/centralsheet/change/customer' id = "search_customer">
+            <input type="hidden" name="redirectRecordType" value="<%=redirectRecordType%>">
+            <select name = "request_customer_id"
+                    class = "form-control select select-info"
+                    data-toggle = "select" form = "search_customer"
+                    onchange = 'this.form.submit()'>
+                <% for(var i = 0; i < userArray.length; i++) { %>
+                <% if (requestID == userArray[i].id){ %>
+                <option value =<%= userArray[i].id %> selected><%= userArray[i].userID %>
+                    (<%= userArray[i].userNickname %>)
+                </option>
+                <% } else { %>
+                <option value =<%= userArray[i].id %>><%= userArray[i].userID %>
+                    (<%= userArray[i].userNickname %>)
+                </option>
+                <% } %>
+                <% } %>
+            </select>
+        </form>
+    </div>
+
+    <table id = "sort" class = "table" border = "1"
+           style = "margin-top: 60px; border-color:#BDC3C7">
+        <thead>
+        <tr>
+            <colgroup>
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#FFFFFF">
+                <col style="background-color:#ECF0F1">
+
+            </colgroup>
+            <th style = "text-align:center; width: 100px"
+                class = "sort-default">Date
+            </th>
+            <th style = "text-align:center; width: 150px"
+                class = "sort-default">Previous Debt
+            </th>
+            <th style = "text-align:center; width: 150px; color: #2ECC71"
+                class = "sort-default">Sale
+            </th>
+            <th style = "text-align:center; width: 150px;color: #E74C3C"
+                class = "sort-default">Strike
+            </th>
+            <th style = "text-align:center; width: 150px; color: #2ECC71" class = "no-sort">
+                Pay In
+            </th>
+            <th style = "text-align:center; width: 150px; color:#E74C3C" class = "no-sort">
+                Pay Out
+            </th>
+
+            <th style = "text-align:center; width: 150px" class = "no-sort">
+                Debt
+            </th>
+        </tr>
+        </thead>
+        <% var totalDebt = 0 %>
+        <% for(var i = 0; i < financialObject.length; i++) { %>
+        <tr>
+            <td align = "center"><%= financialObject[i].recordDate.getDate() %>
+                /<%= financialObject[i].recordDate.getMonth() %>
+                /<%= financialObject[i].recordDate.getFullYear() %></td>
+
+            <td align = "center"><%= totalDebt.toLocaleString('en', {useGrouping:true}) %></td>
+            <td align = "center"><%=financialObject[i].sale.toLocaleString('en', {useGrouping:true})%></td>
+            <td align = "center"><%=financialObject[i].strike.toLocaleString('en', {useGrouping:true})%></td>
+            <td align = "center"><%=financialObject[i].payIn.toLocaleString('en', {useGrouping:true})%></td>
+            <td align = "center"><%=financialObject[i].payOut.toLocaleString('en', {useGrouping:true})%></td>
+            <% totalDebt = totalDebt + financialObject[i].sale - financialObject[i].strike - financialObject[i].payIn + financialObject[i].payOut%>
+            <td align = "center"><%=totalDebt.toLocaleString('en', {useGrouping:true})%></td>
+
+        </tr>
+        <% } %>
+
+    </table>
+
+
+</div>

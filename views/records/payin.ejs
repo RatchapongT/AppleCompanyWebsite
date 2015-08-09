@@ -198,7 +198,7 @@
                     style = "text-align: center;vertical-align: middle; white-space: nowrap">
                     <div class = "form-control-white"
                          style = " text-align: center">
-                        <%= payInDetails[i].payIn %>
+                        <%= payInDetails[i].payIn.toLocaleString('en', {useGrouping:true}) %>
                     </div>
 
                 </td>

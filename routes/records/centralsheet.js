@@ -28,7 +28,7 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/initialize/:recordType', function (req, res, next) {
+router.get('/initialize/:recordType/partner/:requestID?', function (req, res, next) {
     var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
     var requestDate = req.params.date ? req.params.date : ParseToday();
     var recordInput = {
@@ -40,56 +40,130 @@ router.get('/initialize/:recordType', function (req, res, next) {
         if (err) {
             return res.send(err)
         }
-        var locked = recordObject ? recordObject.payOutPage.locked : false;
 
-        return res.render('records/approve', {
-            title: 'Central Sheet (' + requestRecordType + ')',
-            requestDate: requestDate,
-            redirectRecordType: req.params.recordType,
-            requestRecordType: requestRecordType,
-        });
+        if (recordObject != null) {
+            var userArray = [];
+            var workerList = underscore.pluck(recordObject.hierarchy, 'workers');
+            for (var i = 0; i < workerList.length; i++) {
+                var partnerList = underscore.pluck(workerList[i], 'partners');
+                for (var j = 0; j < partnerList.length; j++) {
+                    for (var k = 0; k < partnerList[j].length; k++) {
+                        userArray.push({
+                            id: partnerList[j][k].partnerProfiles.partner_id,
+                            userID: partnerList[j][k].partnerProfiles.partnerID,
+                            userNickname: partnerList[j][k].partnerProfiles.partnerNickname
+                        })
+                    }
+                }
+            }
+            var requestID = req.params.requestID ? req.params.requestID : (userArray[0] ? userArray[0].id : null);
+            var centralSheetInput = {
+                recordType: requestRecordType,
+                requestID: requestID
+            }
+
+            console.log(userArray);
+            databaseFunction.getCentralSheetPartner(centralSheetInput, function(err, financialObject) {
+                return res.render('records/centralpartner', {
+                    title: 'Central Sheet (' + requestRecordType + ')',
+                    requestDate: requestDate,
+                    redirectRecordType: req.params.recordType,
+                    requestRecordType: requestRecordType,
+                    userArray: userArray,
+                    requestID: requestID,
+                    financialObject : financialObject
+                });
+            });
+
+        } else {
+            return res.render('warning',
+                {
+                    title: 'Warning',
+                    warningText: "No Record"
+                }
+            );
+        }
+
     });
 
 });
 
-router.post('/submit', function (req, res) {
 
-    console.log(req.body);
-    databaseFunction.approvePayOut(req.body, function (err) {
-        if (err) {
-            return res.send(err)
-        }
-        return res.redirect('/approve/' + req.body.redirectRecordType + '/' + req.body.requestDate);
-    });
+router.post('/change/partner', function (req, res) {
 
-})
-
-router.get('/unapprove/:payOutID/:recordType/:date', function (req, res) {
-
-    databaseFunction.unapprovePayOut(req.params, function (err) {
-        if (err) {
-            return res.send(err)
-        }
-        return res.redirect('/approve/' + req.params.recordType + '/' + req.params.date);
-    });
+    return res.redirect('/centralsheet/initialize/' +req.body.redirectRecordType + '/partner/' + req.body.request_customer_id)
 
 
 })
 
-router.post('/lock', function (req, res) {
-    var requestRecordType = (req.body.redirectRecordType).charAt(0).toUpperCase() + (req.body.redirectRecordType).substring(1).toLowerCase();
-    var lockInput = {
-        requestDate: req.body.requestDate,
-        requestRecordType: requestRecordType,
-        locked: req.body.locked
+
+router.get('/initialize/:recordType/customer/:requestID?', function (req, res, next) {
+    var requestRecordType = (req.params.recordType).charAt(0).toUpperCase() + (req.params.recordType).substring(1).toLowerCase();
+    var requestDate = req.params.date ? req.params.date : ParseToday();
+    var recordInput = {
+        recordDate: requestDate,
+        recordType: requestRecordType
     }
-    databaseFunction.lockPayOutPage(lockInput, function (err) {
+
+    databaseFunction.findRecord(recordInput, function (err, recordObject) {
         if (err) {
-            return res.send(err);
+            return res.send(err)
         }
-        return res.redirect('/approve/' + req.body.redirectRecordType + '/' + req.body.requestDate);
+
+        if (recordObject != null) {
+            var userArray = [];
+            var workerList = underscore.pluck(recordObject.hierarchy, 'workers');
+            for (var i = 0; i < workerList.length; i++) {
+                var customerList = underscore.pluck(workerList[i], 'customers');
+                for (var j = 0; j < customerList.length; j++) {
+                    for (var k = 0; k < customerList[j].length; k++) {
+                        userArray.push({
+                            id: customerList[j][k].customerProfiles.customer_id,
+                            userID: customerList[j][k].customerProfiles.customerID,
+                            userNickname: customerList[j][k].customerProfiles.customerNickname
+                        })
+                    }
+                }
+            }
+            var requestID = req.params.requestID ? req.params.requestID : (userArray[0] ? userArray[0].id : null);
+            var centralSheetInput = {
+                recordType: requestRecordType,
+                requestID: requestID
+            }
+
+            console.log(userArray);
+            databaseFunction.getCentralSheetCustomer(centralSheetInput, function(err, financialObject) {
+                return res.render('records/centralcustomer', {
+                    title: 'Central Sheet (' + requestRecordType + ')',
+                    requestDate: requestDate,
+                    redirectRecordType: req.params.recordType,
+                    requestRecordType: requestRecordType,
+                    userArray: userArray,
+                    requestID: requestID,
+                    financialObject : financialObject
+                });
+            });
+
+        } else {
+            return res.render('warning',
+                {
+                    title: 'Warning',
+                    warningText: "No Record"
+                }
+            );
+        }
+
     });
 
 });
+
+
+router.post('/change/customer', function (req, res) {
+
+    return res.redirect('/centralsheet/initialize/' +req.body.redirectRecordType + '/customer/' + req.body.request_customer_id)
+
+
+})
+
 
 module.exports = router;

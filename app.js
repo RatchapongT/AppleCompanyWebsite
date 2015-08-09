@@ -18,6 +18,7 @@ var config = require('./config');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var customers = require('./routes/customers');
+var transactions = require('./routes/transactions');
 var partners = require('./routes/partners');
 var managers = require('./routes/managers');
 var profitLoss = require('./routes/records/profitloss');
@@ -25,6 +26,7 @@ var approve = require('./routes/records/approve');
 var payin = require('./routes/records/payin');
 var payout = require('./routes/records/payout');
 var records = require('./routes/records/records');
+var centralsheet = require('./routes/records/centralsheet');
 var restrict = require('./auth/restrict');
 
 var MongoStore = connectMongo(expressSession);
@@ -73,6 +75,8 @@ app.use('/profitLoss', profitLoss);
 app.use('/approve', approve);
 app.use('/payin', payin);
 app.use('/payout', payout);
+app.use('/centralsheet', centralsheet);
+app.use('/transactions', transactions);
 app.use('/records', records);
 
 // catch 404 and forward to error handler

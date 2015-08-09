@@ -85,9 +85,11 @@ router.get('/unapprove/:payOutID/:recordType/:date', function (req, res) {
         }
         return res.redirect('/approve/' + req.params.recordType + '/' + req.params.date);
     });
-
-
 })
+
+router.post('/change/:date', function (req, res) {
+    return res.redirect('/approve/' + req.body.redirectRecordType + '/' + req.params.date);
+});
 
 router.post('/lock', function (req, res) {
     var requestRecordType = (req.body.redirectRecordType).charAt(0).toUpperCase() + (req.body.redirectRecordType).substring(1).toLowerCase();

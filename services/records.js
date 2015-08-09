@@ -475,7 +475,7 @@ exports.lockPayOutPage = function (input, next) {
     });
 }
 exports.getUniqueSystemBank = function (input, next) {
-    SystemBank.find().distinct('bankType', function(err, object) {
+    SystemBank.find().distinct('bankType', function (err, object) {
         if (err) {
             next(err);
         }
@@ -483,7 +483,7 @@ exports.getUniqueSystemBank = function (input, next) {
     });
 }
 exports.getUniqueBank = function (input, next) {
-    Bank.find().distinct('bankType', function(err, object) {
+    Bank.find().distinct('bankType', function (err, object) {
         if (err) {
             next(err);
         }
@@ -514,7 +514,7 @@ exports.updatePayOut = function (input, next) {
                     userID: input.userID,
                     userNickname: input.userNickname,
                     payOut: input.payOut,
-                    paymentMethodBankID:"",
+                    paymentMethodBankID: "",
                     paymentMethodBankName: "",
                     paymentMethodBankNumber: "",
                     paymentMethodBankType: "",
@@ -616,10 +616,10 @@ exports.getSystemBankList = function (input, next) {
 
 exports.approvePayOut = function (input, next) {
 
-if (typeof (input.json_bank) == 'string') {
-    input.json_bank = [input.json_bank];
-    input.payOutDetailsID = [input.payOutDetailsID];
-}
+    if (typeof (input.json_bank) == 'string') {
+        input.json_bank = [input.json_bank];
+        input.payOutDetailsID = [input.payOutDetailsID];
+    }
     async.each(input.payOutDetailsID, function (payOutDetailsID, callback) {
 
         var index = input.payOutDetailsID.indexOf(payOutDetailsID);
@@ -632,7 +632,7 @@ if (typeof (input.json_bank) == 'string') {
                 $set: {
                     'payOutPage.payOutDetails.$.paymentMethodBankID': JSON.parse(input.json_bank[index]).id,
                     'payOutPage.payOutDetails.$.paymentMethodBankName': JSON.parse(input.json_bank[index]).bankName,
-                    'payOutPage.payOutDetails.$.paymentMethodBankNumber':JSON.parse(input.json_bank[index]).bankNumber,
+                    'payOutPage.payOutDetails.$.paymentMethodBankNumber': JSON.parse(input.json_bank[index]).bankNumber,
                     'payOutPage.payOutDetails.$.paymentMethodBankType': JSON.parse(input.json_bank[index]).bankType,
                     'payOutPage.payOutDetails.$.approved': true
                 }
@@ -665,524 +665,84 @@ exports.unapprovePayOut = function (input, next) {
     next(null);
 };
 
-//exports.findApprove = function (input, next) {
-//    console.log(input.payOutID)
-//    RecordPage.findOne({
-//        recordDate: input.recordDate,
-//        recordType: input.recordType,
-//        'payOutPage.payOutDetails._id': input.payOutID
-//    }, function (err, object) {
-//        if (err) {
-//            next(err);
-//        }
-//        console.log(object);
-//    });
-//}
-//exports.initializeRecord = function (input, next) {
-//
-//    var newRecordPage = new RecordPage({
-//        recordDate: input.date,
-//        recordType: input.recordType
-//    });
-//
-//    newRecordPage.save(function (err) {
-//        if (err) {
-//            return next(err);
-//        }
-//        next(null);
-//    });
-//};
+exports.getCentralSheetPartner = function (input, next) {
+    var requestRecordType = (input.recordType).charAt(0).toUpperCase() + (input.recordType).substring(1).toLowerCase();
+    console.log(input.requestID);
+    var financialObject = []
+    RecordPage.find({
+        recordType: requestRecordType
+    }, function (err, object) {
+        if (err) {
+            next(err);
+
+        }
+
+        async.each(object, function (objectData, callback) {
+            var index = object.indexOf(objectData);
+            var profitLossPage = underscore.findWhere(object[index].profitLossPage.buyDetails, {partner_id: input.requestID.toString()})
+            var payOutPage = underscore.where(object[index].payOutPage.payOutDetails, {user_id: input.requestID.toString(), approved: true})
+            var payOutArray = underscore.pluck(payOutPage, 'payOut');
+            var payOutSum = underscore.reduce(payOutArray, function(memo, num){ return memo + num; }, 0);
+            var payInPage = underscore.where(object[index].payInPage.payInDetails, {user_id: input.requestID.toString()})
+            var payInArray = underscore.pluck(payInPage, 'payIn');
+            var payInSum = underscore.reduce(payInArray, function(memo, num){ return memo + num; }, 0);
+            financialObject.push({
+                recordDate: object[index].recordDate,
+                buy: profitLossPage.buy,
+                win : profitLossPage.win,
+                payOut : payOutSum,
+                payIn: payInSum
+            })
+        });
+
+        var sortedObject = underscore.sortBy(financialObject, 'recordDate')
+        next(err, sortedObject);
+    })
+}
 
 
-//
-//exports.initializeRecord = function (input, next) {
-//
-//    var newRecordPage = new RecordPage({
-//        recordDate: input.date,
-//        recordType: input.recordType
-//    });
-//
-//    newRecordPage.save(function (err) {
-//        if (err) {
-//            return next(err);
-//        }
-//        next(null);
-//    });
-//};
-//
-//exports.createEntry = function (input, next) {
-//    var relationshipModel = [];
-//    async.waterfall([
-//        function (callback) {
-//            ManagerWorker.find().deepPopulate(['_customerDetail',
-//                '_workerDetail',
-//                '_workerDetail._profileDetail',
-//                '_workerDetail._profileDetail._userDetail',
-//                '_managerDetail',
-//                '_managerDetail._profileDetail',
-//                '_managerDetail._profileDetail._userDetail']).exec(function (err, managerWorkerObject) {
-//                if (err) throw err;
-//
-//                callback(null, managerWorkerObject);
-//            });
-//        },
-//        function (managerWorkerObject, callback) {
-//            WorkerCustomer.find().deepPopulate(['_customerDetail',
-//                '_customerDetail._workerDetail',
-//                '_customerDetail._workerDetail._profileDetail',
-//                '_customerDetail._workerDetail._profileDetail._userDetail',
-//                '_workerDetail',
-//                '_workerDetail._profileDetail',
-//                '_workerDetail._profileDetail._userDetail']).exec(function (err, workerCustomerObject) {
-//                if (err) throw err;
-//
-//                callback(null, managerWorkerObject, workerCustomerObject);
-//            });
-//        },
-//
-//        function (managerWorkerObject, workerCustomerObject, callback) {
-//            async.each(managerWorkerObject, function (managerWorkerData, callback) {
-//                async.each(workerCustomerObject, function (workerCustomerData, callback) {
-//                    var _worker_id = workerCustomerData._workerDetail._id;
-//                    var _workerUsername = workerCustomerData._workerDetail._profileDetail._userDetail.username;
-//                    var _workerNickname = workerCustomerData._workerDetail._profileDetail.nickname;
-//                    var _customer_id = workerCustomerData._customerDetail._id;
-//                    var _customerID = workerCustomerData._customerDetail.customerID;
-//                    var _customerNickname = workerCustomerData._customerDetail.nickname;
-//                    var _customerMalay = workerCustomerData._customerDetail.malay;
-//                    var _customerThai = workerCustomerData._customerDetail.thai;
-//
-//
-//                    var _manager_id = managerWorkerData._managerDetail._id;
-//                    var _managerUsername = managerWorkerData._managerDetail._profileDetail._userDetail.username;
-//                    var _managerNickname = managerWorkerData._managerDetail._profileDetail.nickname;
-//
-//
-//                    if (workerCustomerData._workerDetail._profileDetail._id.equals(managerWorkerData._workerDetail._profileDetail._id)) {
-//                        if (_customerMalay && input.customerType == 'Malay') {
-//                            relationshipModel.push(
-//                                {
-//                                    manager_id: _manager_id,
-//                                    managerUsername: _managerUsername,
-//                                    managerNickname: _managerNickname,
-//                                    worker_id: _worker_id,
-//                                    workerUsername: _workerUsername,
-//                                    workerNickname: _workerNickname,
-//                                    customer_id: _customer_id,
-//                                    customerID: _customerID,
-//                                    customerNickname: _customerNickname,
-//                                    customerType: 'Malay'
-//                                }
-//                            );
-//
-//                        }
-//
-//                        if (_customerThai && input.customerType == 'Thai') {
-//                            relationshipModel.push(
-//                                {
-//                                    manager_id: _manager_id,
-//                                    managerUsername: _managerUsername,
-//                                    managerNickname: _managerNickname,
-//                                    worker_id: _worker_id,
-//                                    workerUsername: _workerUsername,
-//                                    workerNickname: _workerNickname,
-//                                    customer_id: _customer_id,
-//                                    customerID: _customerID,
-//                                    customerNickname: _customerNickname,
-//                                    customerType: 'Thai'
-//                                }
-//                            );
-//                        }
-//
-//                    }
-//
-//
-//                });
-//            });
-//
-//
-//            callback(null, relationshipModel);
-//        },
-//
-//        function (relationshipModel, callback) {
-//
-//            async.each(relationshipModel, function (relationshipModelData, callback) {
-//                Entry.findOneAndUpdate({
-//                        _recordDetail: input.recordPageID,
-//                        recordDate: input.date,
-//                        manager_id: relationshipModelData.manager_id,
-//                        customer_id: relationshipModelData.customer_id,
-//                        worker_id: relationshipModelData.worker_id,
-//                        customerType: relationshipModelData.customerType
-//                    }, {
-//                        $set: {
-//                            _recordDetail: input.recordPageID,
-//                            recordDate: input.date,
-//                            manager_id: relationshipModelData.manager_id,
-//                            customer_id: relationshipModelData.customer_id,
-//                            worker_id: relationshipModelData.worker_id,
-//                            managerUsername: relationshipModelData.managerUsername,
-//                            managerNickname: relationshipModelData.managerNickname,
-//                            customerID: relationshipModelData.customerID,
-//                            customerNickname: relationshipModelData.customerNickname,
-//                            workerUsername: relationshipModelData.workerUsername,
-//                            workerNickname: relationshipModelData.workerNickname,
-//                            customerType: relationshipModelData.customerType
-//                        },
-//                        $setOnInsert: {
-//                            strike: 0,
-//                            sale: 0,
-//                            payIn: 0,
-//                            payOut: 0,
-//                            balance: 0,
-//                            payInDetails: [],
-//                            payOutDetails: []
-//                        }
-//                    }
-//                    , {upsert: true}, function (err, object) {
-//                        if (err) {
-//                            return res.send(err);
-//                        }
-//                    });
-//            });
-//            callback(null, 'done');
-//        }
-//    ], function (err, result) {
-//        next();
-//    });
-//};
-//
-//exports.findEntry = function (input, next) {
-//
-//
-//
-//        RecordPage.update({
-//            recordDate: input.recordDate,
-//            recordType: input.customerType
-//        }, {
-//            $set: {
-//                totalSale: totalPageSale,
-//                totalStrike: totalPageStrike
-//            }
-//        }, function (err) {
-//            next(err, managerArray);
-//        });
-//    });
-//};
-//
-//exports.getRecordInfo = function (input, next) {
-//    RecordPage.findOne({
-//        recordDate: input.date,
-//        recordType: input.recordType
-//    }, function (err, object) {
-//        if (err) throw err;
-//        next(err, object);
-//    });
-//};
-//
-//exports.findRecordByID = function (input, next) {
-//    RecordPage.findById(input
-//        , function (err, object) {
-//            if (err) throw err;
-//            next(err, object);
-//        });
-//};
-//
-//exports.updateEntry = function (input, next) {
-//    if (typeof(input.customer_id) === 'object') {
-//        async.each(input.customer_id, function (customer_id, callback) {
-//            var index = input.customer_id.indexOf(customer_id)
-//            Entry.findOneAndUpdate({
-//                _recordDetail: input.recordPageID,
-//                recordDate: input.date,
-//                customer_id: input.customer_id[index],
-//                customerType: input.customerType
-//            }, {
-//                $set: {
-//                    strike: input.strike[index],
-//                    sale: input.sale[index],
-//                }
-//            }, function (err, object) {
-//                if (err) throw err;
-//            });
-//        });
-//        next(null);
-//    } else if (typeof(input.customer_id) === 'string') {
-//        Entry.findOneAndUpdate({
-//            _recordDetail: input.recordPageID,
-//            recordDate: input.date,
-//            customer_id: input.customer_id,
-//            customerType: input.customerType
-//        }, {
-//            $set: {
-//                strike: input.strike,
-//                sale: input.sale
-//            }
-//        }, function (err, object) {
-//            if (err) throw err;
-//
-//            next(null, object);
-//        });
-//    } else {
-//        next(null);
-//    }
-//
-//};
-//
-//exports.getSystemBankList = function (input, next) {
-//    SystemBank.find({}, function (err, object) {
-//        next(err, object);
-//    });
-//};
-//
-//exports.getCustomerTypeList = function (query, next) {
-//    Customer.find(query).deepPopulate(['_workerDetail', '_workerDetail._profileDetail', '_workerDetail._profileDetail._userDetail']).exec(function (err, object) {
-//        if (err) throw err;
-//        next(err, object);
-//    });
-//};
-//
-//exports.getEntryPayIn = function (input, next) {
-//    Entry.find({
-//        recordDate: input.requestDate,
-//        customerType: input.requestRecordType
-//    }, function (err, object) {
-//        if (err) throw err;
-//        next(err, object);
-//    })
-//};
-//
-//exports.updatePayIn = function (input, next) {
-//    async.waterfall([
-//        function (callback) {
-//            SystemBank.findOne({_id: input.requestBankID}, function (err, bankObject) {
-//                if (bankObject != null) {
-//                    Entry.findOneAndUpdate({
-//                        recordDate: input.requestDate,
-//                        customer_id: input.requestCustomerID,
-//                        customerType: input.customerType
-//                    }, {
-//                        $push: {
-//                            "payInDetails": {
-//                                payIn: input.payIn,
-//                                paymentMethod_id: bankObject.id,
-//                                paymentMethodBankName: bankObject.bankName,
-//                                paymentMethodBankNumber: bankObject.bankNumber,
-//                                paymentMethodBankType: bankObject.bankType
-//                            }
-//                        }
-//                    }, function (err, entryObject) {
-//                        callback(null, entryObject.id);
-//                    });
-//                } else {
-//                    callback(null, null);
-//                }
-//
-//            });
-//        },
-//        function (entryObjectID, callback) {
-//            Entry.findOne({
-//                _id: entryObjectID
-//            }, function (err, entryObject) {
-//                callback(null, entryObject);
-//            });
-//        },
-//        function (entryObject, callback) {
-//            if (entryObject != null) {
-//                var payInArray = underscore.pluck(entryObject.payInDetails, 'payIn');
-//                var sum = underscore.reduce(payInArray, function (memo, num) {
-//                    return memo + num;
-//                }, 0);
-//                Entry.findOneAndUpdate({
-//                    _id: entryObject.id,
-//                }, {
-//                    $set: {
-//                        "payIn": sum
-//                    }
-//                }, function (err, recordObject) {
-//                    callback(null, 'done');
-//                });
-//            } else {
-//                callback(null, 'done');
-//            }
-//
-//        }
-//    ], function (err, result) {
-//        next(err, result)
-//    });
-//};
-//
-//exports.deletePayIn = function (input, next) {
-//    async.waterfall([
-//        function (callback) {
-//            Entry.findOneAndUpdate({
-//                _id: input.entry_id
-//            }, {
-//                $pull: {
-//                    "payInDetails": {
-//                        _id: input.delete_id
-//                    }
-//                }
-//            }, function (err, entryObject) {
-//                callback(null);
-//            });
-//        },
-//        function (callback) {
-//            Entry.findOne({
-//                _id: input.entry_id
-//            }, function (err, entryObject) {
-//                callback(null, entryObject);
-//            });
-//        },
-//        function (entryObject, callback) {
-//            var payInArray = underscore.pluck(entryObject.payInDetails, 'payIn');
-//            var sum = underscore.reduce(payInArray, function (memo, num) {
-//                return memo + num;
-//            }, 0);
-//            Entry.findOneAndUpdate({
-//                _id: entryObject.id,
-//            }, {
-//                $set: {
-//                    "payIn": sum
-//                }
-//            }, function (err, recordObject) {
-//                callback(null, 'done');
-//            });
-//        }
-//    ], function (err, recordObject) {
-//        next(err, recordObject)
-//    });
-//
-//};
-//
-//exports.getEntryPayOut = function (input, next) {
-//    Entry.find({
-//        recordDate: input.requestDate,
-//        customerType: input.requestRecordType
-//    }, function (err, object) {
-//        if (err) throw err;
-//        next(err, object);
-//    })
-//};
-//
-//exports.getCustomerBankList = function (input, next) {
-//    Bank.find({_customerDetail: input}).populate('_customerDetail').exec(function (err, object) {
-//        if (err) throw err;
-//        next(err, object);
-//    });
-//};
-//
-//exports.updatePayOut = function (input, next) {
-//    async.waterfall([
-//        function (callback) {
-//            Entry.findOneAndUpdate({
-//                recordDate: input.requestDate,
-//                customer_id: input.requestCustomerID,
-//                customerType: input.customerType
-//            }, {
-//                $push: {
-//                    "payOutDetails": {
-//                        payOut: input.payOut,
-//                        approved: false
-//                    }
-//                }
-//            }, function (err, entryObject) {
-//                callback(null, entryObject.id);
-//            });
-//        },
-//        function (entryObjectID, callback) {
-//            Entry.findOne({
-//                _id: entryObjectID
-//            }, function (err, entryObject) {
-//                callback(null, entryObject);
-//            });
-//        },
-//        function (entryObject, callback) {
-//            if (entryObject != null) {
-//                var payOutArray = underscore.pluck(entryObject.payOutDetails, 'payOut');
-//                var sum = underscore.reduce(payOutArray, function (memo, num) {
-//                    return memo + num;
-//                }, 0);
-//                Entry.findOneAndUpdate({
-//                    _id: entryObject.id,
-//                }, {
-//                    $set: {
-//                        "payOut": sum
-//                    }
-//                }, function (err, recordObject) {
-//                    callback(null, 'done');
-//                });
-//            } else {
-//                callback(null, 'done');
-//            }
-//        }
-//    ], function (err, result) {
-//        next(err, result)
-//    });
-//};
-//
-//exports.deletePayOut = function (input, next) {
-//    async.waterfall([
-//        function (callback) {
-//            Entry.findOneAndUpdate({
-//                _id: input.entry_id
-//            }, {
-//                $pull: {
-//                    "payOutDetails": {
-//                        _id: input.delete_id
-//                    }
-//                }
-//            }, function (err, entryObject) {
-//                callback(null);
-//            });
-//        },
-//        function (callback) {
-//            Entry.findOne({
-//                _id: input.entry_id
-//            }, function (err, entryObject) {
-//                callback(null, entryObject);
-//            });
-//        },
-//        function (entryObject, callback) {
-//            var payOutArray = underscore.pluck(entryObject.payOutDetails, 'payOut');
-//            var sum = underscore.reduce(payOutArray, function (memo, num) {
-//                return memo + num;
-//            }, 0);
-//            Entry.findOneAndUpdate({
-//                _id: entryObject.id,
-//            }, {
-//                $set: {
-//                    "payOut": sum
-//                }
-//            }, function (err, recordObject) {
-//                callback(null, 'done');
-//            });
-//        }
-//    ], function (err, recordObject) {
-//        next(err, recordObject)
-//    });
-//
-//};
-//
-//exports.lockPage = function (input, next) {
-//
-//    RecordPage.findOneAndUpdate({_id: input.recordPageID}, {
-//        $set: {
-//            locked: input.locked
-//        }
-//    }, function (err, object) {
-//
-//        if (err) throw err;
-//        next(null, object);
-//    });
-//};
-//
-//exports.getCustomerFinancialHistory = function (input, next) {
-//    Entry.find({
-//        customer_id: input.requestCustomer_id,
-//        customerType: input.requestRecordType
-//    }, function (err, object) {
-//        if (err) throw err;
-//        next(err, underscore.sortBy(object, 'recordDate'));
-//    });
-//};
+
+exports.getCentralSheetCustomer = function (input, next) {
+    var requestRecordType = (input.recordType).charAt(0).toUpperCase() + (input.recordType).substring(1).toLowerCase();
+    var financialObject = []
+    RecordPage.find({
+        recordType: requestRecordType
+    }, function (err, object) {
+        if (err) {
+            next(err);
+
+        }
+
+        async.each(object, function (objectData, callback) {
+            var index = object.indexOf(objectData);
+            var profitLossPage = underscore.findWhere(object[index].profitLossPage.sellDetails, {customer_id: input.requestID.toString()})
+            var payOutPage = underscore.where(object[index].payOutPage.payOutDetails, {user_id: input.requestID.toString(), approved: true})
+            var payOutArray = underscore.pluck(payOutPage, 'payOut');
+            var payOutSum = underscore.reduce(payOutArray, function(memo, num){ return memo + num; }, 0);
+            var payInPage = underscore.where(object[index].payInPage.payInDetails, {user_id: input.requestID.toString()})
+            var payInArray = underscore.pluck(payInPage, 'payIn');
+            var payInSum = underscore.reduce(payInArray, function(memo, num){ return memo + num; }, 0);
+            financialObject.push({
+                recordDate: object[index].recordDate,
+                strike: profitLossPage.strike,
+                sale : profitLossPage.sale,
+                payOut : payOutSum,
+                payIn: payInSum
+            })
+        });
+
+        var sortedObject = underscore.sortBy(financialObject, 'recordDate')
+        next(err, sortedObject);
+    })
+}
+
+exports.getAllRecord = function (input, next) {
+
+    RecordPage.find({}, function (err, object) {
+        if (err) {
+            next(err);
+
+        }
+        next(err, object);
+    })
+}

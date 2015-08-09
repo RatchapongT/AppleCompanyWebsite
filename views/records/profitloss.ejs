@@ -142,12 +142,12 @@
                 </td>
                 <td align = "center" bgcolor = #ECF0F1>
                     <div class = "form-control" style="width: 100%; text-align: right;  padding-right: 45%;background-color: #ECF0F1; border-color:#ECF0F1">
-                        <%= saleTotalLocal %>
+                        <%= saleTotalLocal.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
                 <td align = "center" bgcolor = #ECF0F1>
                     <div class = "form-control" style="width: 100%; text-align: right;  padding-right: 45%;background-color: #ECF0F1; border-color:#ECF0F1">
-                        <%= strikeTotalLocal %>
+                        <%= strikeTotalLocal.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
             </tr>
@@ -240,13 +240,13 @@
                 </td>
                 <td align = "center" bgcolor = #ECF0F1>
                     <div class = "form-control" style="width: 100%; text-align: right;  padding-right: 45%;background-color: #ECF0F1; border-color:#ECF0F1">
-                        <%= buyTotalLocal %>
+                        <%= buyTotalLocal.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
 
                 <td align = "center" bgcolor = #ECF0F1>
                     <div class = "form-control" style="width: 100%; text-align: right;  padding-right: 45%;background-color: #ECF0F1; border-color:#ECF0F1 ">
-                        <%= winTotalLocal %>
+                        <%= winTotalLocal.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
             </tr>
@@ -279,27 +279,27 @@
             <tr>
                 <td align = "center">
                     <div class = "form-control-white">
-                        <%= recordObject.totalSale %>
+                        <%= recordObject.totalSale.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
                 <td align = "center">
                     <div class = "form-control-white">
-                        <%= recordObject.totalStrike %>
+                        <%= recordObject.totalStrike.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
                 <td align = "center">
                     <div class = "form-control-white">
-                        <%= recordObject.totalBuy %>
+                        <%= recordObject.totalBuy.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
                 <td align = "center">
                     <div class = "form-control-white">
-                        <%= recordObject.totalWin %>
+                        <%= recordObject.totalWin.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
                 <td align = "center">
                     <div class = "form-control-white">
-                        <%= recordObject.totalBalance %>
+                        <%= recordObject.totalBalance.toLocaleString('en', {useGrouping:true}) %>
                     </div>
                 </td>
             </tr>
