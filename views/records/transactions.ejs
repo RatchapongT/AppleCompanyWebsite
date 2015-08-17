@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <% include ../partials/page/head.ejs %>
+</head>
+<header>
+    <% include ../partials/page/header.ejs %>
+    <% include ../partials/page/jsdefaults.ejs %>
+</header>
+
+
+<div class = "container">
+    <h2><%= title %></h2>
+
+    <table id = "sort" class = "table" border = "1"
+           style = "border-color:#BDC3C7;margin-top: 50px">
+        <thead>
+        <tr>
+            <th style="text-align:center" class="sort-default">Date</th>
+            <th style="text-align:center" class="sort-default">Information</th>
+            <th style="text-align:center" class="sort-default">Pay Out</th>
+            <th style="text-align:center" class="no-sort">Pay In</th>
+            <th style="text-align:center" class="no-sort">Balance</th>
+        </tr>
+        </thead>
+
+        <% for (var i = 0 ; i < transactionObject.length; i++) { %>
+        <tr>
+
+            <td align = "center"><%= transactionObject[i].date.getDate() %>
+                /<%= transactionObject[i].date.getMonth() %>
+                /<%= transactionObject[i].date.getFullYear() %></td>
+
+
+                <% if (transactionObject[i].type == 'payin') { %>
+            <td align = "center">
+            Pay In From: <br> <%=transactionObject[i].userID%> (<%=transactionObject[i].userNickname%>)
+            </td>
+                <% } %>
+
+
+                <% if (transactionObject[i].type == 'payout') { %>
+            <td align = "center">
+                Pay Out To: <br> <%=transactionObject[i].userID%> (<%=transactionObject[i].userNickname%>)
+            </td>
+                <% } %>
+
+
+
+                <% if (transactionObject[i].type == 'payout') { %>
+            <td align = "center">
+            <%=transactionObject[i].payOut%>
+            </td>
+                <% } else { %>
+            <td align = "center" bgcolor=#ECF0F1>
+
+            </td>
+            <% } %>
+                <% if (transactionObject[i].type == 'payin') { %>
+            <td align = "center">
+            <%=transactionObject[i].payIn%>
+            </td>
+            <% } else { %>
+            <td align = "center" bgcolor=#ECF0F1>
+
+            </td>
+            <% } %>
+            <td align = "center">
+
+            </td>
+        </tr>
+        <% } %>
+    </table>
+</div>

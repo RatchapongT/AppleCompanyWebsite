@@ -289,6 +289,19 @@ var bankSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
+var transactionSchema = new Schema({
+    _systemBankDetail: {type: Schema.Types.ObjectId},
+    transactionDate: Date,
+    relationID: String,
+    amount: Number,
+    transactionType: String,
+    user_id: String,
+    userID: String,
+    userNickname: String,
+    created: {type: Date, default: Date.now}
+});
+
+
 var systemBankSchema = new Schema({
     bankNumber: String,
     bankName: String,
@@ -321,6 +334,7 @@ var payInSchema = new Schema({
     userID: String,
     userNickname: String,
     payIn: {type: Number, Default: 0},
+    paymentMethodBankID: String,
     paymentMethodBankName: String,
     paymentMethodBankNumber: Number,
     paymentMethodBankType: String,
@@ -428,6 +442,8 @@ var WorkerCustomer = mongoose.model('WorkerCustomer', workerCustomerSchema);
 var RecordPage = mongoose.model('RecordPage', recordPageSchema);
 var Entry = mongoose.model('Entry', entrySchema);
 var SystemBank = mongoose.model('SystemBank', systemBankSchema);
+var Transaction = mongoose.model('Transaction', transactionSchema);
+
 
 workerSchema.plugin(deepPopulate, {});
 managerSchema.plugin(deepPopulate, {});
@@ -451,5 +467,6 @@ module.exports = {
     WorkerPartner: WorkerPartner,
     RecordPage: RecordPage,
     Entry: Entry,
-    SystemBank: SystemBank
+    SystemBank: SystemBank,
+    Transaction: Transaction
 };

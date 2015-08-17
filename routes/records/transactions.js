@@ -29,9 +29,18 @@ router.get('/', function (req, res) {
 });
 
 router.get('/view', function (req, res) {
-    databaseFunction.getAllRecord(req, function(err, recordObject) {
-       console.log(recordObject);
+    databaseFunction.getSystemBankList(req, function(err, systemBankObject) {
+        databaseFunction.getAllRecord(req, function(err, transactionObject) {
+            if (err) {
+                return res.send(err);
+            }
+            return res.render('records/transactions', {
+                title : 'Transaction',
+                transactionObject :transactionObject
+            })
+        });
     });
+
 });
 
 

@@ -106,6 +106,7 @@ router.post('/submit', function (req, res) {
         var locked = recordObject.payInPage.locked ? recordObject.payInPage.locked : false;
 
         if (!locked) {
+            console.log(bankObject);
             var updateInput = {
                 requestRecordType: requestRecordType,
                 requestDate: req.body.requestDate,
@@ -115,6 +116,7 @@ router.post('/submit', function (req, res) {
                 userID: userObject.username,
                 userNickname: userObject.nickname,
                 payIn: req.body.payIn,
+                paymentMethodBankID : bankObject.id,
                 paymentMethodBankName: bankObject.bankName,
                 paymentMethodBankNumber: bankObject.bankNumber,
                 paymentMethodBankType: bankObject.bankType

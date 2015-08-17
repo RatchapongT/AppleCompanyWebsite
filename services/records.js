@@ -6,6 +6,7 @@ var WorkerPartner = require('../models/databaseModels').WorkerPartner;
 var SystemBank = require('../models/databaseModels').SystemBank;
 var Bank = require('../models/databaseModels').Bank;
 var Customer = require('../models/databaseModels').Customer;
+var Transaction = require('../models/databaseModels').Transaction
 var async = require('async');
 var underscore = require('underscore');
 
@@ -525,9 +526,36 @@ exports.updatePayOut = function (input, next) {
             if (err) {
                 next(err);
             }
-            next(null);
+
+            RecordPage.findOne({
+                recordDate: input.requestDate,
+                recordType: input.requestRecordType
+            }, function (err, object) {
+                if (err) {
+                    return next(err);
+                }
+                var lastObject = underscore.last(object.payOutPage.payOutDetails);
+
+                var newTransaction = new Transaction({
+                    _systemBankDetail: null,
+                    relationID: lastObject.id,
+                    transactionDate: Date.now(),
+                    amount: input.payOut,
+                    user_id: input.user_id,
+                    userID: input.userID,
+                    userNickname: input.userNickname,
+                    transactionType: 'payout'
+                });
+                newTransaction.save(function (err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    next(null);
+                });
+            });
+            });
         });
-    });
+
 }
 
 exports.updatePayIn = function (input, next) {
@@ -544,6 +572,7 @@ exports.updatePayIn = function (input, next) {
                 userID: input.userID,
                 userNickname: input.userNickname,
                 payIn: input.payIn,
+                paymentMethodBankName: input.paymentMethodBankID,
                 paymentMethodBankName: input.paymentMethodBankName,
                 paymentMethodBankNumber: input.paymentMethodBankNumber,
                 paymentMethodBankType: input.paymentMethodBankType
@@ -553,7 +582,36 @@ exports.updatePayIn = function (input, next) {
         if (err) {
             next(err);
         }
-        next(null);
+        RecordPage.findOne({
+            recordDate: input.requestDate,
+            recordType: input.requestRecordType
+        }, function (err, object) {
+            if (err) {
+                return next(err);
+            }
+            var lastObject = underscore.last(object.payInPage.payInDetails);
+
+            var newTransaction = new Transaction({
+                _systemBankDetail: input.paymentMethodBankID,
+                relationID: lastObject.id,
+                transactionDate: Date.now(),
+                amount: input.payIn,
+                user_id: input.user_id,
+                userID: input.userID,
+                userNickname: input.userNickname,
+                transactionType: 'payin'
+            });
+            newTransaction.save(function (err) {
+                if (err) {
+                    return next(err);
+                }
+                next(null);
+            });
+        });
+
+
+        //
+
     });
 }
 
@@ -571,7 +629,12 @@ exports.deletePayOut = function (input, next) {
         if (err) {
             next(err);
         }
-        next(null);
+        Transaction.findOne({relationID: input.payOutID}, function (err, object) {
+            if (err) return next(err);
+            object.remove(function (err) {
+                next(err);
+            });
+        });
     });
 }
 
@@ -589,7 +652,12 @@ exports.deletePayIn = function (input, next) {
         if (err) {
             next(err);
         }
-        next(null);
+        Transaction.findOne({relationID: input.payInID}, function (err, object) {
+            if (err) return next(err);
+            object.remove(function (err) {
+                next(err);
+            });
+        });
     });
 }
 
@@ -634,13 +702,26 @@ exports.approvePayOut = function (input, next) {
                     'payOutPage.payOutDetails.$.paymentMethodBankName': JSON.parse(input.json_bank[index]).bankName,
                     'payOutPage.payOutDetails.$.paymentMethodBankNumber': JSON.parse(input.json_bank[index]).bankNumber,
                     'payOutPage.payOutDetails.$.paymentMethodBankType': JSON.parse(input.json_bank[index]).bankType,
-                    'payOutPage.payOutDetails.$.approved': true
+                    'payOutPage.payOutDetails.$.approved': true,
+                    'payOutPage.payOutDetails.$.created': Date.now()
                 }
             }, function (err, result) {
                 if (err) {
                     next(err);
                 }
+                Transaction.update({
+                    relationID: input.payOutDetailsID[index]
+                }, {
+                    $set: {
+                        _systemBankDetail: JSON.parse(input.json_bank[index]).id
+                    }
+                }, function (err, result) {
+                    if (err) {
+                        next(err);
+                    }
+                })
             });
+
         }
 
     });
@@ -661,8 +742,21 @@ exports.unapprovePayOut = function (input, next) {
         if (err) {
             next(err);
         }
+        Transaction.update({
+            relationID: input.payOutID
+        }, {
+            $set: {
+                _systemBankDetail: null
+            }
+        }, function (err, result) {
+            if (err) {
+                next(err);
+            }
+            next(null);
+        })
+
     });
-    next(null);
+
 };
 
 exports.getCentralSheetPartner = function (input, next) {
@@ -743,6 +837,34 @@ exports.getAllRecord = function (input, next) {
             next(err);
 
         }
-        next(err, object);
+        var transactionArray = []
+        var payOutPluck = underscore.pluck(object, 'payOutPage');
+        for (var i = 0; i < payOutPluck.length; i++){
+            for (var j = 0; j < payOutPluck[i].payOutDetails.length; j++) {
+                if (payOutPluck[i].payOutDetails[j].approved);
+                transactionArray.push({
+                    date: payOutPluck[i].payOutDetails[j].created,
+                    userID: payOutPluck[i].payOutDetails[j].userID,
+                    userNickname: payOutPluck[i].payOutDetails[j].userNickname,
+                    payOut: payOutPluck[i].payOutDetails[j].payOut,
+                    type: 'payout'
+                })
+            }
+        }
+
+        var payInPluck = underscore.pluck(object, 'payInPage');
+        for (var i = 0; i < payInPluck.length; i++){
+
+            for (var j = 0; j < payInPluck[i].payInDetails.length; j++) {
+                transactionArray.push({
+                    date: payInPluck[i].payInDetails[j].created,
+                    userID: payInPluck[i].payInDetails[j].userID,
+                    userNickname: payInPluck[i].payInDetails[j].userNickname,
+                    payIn: payInPluck[i].payInDetails[j].payIn,
+                    type: 'payin'
+                });
+            }
+        }
+        next(err, underscore.sortBy(transactionArray, 'date'));
     })
 }
